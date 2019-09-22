@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+}
+
+.video-container {
+  width: 400px;
+  
+  video, canvas {
+    max-width: 100%;
+  }
+}
+
+.hidden { display: none; }
