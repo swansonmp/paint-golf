@@ -28,9 +28,6 @@ function init() {
   //initiate the hole bg
   drawImage(img);
   
-  //set span content
-  document.getElementById("sp1").textContent="initial";
-  
   $('#canvas').mousemove(function(e) {
 		var pos = findPos(this);
 		var x = e.pageX - pos.x;
@@ -39,7 +36,7 @@ function init() {
 		var c = this.getContext('2d');
 		var p = c.getImageData(x, y, 1, 1).data; 
 		var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-		$('#sp1').html(coord + "<br>" + hex);
+		$('#coord').html(coord + "<br>" + hex);
 	});
   
   //find the tee box
@@ -57,7 +54,7 @@ function init() {
 function drawImage(img) {
 	// Set the canvas the same width and height of the image
 	if (img.width != WIDTH || img.height != HEIGHT) {
-		document.getElementById("sp1").textContent="ERROR: INVALID IMAGE SIZE";
+		document.getElementById("debug").textContent="ERROR: INVALID IMAGE SIZE";
 	}
 	else {
 		canvas.width = WIDTH;
@@ -71,31 +68,30 @@ function drawImage(img) {
  */
 function drawBall() {
 	ctx.fillStyle = "white";
-	ctx.fillRect(teeX,teeY,3,3);
+	ctx.fillRect(teeX,teeY,4,4);
 }
 
 /*
  *	Find tee and hole
  */
 function findTeeAndHole() {
-	//for loop to fine tee and hole
-	//CAN BE OPTIMIZED?
-	for (var x = 0; x <= WIDTH; x++) {
-		for (var y = 0; y <= HEIGHT; y++) {
-			var p = ctx.getImageData(x, y, 1, 1).data;
-			if ((p[0] == 255) && (p[1] == 255) && (p[2] == 0)) {
-				teeX = x;
+	//for loop to fine tee and hole	
+	for (var y = 0; y < WIDTH; y++) {
+		var p = ctx.getImageData(0,y,WIDTH,1).data;
+		for (var i = 0; i < p.length; i += 4) {
+			if ((teeX == -1) && (p[i] == 255) && (p[i+1] == 255) && (p[i+2] == 0)) {
+				teeX = i/4;
 				teeY = y;
 			}
-			else if ((p[0] == 255) && (p[1] == 0) && (p[2] == 0)) {
-				holeX = x;
+			else if ((holeX == -1) && (p[i] == 255) && (p[i+1] == 0) && (p[i+2] == 0)) {
+				holeX = i/4;
 				holeY = y;
 			}
 		}
 	}
-	document.getElementById("spx").textContent=teeX;
-	document.getElementById("spy").textContent=holeX;
-	
+	//print to spans
+	document.getElementById("tee").textContent=teeX + " " + teeY;
+	document.getElementById("hole").textContent=holeX + " " + holeY;
 }
 
 //Helper methods for mouse hover code////////////////
