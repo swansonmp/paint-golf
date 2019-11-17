@@ -2,23 +2,27 @@ import Club from "./club.js";
 
 export default class Bag {
   constructor() {
-    this.cur = 0;
-    //this.bag = [new Club(), new Club, new Club()];
+    this.bag = [
+        new Club("PW", 3, 14),
+        new Club("5I", 5, 12),
+        new Club("1W", 8, 10) 
+    ];
+    this.cur = this.bag.length - 1;;
   }
   
-  inc() {
-    cur += 1;
-	//if (cur >= bag.length)
-	//  cur = 0;
+  incBag() {
+    this.cur += 1;
+	if (this.cur >= this.bag.length)
+	  this.cur = 0;
   }
   
-  dec() {
-    cur -= 1;
-	//if (cur < 0)
-	//  cur = bag.length - 1;
+  decBag() {
+    this.cur -= 1;
+	if (this.cur < 0)
+	  this.cur = this.bag.length - 1;
   }
   
   getClub() {
-    //return bag[cur];
+    return this.bag[this.cur];
   }
 }

@@ -16,8 +16,8 @@ export default class Ball {
   reset() {
     this.position = { x: 20, y: 20, z: 0 };
     this.zvel = 0;
-	this.angle = 0;
-	this.speed = 0;
+    this.angle = 0;
+    this.speed = 0;
   }
 
   isMoving() {
@@ -26,7 +26,7 @@ export default class Ball {
 
   strike(speed, zvel) {
     this.speed = speed;
-	this.zvel = zvel;
+    this.zvel = zvel;
   }
   
   incAngle() {
@@ -75,8 +75,8 @@ export default class Ball {
 	this.position.x += this.speed * Math.cos(this.angle);
 	this.position.y += this.speed * Math.sin(this.angle);
     this.position.z += this.zvel;
-    	
-	
+    
+    
     //update velocities
     if (this.speed > 1) this.speed -= DECAY;
 	else this.speed = 0;

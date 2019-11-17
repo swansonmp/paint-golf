@@ -17,7 +17,8 @@ export default class Game {
     this.gameHeight = gameHeight;
     this.gamestate = GAMESTATE.MENU;
     this.ball = new Ball(this);
-	this.cursor = new Cursor(this.ball);
+    this.cursor = new Cursor(this.ball);
+    this.bag = new Bag();
     //this.gameObjects = [];
 
     new InputHandler(this.ball, this);
@@ -33,19 +34,28 @@ export default class Game {
     this.gamestate = GAMESTATE.PAUSED;
   }
 
-  strike(speed, zvel) {
+  strike() {
     this.gamestate = GAMESTATE.RUNNING;
-    this.ball.strike(speed, zvel);
+    this.ball.strike(this.bag.getClub().speed, this.bag.getClub().zvel);
+  }
+  
+  incBag() {
+    this.bag.incBag();
+  }
+  
+  decBag() {
+    this.bag.decBag();
   }
   
   update(deltaTime) {
 	
-	console.log("Gamestate: " + this.gamestate + "\n"
-	  + "Position: x:" + this.ball.position.x + ", y:" + this.ball.position.y + ", z:" + this.ball.position.z + "\n"
-	  + "Speed: " + this.ball.speed + "\n"
-	  + "Angle: " + this.ball.angle + "\n"
-	  + "ZVel: " + this.ball.zvel + "\n"
-	  + "Is moving: " + this.ball.isMoving()); 
+    console.log("Gamestate: " + this.gamestate + "\n"
+        + "Position: x:" + this.ball.position.x + ", y:" + this.ball.position.y + ", z:" + this.ball.position.z + "\n"
+        + "Speed: " + this.ball.speed + "\n"
+        + "Angle: " + this.ball.angle + "\n"
+        + "ZVel: " + this.ball.zvel + "\n"
+        + "Is moving: " + this.ball.isMoving()
+        + "Club: " + this.bag.getClub().name); 
 	
 	
     if (this.gamestate === GAMESTATE.MENU) return;
@@ -53,7 +63,8 @@ export default class Game {
 	
     if (this.ball.isMoving()) {
       this.ball.update(deltaTime); //this.gameObjects.forEach(object => object.update(deltaTime));
-    } else {
+    }
+    else {
       this.gamestate = GAMESTATE.PAUSED;
     }
 
@@ -62,21 +73,22 @@ export default class Game {
   draw(ctx) {
     this.ball.draw(ctx); //this.gameObjects.forEach(object => object.draw(ctx));
     
-	//if game is paused
+    //if game is paused
     if (this.gamestate === GAMESTATE.PAUSED) {
-	  this.cursor.draw(ctx);
-	  
-	  /* Grayed-out menu code
-      ctx.fillStyle = "rgba(0,0,0,0.5)";
-	  ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
-      //ctx.rect(0, 0, this.gameWidth, this.gameHeight);
-      //ctx.fill();
+      this.cursor.draw(ctx);
+      
+      /* Grayed-out menu code
+        ctx.fillStyle = "rgba(0,0,0,0.5)";
+      ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
+        //ctx.rect(0, 0, this.gameWidth, this.gameHeight);
+        //ctx.fill();
 
-      ctx.font = "30px Arial";
-      ctx.fillStyle = "white";
-      ctx.textAlign = "center";
-      ctx.fillText(this.ball.angle, this.gameWidth / 2, this.gameHeight / 2);
-	  */
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "white";
+        ctx.textAlign = "center";
+        ctx.fillText(this.ball.angle, this.gameWidth / 2, this.gameHeight / 2);
+      */
+      
     }
 	
     //if game is in menu
