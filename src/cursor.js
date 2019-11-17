@@ -10,7 +10,6 @@ export default class Cursor {
 	let cury = this.ball.position.y + CURLEN * Math.sin(this.ball.angle);
 	ctx.fillStyle = "rgba(255,0,0,1)";
     ctx.fillRect(curx, cury, 4, 4);
-    //ctx.fill();
   }
   
   update() {

@@ -1,5 +1,6 @@
 import Ball from "./ball.js";
 import Cursor from "./cursor.js";
+import Bag from "./bag.js";
 import InputHandler from "./input.js";
 
 const GAMESTATE = {
