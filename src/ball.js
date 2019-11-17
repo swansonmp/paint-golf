@@ -9,22 +9,36 @@ export default class Ball {
 
     this.game = game;
     this.size = DEFAULT_SIZE;
+	
     this.reset();
   }
 
   reset() {
-    this.position = { x: 400, y: 400, z: 0 };
-    this.velocity = { x: 0, y: 0, z: 0 };
+    this.position = { x: 20, y: 20, z: 0 };
+    this.zvel = 0;
+	this.angle = 0;
+	this.speed = 0;
   }
 
   isMoving() {
-    return (this.position.z > 0 || this.velocity.z < -0.1 || this.velocity.z > 0.1);
+    return (this.position.z > 1 || this.zvel < -1 || this.zvel > 1 || this.speed > 0.1);
   }
 
-  strike(xVel, yVel, zVel) {
-    this.velocity.x = xVel; 
-    this.velocity.y = yVel;
-    this.velocity.z = zVel;
+  strike(speed, zvel) {
+    this.speed = speed;
+	this.zvel = zvel;
+  }
+  
+  incAngle() {
+	this.angle += 0.1;
+    if (this.angle >= Math.PI * 2)
+      this.angle -= Math.PI * 2;
+  }
+  
+  decAngle() {
+    this.angle -= 0.1;
+    if (this.angle <= 0)
+      this.angle += Math.PI * 2;
   }
 
   draw(ctx) {
@@ -47,23 +61,39 @@ export default class Ball {
   }
 
   update(deltaTime) {
-    if (!this.isMoving()) return;
+	  
+    if (!this.isMoving()) {
+		this.speed = 0;
+		this.zvel = 0;
+		return;
+	}
+
+	const DECAY = 0.1;
+	const ZDECAY = 0.5;
 	
 	//update positions
-    this.position.x += this.velocity.x;
-    this.position.y += this.velocity.y;
-    this.position.z += this.velocity.z;
-	  
+	this.position.x += this.speed * Math.cos(this.angle);
+	this.position.y += this.speed * Math.sin(this.angle);
+    this.position.z += this.zvel;
+    	
+	
     //update velocities
-    if (this.velocity.x > 1) this.velocity.x -= 1;
-	else if (this.velocity.x < -1) this.velocity.x += 1;
-	else this.velocity.x = 0;
+    if (this.speed > 1) this.speed -= DECAY;
+	else this.speed = 0;
 	
-    if (this.velocity.y > 1) this.velocity.y -= 1;
-	else if (this.velocity.y < -1) this.velocity.y += 1;
-	else this.velocity.y = 0;
-	
-    if (this.position.z < 0) this.velocity.z = -this.velocity.z / 2;
-    this.velocity.z -= 1;
+	if (this.position.z < 0) {
+	  if (this.zvel < 0) {
+	    this.position.z = Math.abs(this.position.z / 2);
+		this.zvel = -this.zvel / 2;
+	  }
+	}
+	else if (this.position.z > 0) {
+	  this.zvel -= ZDECAY;
+	}
+	//if pos < 0 && vel > 0: reset pos to 0 and invert vel
+	//if pos < 0 && vel > 0: let it be
+	//if pos > 0 && vel < 0: ball is falling
+	//if pos > 0 && vel > 0: ball is rising
+
   }
 }

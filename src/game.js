@@ -1,4 +1,5 @@
 import Ball from "./ball.js";
+import Cursor from "./cursor.js";
 import InputHandler from "./input.js";
 
 const GAMESTATE = {
@@ -15,6 +16,7 @@ export default class Game {
     this.gameHeight = gameHeight;
     this.gamestate = GAMESTATE.MENU;
     this.ball = new Ball(this);
+	this.cursor = new Cursor(this.ball);
     //this.gameObjects = [];
 
     new InputHandler(this.ball, this);
@@ -25,21 +27,25 @@ export default class Game {
     if (this.gamestate !== GAMESTATE.MENU) return;
 
     this.ball.reset();
-    //this.gameObjects = [this.ball];
+    //this.gameObjects = [this.ball, this.cursor];
 
     this.gamestate = GAMESTATE.PAUSED;
   }
 
-  strike(xVel, yVel, zVel) {
+  strike(speed, zvel) {
     this.gamestate = GAMESTATE.RUNNING;
-    this.ball.strike(xVel, yVel, zVel);
+    this.ball.strike(speed, zvel);
   }
   
   update(deltaTime) {
+	
 	console.log("Gamestate: " + this.gamestate + "\n"
-	+ "Position: x:" + this.ball.position.x + ", y:" + this.ball.position.y + ", z:" + this.ball.position.z + "\n"
-	  + "Velocity: x:" + this.ball.velocity.x + ", y:" + this.ball.velocity.y + ", z:" + this.ball.velocity.z + "\n"
+	  + "Position: x:" + this.ball.position.x + ", y:" + this.ball.position.y + ", z:" + this.ball.position.z + "\n"
+	  + "Speed: " + this.ball.speed + "\n"
+	  + "Angle: " + this.ball.angle + "\n"
+	  + "ZVel: " + this.ball.zvel + "\n"
 	  + "Is moving: " + this.ball.isMoving()); 
+	
 	
     if (this.gamestate === GAMESTATE.MENU) return;
 	//if (this.gamestate === GAMESTATE.PAUSED) return;
@@ -57,14 +63,19 @@ export default class Game {
     
 	//if game is paused
     if (this.gamestate === GAMESTATE.PAUSED) {
-      ctx.rect(0, 0, this.gameWidth, this.gameHeight);
+	  this.cursor.draw(ctx);
+	  
+	  /* Grayed-out menu code
       ctx.fillStyle = "rgba(0,0,0,0.5)";
-      ctx.fill();
+	  ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
+      //ctx.rect(0, 0, this.gameWidth, this.gameHeight);
+      //ctx.fill();
 
       ctx.font = "30px Arial";
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
-      ctx.fillText("Paused", this.gameWidth / 2, this.gameHeight / 2);
+      ctx.fillText(this.ball.angle, this.gameWidth / 2, this.gameHeight / 2);
+	  */
     }
 	
     //if game is in menu

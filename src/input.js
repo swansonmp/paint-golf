@@ -8,7 +8,15 @@ export default class InputHandler {
           break;
         case 32:
           console.log("SPACE bar; calling strike()");
-          game.strike(10, 10, 20);
+          game.strike(6, 10);
+          break;
+		case 37:
+          console.log("Left Arrow; calling incAngle()");
+          ball.incAngle();
+          break;
+		case 39:
+          console.log("Right Arrow; calling decAngle()");
+          ball.decAngle();
           break;
         default:
       }
