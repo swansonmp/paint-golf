@@ -1,13 +1,13 @@
 const DEFAULT_SIZE = 4;
 
 export default class Ball {
-  constructor(game) {
+  constructor() {
     this.image = document.getElementById("img_ball");
 
-    this.gameWidth = game.gameWidth;
-    this.gameHeight = game.gameHeight;
-
-    this.game = game;
+    //this.gameWidth = game.gameWidth;
+    //this.gameHeight = game.gameHeight;
+    //this.game = game;
+    
     this.size = DEFAULT_SIZE;
 	
     this.reset();
@@ -30,27 +30,27 @@ export default class Ball {
   }
   
   incAngle() {
-	this.angle += 0.1;
+	this.angle += 0.0875;
     if (this.angle >= Math.PI * 2)
       this.angle -= Math.PI * 2;
   }
   
   decAngle() {
-    this.angle -= 0.1;
+    this.angle -= 0.0875;
     if (this.angle <= 0)
       this.angle += Math.PI * 2;
   }
 
   draw(ctx) {
-	//calculate size
-	if (this.position.z <= 0) {
-	  this.size = DEFAULT_SIZE;
-	}
-	else {
-	  this.size = DEFAULT_SIZE + this.position.z / 4;
-	}
+    //calculate size
+    if (this.position.z <= 0) {
+      this.size = DEFAULT_SIZE;
+    }
+    else {
+      this.size = DEFAULT_SIZE + this.position.z / 4;
+    }
 	
-	//draw ball
+    //draw ball
     ctx.drawImage(
       this.image,
       this.position.x,
