@@ -20,14 +20,14 @@ export default class Game {
     
     this.ball = new Ball();
     this.cursor = new Cursor(this.ball);
-    this.powerbar = new PowerBar();
+    this.powerbar = new PowerBar(this);
     
     this.bag = new Bag();
     
     this.hole = new Hole("hole1");
     //this.gameObjects = [];
 
-    new InputHandler(this.ball, this);
+    new InputHandler(this);
   }
 
   start() {
@@ -41,17 +41,10 @@ export default class Game {
     this.gamestate = GAMESTATE.IDLE;
   }
 
-  strike() {
+  strike(power, accuracy) {
     this.gamestate = GAMESTATE.RUNNING;
-    this.ball.strike(this.bag.getClub().speed, this.bag.getClub().zvel);
-  }
-  
-  incBag() {
-    this.bag.incBag();
-  }
-  
-  decBag() {
-    this.bag.decBag();
+    console.log("Striking with: " + power + " power and " + accuracy + " accuracy\n");
+    this.ball.strike(this.bag.getClub().speed * power, this.bag.getClub().zvel * power);
   }
   
   /*
@@ -69,13 +62,14 @@ export default class Game {
   
   update(deltaTime) {
 
-    this.debug();
+    this.powerbar.debug();
 	
     if (this.gamestate === GAMESTATE.MENU) return;
     //if (this.gamestate === GAMESTATE.IDLE) return;
     
     if (this.gamestate === GAMESTATE.STRIKING) {
       this.powerbar.update();
+      return;
     }
 	
     if (this.ball.isMoving()) {
@@ -96,7 +90,7 @@ export default class Game {
     }
     
     //if game is IDLE
-    if (this.gamestate === GAMESTATE.IDLE) {
+    else if (this.gamestate === GAMESTATE.IDLE) {
       //draw the cursor
       this.cursor.draw(ctx);
       //draw powerbar
@@ -106,7 +100,7 @@ export default class Game {
     }
 	
     //if game is in menu
-    if (this.gamestate === GAMESTATE.MENU) {
+    else if (this.gamestate === GAMESTATE.MENU) {
       ctx.rect(0, 0, this.gameWidth, this.gameHeight);
       ctx.fillStyle = "rgba(0,0,0,1)";
       ctx.fill();
