@@ -53,8 +53,8 @@ export default class Ball {
     //draw ball
     ctx.drawImage(
       this.image,
-      this.position.x,
-      this.position.y,
+      this.position.x - this.size / 2,
+      this.position.y - this.size / 2,
       this.size,
       this.size
     );
