@@ -21,7 +21,7 @@ export default class Ball {
   }
 
   isMoving() {
-    return (this.position.z > 1 || this.zvel < -1 || this.zvel > 1 || this.speed > 0.1);
+    return (this.position.z > 1 || this.zvel < -0.5 || this.zvel > 0.5 || this.speed > 0.05);
   }
 
   strike(speed, zvel) {
@@ -47,7 +47,7 @@ export default class Ball {
 	  this.size = DEFAULT_SIZE;
 	}
 	else {
-	  this.size = DEFAULT_SIZE + this.position.z / 10;
+	  this.size = DEFAULT_SIZE + this.position.z / 4;
 	}
 	
 	//draw ball
@@ -63,37 +63,34 @@ export default class Ball {
   update(deltaTime) {
 	  
     if (!this.isMoving()) {
-		this.speed = 0;
-		this.zvel = 0;
-		return;
-	}
+      this.speed = 0;
+      this.zvel = 0;
+      return;
+    }
 
-	const DECAY = 0.1;
-	const ZDECAY = 0.5;
+    const DECAY = 0.1;
+    const ZDECAY = 0.05;
+    const BOUNCE = 6;
 	
-	//update positions
-	this.position.x += this.speed * Math.cos(this.angle);
-	this.position.y += this.speed * Math.sin(this.angle);
+    //update positions
+    this.position.x += this.speed * Math.cos(this.angle);
+    this.position.y += this.speed * Math.sin(this.angle);
     this.position.z += this.zvel;
     
-    
     //update velocities
-    if (this.speed > 1) this.speed -= DECAY;
-	else this.speed = 0;
+    if (this.speed > DECAY) this.speed -= DECAY;
+    else this.speed = 0;
 	
-	if (this.position.z < 0) {
-	  if (this.zvel < 0) {
-	    this.position.z = Math.abs(this.position.z / 2);
-		this.zvel = -this.zvel / 2;
-	  }
-	}
-	else if (this.position.z > 0) {
-	  this.zvel -= ZDECAY;
-	}
-	//if pos < 0 && vel > 0: reset pos to 0 and invert vel
-	//if pos < 0 && vel > 0: let it be
-	//if pos > 0 && vel < 0: ball is falling
-	//if pos > 0 && vel > 0: ball is rising
-
+    if (this.position.z < 0) {
+      if (this.zvel < 0) {
+        this.position.z = -this.position.z / BOUNCE;
+        this.zvel = -this.zvel / BOUNCE;
+        this.speed += this.zvel * BOUNCE;
+      }
+    }
+    else if (this.position.z > 0) {
+      this.zvel -= ZDECAY;
+    }
+    
   }
 }

@@ -75,20 +75,17 @@ export default class Game {
     
     //if game is paused
     if (this.gamestate === GAMESTATE.PAUSED) {
+      //draw the cursor
       this.cursor.draw(ctx);
       
-      /* Grayed-out menu code
-        ctx.fillStyle = "rgba(0,0,0,0.5)";
-      ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
-        //ctx.rect(0, 0, this.gameWidth, this.gameHeight);
-        //ctx.fill();
-
-        ctx.font = "30px Arial";
-        ctx.fillStyle = "white";
-        ctx.textAlign = "center";
-        ctx.fillText(this.ball.angle, this.gameWidth / 2, this.gameHeight / 2);
-      */
-      
+      ctx.font = "small-caps bold 50px monospace";
+      ctx.fillStyle = "black";
+      ctx.textAlign = "left";
+      ctx.fillText(
+        this.bag.getClub().name,
+        15,
+        this.gameHeight - 15
+      );
     }
 	
     //if game is in menu
@@ -97,7 +94,7 @@ export default class Game {
       ctx.fillStyle = "rgba(0,0,0,1)";
       ctx.fill();
 
-      ctx.font = "30px Arial";
+      ctx.font = "small-caps bold 50px monospace";
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
       ctx.fillText(
