@@ -10,34 +10,22 @@ export default class InputHandler {
     document.addEventListener("keydown", event => {
       switch (event.keyCode) {
         case 13:
-          //console.log("ENTER key; calling start()");
-          game.start();
+          game.state.handleEnter();
           break;
         case 32:
-          //console.log("SPACE bar; calling ???");
-          if (game.gamestate === GAMESTATE.IDLE) {
-            game.gamestate = GAMESTATE.STRIKING;
-            game.powerbar.start();
-          }
-          else if (game.gamestate === GAMESTATE.STRIKING) {
-            game.powerbar.handle();
-          }
+          game.state.handleSpace();
           break;
         case 37:
-          //console.log("Left Arrow; calling decAngle()");
-          game.ball.decAngle();
-          break;
-        case 39:
-          //console.log("Right Arrow; calling incAngle()");
-          game.ball.incAngle();
+          game.state.handleLeftArrow();
           break;
         case 38:
-          //console.log("Up Arrow; calling incBag()");
-          game.bag.incBag();
+          game.state.handleUpArrow();
+          break;
+        case 39:
+          game.state.handleRightArrow();
           break;
         case 40:
-          //console.log("Down Arrow; calling decBag()");
-          game.bag.decBag();
+          game.state.handleDownArrow();
           break;
         default:
       }

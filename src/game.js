@@ -5,45 +5,72 @@ import Hole from "./hole.js";
 import PowerBar from "./powerbar.js";
 import InputHandler from "./input.js";
 
-const GAMESTATE = {
-  IDLE: 0,
-  STRIKING: 1,
-  RUNNING: 2,
-  MENU: 3
-};
+import MenuState from "./menuState.js";
+import LoadState from "./loadState.js";
+import IdleState from "./idleState.js";
+import PowerState from "./powerState.js";
+import AccuracyState from "./accuracyState.js";
+import RunningState from "./runningState.js";
+import EvaluateState from "./evaluateState.js";
 
 export default class Game {
   constructor(gameWidth, gameHeight) {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
-    this.gamestate = GAMESTATE.MENU;
     
     this.ball = new Ball();
     this.cursor = new Cursor(this.ball);
     this.powerbar = new PowerBar(this);
-    
     this.bag = new Bag();
-    
     this.hole = new Hole("hole1");
-    //this.gameObjects = [];
 
     new InputHandler(this);
+    
+    this.menuState = new MenuState(this);
+    this.loadState = new LoadState(this);
+    this.idleState = new IdleState(this);
+    this.powerState = new PowerState(this);
+    this.accuracyState = new AccuracyState(this);
+    this.runningState = new RunningState(this);
+    this.evaluateState = new EvaluateState(this);
+    
+    this.setState(this.getMenuState());
   }
-
-  start() {
-    //don't restart the game if we're not in menu or newlevel
-    //TODO take this comment out for no instant reset
-    //if (this.gamestate !== GAMESTATE.MENU) return;
-
-    this.ball.reset();
-    //this.gameObjects = [this.ball, this.cursor];
-
-    this.gamestate = GAMESTATE.IDLE;
+  
+  getMenuState() {
+    return this.menuState;
+  }
+  
+  getLoadState() {
+    return this.loadState;
+  }
+  
+  getIdleState() {
+    return this.idleState;
+  }
+  
+  getPowerState() {
+    return this.powerState;
+  }
+  
+  getAccuracyState() {
+    return this.accuracyState;
+  }
+  
+  getRunningState() {
+    return this.runningState;
+  }
+  
+  getEvaluateState() {
+    return this.evaluateState;
+  }
+  
+  setState(state) {
+    this.state = state;
   }
 
   strike(power, accuracy) {
-    this.gamestate = GAMESTATE.RUNNING;
-    console.log("Striking with: " + power + " power and " + accuracy + " accuracy\n");
+    //console.log("Striking with: " + power + " power and " + accuracy + " accuracy\n");
     this.ball.strike(this.bag.getClub().speed * power, this.bag.getClub().zvel * power);
   }
   
@@ -61,59 +88,11 @@ export default class Game {
   }
   
   update(deltaTime) {
-
-    this.powerbar.debug();
-	
-    if (this.gamestate === GAMESTATE.MENU) return;
-    //if (this.gamestate === GAMESTATE.IDLE) return;
-    
-    if (this.gamestate === GAMESTATE.STRIKING) {
-      this.powerbar.update();
-      return;
-    }
-	
-    if (this.ball.isMoving()) {
-      this.ball.update(deltaTime); //this.gameObjects.forEach(object => object.update(deltaTime));
-    }
-    else {
-      this.gamestate = GAMESTATE.IDLE;
-    }
-
+    this.state.update(deltaTime);
   }
   
   draw(ctx) {
-    this.hole.draw(ctx);
-    this.ball.draw(ctx); //this.gameObjects.forEach(object => object.draw(ctx));
-    
-    if (this.gamestate === GAMESTATE.STRIKING) {
-      this.powerbar.draw(ctx);
-    }
-    
-    //if game is IDLE
-    else if (this.gamestate === GAMESTATE.IDLE) {
-      //draw the cursor
-      this.cursor.draw(ctx);
-      //draw powerbar
-      this.powerbar.draw(ctx);
-      //draw club indicator
-      this.bag.draw(ctx);
-    }
-	
-    //if game is in menu
-    else if (this.gamestate === GAMESTATE.MENU) {
-      ctx.rect(0, 0, this.gameWidth, this.gameHeight);
-      ctx.fillStyle = "rgba(0,0,0,1)";
-      ctx.fill();
-
-      ctx.font = "small-caps bold 50px monospace";
-      ctx.fillStyle = "white";
-      ctx.textAlign = "center";
-      ctx.fillText(
-        "Press ENTER To Start",
-        this.gameWidth / 2,
-        this.gameHeight / 2
-      );
-    }
+    this.state.draw(ctx);
   }
   
 }
