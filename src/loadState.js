@@ -7,7 +7,8 @@ export default class LoadState {
   
   update(deltaTime) {
     //load the hole
-    this.game.hole = new Hole(this.game.holeNum);
+    this.game.hole = new Hole(this.game);
+    this.game.hole.loadHole();
     
     //set ball
     this.game.ball.reset(20, 20, 0);
