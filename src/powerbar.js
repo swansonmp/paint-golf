@@ -41,6 +41,10 @@ export default class PowerBar {
   }
   
   done() {
+    console.log(
+        "Power: " + this.power / 100 + "\n" +
+        "Accuracy: " + this.accuracy / 10
+    );
     //late sends ball left
     this.game.ball.strike(
         this.game.bag.getClub().speed * this.power / 100, 
@@ -75,6 +79,13 @@ export default class PowerBar {
     return BARSTART - this.getBarActiveX();
   }
   
+  getCursorX() {
+    if (this.power > 0)
+      return BARSTART - this.power * (BAR_WIDTH / 110);
+    else
+      return this.getBarActiveX();
+  }
+  
   debug() {
     console.log(
         //"Current: " + this.current + "\n"
@@ -98,7 +109,9 @@ export default class PowerBar {
     ctx.fillRect(this.getBarActiveX(), BAR_Y, this.getBarActiveWidth(), BAR_HEIGHT);
     
     //draw cursor
-    //TODO
+    const CURSOR_WIDTH = 4;
+    ctx.fillStyle = "rgba(255,255,255,1)";
+    ctx.fillRect(this.getCursorX(), BAR_Y, CURSOR_WIDTH, BAR_HEIGHT);
     
     //draw outline
     ctx.strokeStyle = "rgba(0,0,0,1)";
