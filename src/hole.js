@@ -1,8 +1,5 @@
 import Palette from "./palette.js";
 
-const GAME_WIDTH = 800;
-const GAME_HEIGHT = 600;
-
 const PIXELTYPE = {
   TEE: 0,
   HOLE: 1,
@@ -30,7 +27,7 @@ export default class Hole {
   
   draw(ctx) {
     //if (this.loaded)
-      ctx.drawImage(this.image, 0, 0, GAME_WIDTH, GAME_HEIGHT);
+      ctx.drawImage(this.image, 0, 0, this.game.GAME_WIDTH, this.game.GAME_HEIGHT);
   }
   
   update(deltaTime) {

@@ -41,7 +41,11 @@ export default class PowerBar {
   }
   
   done() {
-    this.game.ball.strike(this.game.bag.getClub().speed * this.power / 100, this.game.bag.getClub().zvel * this.power / 100);
+    //late sends ball left
+    this.game.ball.strike(
+        this.game.bag.getClub().speed * this.power / 100, 
+        this.game.bag.getClub().zvel * this.power / 100, 
+        this.accuracy / 10);
     this.reset();
   }
   

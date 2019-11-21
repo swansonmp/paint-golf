@@ -12,28 +12,30 @@ export default class Ball {
 
   reset(xp, yp, zp) {
     this.position = { x: xp, y: yp, z: zp };
+    this.speed = 0;
     this.zvel = 0;
     this.angle = 0;
-    this.speed = 0;
+    this.dangle = 0;
   }
 
   isMoving() {
     return (this.position.z > 1 || this.zvel < -0.5 || this.zvel > 0.5 || this.speed > 0.05);
   }
 
-  strike(speed, zvel) {
+  strike(speed, zvel, dangle) {
     this.speed = speed;
     this.zvel = zvel;
+    this.dangle = dangle;
   }
   
   incAngle() {
-	this.angle += 0.0875;
+	this.angle += 0.075;
     if (this.angle >= Math.PI * 2)
       this.angle -= Math.PI * 2;
   }
   
   decAngle() {
-    this.angle -= 0.0875;
+    this.angle -= 0.075;
     if (this.angle <= 0)
       this.angle += Math.PI * 2;
   }
@@ -68,6 +70,7 @@ export default class Ball {
     const DECAY = 0.1;
     const ZDECAY = 0.05;
     const BOUNCE = 6;
+    const DANGLERATE = 0.025;
 	
     //update positions
     this.position.x += this.speed * Math.cos(this.angle);
@@ -88,6 +91,8 @@ export default class Ball {
     else if (this.position.z > 0) {
       this.zvel -= ZDECAY;
     }
+    
+    this.angle += this.dangle * DANGLERATE;
     
   }
 }
