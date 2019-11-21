@@ -12,8 +12,15 @@ const PIXELTYPE = {
 };
 
 export default class Hole {
-  constructor(name) {
-    this.image = document.getElementById(name);
+  constructor(holeNum) {
+    //this.loaded = false;
+    this.image = document.getElementById("hole");
+    /*
+    this.image.onload = function() {
+      this.loaded = true;
+    };
+    this.image.src = "./assets/holes/hole".concat(holeNum.toString()).concat(".png");
+    */
     
     //this.map = loadHole(image);
   }
@@ -23,7 +30,9 @@ export default class Hole {
   }
   
   draw(ctx) {
-    ctx.drawImage(this.image, 0, 0, GAME_WIDTH, GAME_HEIGHT);
+    //console.log(this.loaded);
+    //if (this.loaded)
+      ctx.drawImage(this.image, 0, 0, GAME_WIDTH, GAME_HEIGHT);
   }
   
   update(deltaTime) {

@@ -39,5 +39,5 @@ export default class IdleState {
   handleRightArrow() {
     this.game.ball.incAngle();
   }
-  
+
 }

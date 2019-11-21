@@ -41,7 +41,7 @@ export default class PowerBar {
   }
   
   done() {
-    this.game.strike(this.power / 100, this.accuracy / 100);
+    this.game.ball.strike(this.game.bag.getClub().speed * this.power / 100, this.game.bag.getClub().zvel * this.power / 100);
     this.reset();
   }
   

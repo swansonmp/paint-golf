@@ -1,4 +1,4 @@
-export default class MenuState {
+export default class EvaluateState {
   constructor(game) {
     this.game = game;
   }

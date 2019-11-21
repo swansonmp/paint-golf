@@ -21,6 +21,7 @@ export default class Game {
     this.cursor = new Cursor(this.ball);
     this.powerbar = new PowerBar(this);
     this.bag = new Bag(this);
+    this.holeNum = 1;
     this.hole;
 
     new InputHandler(this);
@@ -46,11 +47,6 @@ export default class Game {
   
   setState(state) {
     this.state = state;
-  }
-
-  strike(power, accuracy) {
-    //console.log("Striking with: " + power + " power and " + accuracy + " accuracy\n");
-    this.ball.strike(this.bag.getClub().speed * power, this.bag.getClub().zvel * power);
   }
   
   /*
