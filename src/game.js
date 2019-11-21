@@ -13,10 +13,10 @@ import RunningState from "./runningState.js";
 import EvaluateState from "./evaluateState.js";
 
 export default class Game {
-  constructor(GAME_WIDTH, GAME_HEIGHT, CTX) {
+  constructor(GAME_WIDTH, GAME_HEIGHT, loader) {
     this.GAME_WIDTH = GAME_WIDTH;
     this.GAME_HEIGHT = GAME_HEIGHT;
-    this.CTX = CTX;
+    this.loader = loader;
     
     this.ball = new Ball(this);
     this.cursor = new Cursor(this.ball);

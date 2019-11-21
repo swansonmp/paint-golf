@@ -1,3 +1,4 @@
+import Loader from "./loader.js";
 import Game from "./game.js";
 
 let canvas = document.getElementById("gameScreen");
@@ -6,7 +7,8 @@ let ctx = canvas.getContext("2d");
 const GAME_WIDTH = 800;
 const GAME_HEIGHT = 600;
 
-let game = new Game(GAME_WIDTH, GAME_HEIGHT, ctx);
+let loader = new Loader(GAME_WIDTH, GAME_HEIGHT, ctx);
+let game = new Game(GAME_WIDTH, GAME_HEIGHT, loader);
 
 let lastTime = 0;
 

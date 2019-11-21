@@ -26,8 +26,6 @@ export default class Hole {
     };
     this.image.src = "./assets/holes/hole".concat(holeNum.toString()).concat(".png");
     */
-    
-    this.map = this.create2DArray(this.game.GAME_WIDTH);
   }
   
   draw(ctx) {
@@ -38,23 +36,5 @@ export default class Hole {
   update(deltaTime) {
     
   }
-  
-  loadHole(image) {
-    let imgData = this.game.CTX.getImageData(0, 0, this.game.GAME_WIDTH, this.game.GAME_HEIGHT);
-    let i;
-    for (i = 0; i < imgData.data.length; i += 4) {
-      //imgData.data[i] = 255-imgData.data[i];
-      //imgData.data[i + 1] = 255-imgData.data[i + 1];
-      //imgData.data[i + 2] = 255-imgData.data[i + 2];
-      //imgData.data[i + 3] = 255;
-    }
-  }
 
-  create2DArray(rows) {
-    var arr = [];
-    for (var i=0;i<rows;i++) {
-      arr[i] = [];
-    }
-    return arr;
-  }
 }
