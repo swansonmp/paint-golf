@@ -1,7 +1,6 @@
 import Ball from "./ball.js";
 import Cursor from "./cursor.js";
 import Bag from "./bag.js";
-import Hole from "./hole.js";
 import PowerBar from "./powerbar.js";
 import InputHandler from "./input.js";
 
@@ -14,15 +13,15 @@ import RunningState from "./runningState.js";
 import EvaluateState from "./evaluateState.js";
 
 export default class Game {
-  constructor(gameWidth, gameHeight) {
-    this.gameWidth = gameWidth;
-    this.gameHeight = gameHeight;
+  constructor(GAME_WIDTH, GAME_HEIGHT) {
+    this.GAME_WIDTH = GAME_WIDTH;
+    this.GAME_HEIGHT = GAME_HEIGHT;
     
-    this.ball = new Ball();
+    this.ball = new Ball(this);
     this.cursor = new Cursor(this.ball);
     this.powerbar = new PowerBar(this);
-    this.bag = new Bag();
-    this.hole = new Hole("hole1");
+    this.bag = new Bag(this);
+    this.hole;
 
     new InputHandler(this);
     
@@ -37,33 +36,13 @@ export default class Game {
     this.setState(this.getMenuState());
   }
   
-  getMenuState() {
-    return this.menuState;
-  }
-  
-  getLoadState() {
-    return this.loadState;
-  }
-  
-  getIdleState() {
-    return this.idleState;
-  }
-  
-  getPowerState() {
-    return this.powerState;
-  }
-  
-  getAccuracyState() {
-    return this.accuracyState;
-  }
-  
-  getRunningState() {
-    return this.runningState;
-  }
-  
-  getEvaluateState() {
-    return this.evaluateState;
-  }
+  getMenuState() { return this.menuState; }
+  getLoadState() { return this.loadState; }
+  getIdleState() { return this.idleState; }
+  getPowerState() { return this.powerState; }
+  getAccuracyState() { return this.accuracyState; }
+  getRunningState() { return this.runningState; }
+  getEvaluateState() { return this.evaluateState; }
   
   setState(state) {
     this.state = state;

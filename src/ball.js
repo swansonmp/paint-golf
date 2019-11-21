@@ -1,20 +1,17 @@
 const DEFAULT_SIZE = 4;
 
 export default class Ball {
-  constructor() {
-    this.image = document.getElementById("img_ball");
-
-    //this.gameWidth = game.gameWidth;
-    //this.gameHeight = game.gameHeight;
-    //this.game = game;
+  constructor(game) {
+    this.game = game;
     
+    this.image = document.getElementById("img_ball");
     this.size = DEFAULT_SIZE;
 	
     this.reset();
   }
 
-  reset() {
-    this.position = { x: 20, y: 20, z: 0 };
+  reset(xp, yp, zp) {
+    this.position = { x: xp, y: yp, z: zp };
     this.zvel = 0;
     this.angle = 0;
     this.speed = 0;

@@ -1,17 +1,16 @@
 import Club from "./club.js";
 
-const GAME_WIDTH = 800;
-const GAME_HEIGHT = 600;
-
 export default class Bag {
-  constructor() {
+  constructor(game) {
+    this.game = game;
+    
     this.bag = [
         new Club("LW", 2, 1.825),
         new Club("PW", 3, 1.75),
         new Club("5I", 5, 1.625),
         new Club("1W", 6.825, 1.5) 
     ];
-    this.cur = this.bag.length - 1;;
+    this.cur = this.bag.length - 1;
   }
   
   incBag() {
@@ -36,10 +35,10 @@ export default class Bag {
     ctx.font = "small-caps bold 50px monospace";
     ctx.strokeStyle = "black";
     ctx.lineWidth = 5;
-    ctx.strokeText(this.getClub().name, PADDING, GAME_HEIGHT - PADDING);
+    ctx.strokeText(this.getClub().name, PADDING, this.game.GAME_HEIGHT - PADDING);
     ctx.fillStyle = "white";
     ctx.textAlign = "left";
-    ctx.fillText(this.getClub().name, PADDING, GAME_HEIGHT - PADDING);
+    ctx.fillText(this.getClub().name, PADDING, this.game.GAME_HEIGHT - PADDING);
       
     
     

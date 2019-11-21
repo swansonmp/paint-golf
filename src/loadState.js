@@ -1,3 +1,5 @@
+import Hole from "./hole.js";
+
 export default class LoadState {
   constructor(game) {
     this.game = game;
@@ -5,9 +7,10 @@ export default class LoadState {
   
   update(deltaTime) {
     //load the hole
+    this.game.hole = new Hole("hole1");
     
     //set ball
-    this.game.ball.reset();
+    this.game.ball.reset(20, 20, 0);
     
     //go to idle state
     this.game.setState(this.game.getIdleState());
@@ -18,7 +21,7 @@ export default class LoadState {
   }
   
   drawLoadScreen(ctx) {
-    ctx.rect(0, 0, this.game.gameWidth, this.game.gameHeight);
+    ctx.rect(0, 0, this.game.GAME_WIDTH, this.game.GAME_HEIGHT);
     ctx.fillStyle = "rgba(0,0,0,1)";
     ctx.fill();
 
@@ -27,8 +30,8 @@ export default class LoadState {
     ctx.textAlign = "center";
     ctx.fillText(
       "Loading...",
-      this.game.gameWidth / 2,
-      this.game.gameHeight / 2
+      this.game.GAME_WIDTH / 2,
+      this.game.GAME_HEIGHT / 2
     );
   }
   

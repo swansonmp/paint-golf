@@ -12,7 +12,7 @@ export default class MenuState {
   }
   
   drawMenu(ctx) {
-    ctx.rect(0, 0, this.game.gameWidth, this.game.gameHeight);
+    ctx.rect(0, 0, this.game.GAME_WIDTH, this.game.GAME_HEIGHT);
     ctx.fillStyle = "rgba(0,0,0,1)";
     ctx.fill();
 
@@ -21,13 +21,13 @@ export default class MenuState {
     ctx.textAlign = "center";
     ctx.fillText(
       "Press ENTER To Start",
-      this.game.gameWidth / 2,
-      this.game.gameHeight / 2
+      this.game.GAME_WIDTH / 2,
+      this.game.GAME_HEIGHT / 2
     );
   }
   
   handleEnter() { 
-    this.game.setState(this.game.getIdleState());
+    this.game.setState(this.game.getLoadState());
   }
   
   handleSpace() { }

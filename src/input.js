@@ -1,10 +1,3 @@
-const GAMESTATE = {
-  IDLE: 0,
-  STRIKING: 1,
-  RUNNING: 2,
-  MENU: 3
-};
-
 export default class InputHandler {
   constructor(game) {
     document.addEventListener("keydown", event => {
