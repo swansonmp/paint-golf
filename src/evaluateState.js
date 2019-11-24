@@ -4,8 +4,14 @@ export default class EvaluateState {
   }
   
   update(deltaTime) {
-    //go to idle state
-    this.game.setState(this.game.getIdleState());
+    if (this.game.ball.inHole()) {
+      this.game.holeNum++;
+      this.game.setState(this.game.getLoadState());
+    }
+    else {
+      this.game.strokes++;
+      this.game.setState(this.game.getIdleState());
+    }
   }
   
   draw(ctx) {

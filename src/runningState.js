@@ -8,7 +8,7 @@ export default class RunningState {
       this.game.ball.update(deltaTime);
     }
     else {
-      this.game.setState(this.game.getIdleState());
+      this.game.setState(this.game.getEvaluateState());
     }
   }
   

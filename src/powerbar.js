@@ -48,7 +48,7 @@ export default class PowerBar {
     //late sends ball left
     this.game.ball.strike(
         this.game.bag.getClub().speed * this.power / 100, 
-        this.game.bag.getClub().zvel * this.power / 100, 
+        this.game.bag.getClub().zvel, 
         this.accuracy / 10);
     this.reset();
   }
@@ -62,9 +62,11 @@ export default class PowerBar {
       this.barstate = BARSTATE.WAITING_ACCURACY;
     }
     else if (this.barstate === BARSTATE.WAITING_ACCURACY) {
-      this.accuracy = this.current;
-      this.barstate = BARSTATE.DONE;
-      this.done();
+      //if (this.current <= 10) {
+        this.accuracy = this.current;
+        this.barstate = BARSTATE.DONE;
+        this.done();
+      //}
     }
     else {  //done
       this.done();

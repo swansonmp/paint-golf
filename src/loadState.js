@@ -3,6 +3,7 @@ import Hole from "./hole.js";
 export default class LoadState {
   constructor(game) {
     this.game = game;
+    this.tee = { x: -1, y: -1 };
   }
   
   update(deltaTime) {
@@ -11,14 +12,15 @@ export default class LoadState {
     this.game.loader.loadHole(this.game.hole);
     
     //set ball
-    this.game.ball.reset(20, 20, 0);
+    this.game.ball.reset(this.game.hole.tee.x, this.game.hole.tee.y, 0);
     
     //go to idle state
     this.game.setState(this.game.getIdleState());
   }
   
   draw(ctx) {
-    this.drawLoadScreen(ctx);
+    this.game.hole.draw(ctx);
+    //this.drawLoadScreen(ctx);
   }
   
   drawLoadScreen(ctx) {

@@ -2,6 +2,7 @@ import Ball from "./ball.js";
 import Cursor from "./cursor.js";
 import Bag from "./bag.js";
 import PowerBar from "./powerbar.js";
+import Status from "./status.js";
 import InputHandler from "./input.js";
 
 import MenuState from "./menuState.js";
@@ -22,6 +23,8 @@ export default class Game {
     this.cursor = new Cursor(this.ball);
     this.powerbar = new PowerBar(this);
     this.bag = new Bag(this);
+    this.status = new Status(this);
+    this.strokes = 0;
     this.holeNum = 1;
     this.hole;
 

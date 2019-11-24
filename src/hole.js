@@ -1,20 +1,10 @@
 import Palette from "./palette.js";
 
-const PIXELTYPE = {
-  TEE: 0,
-  HOLE: 1,
-  GREEN: 2,
-  FAIRWAY: 3,
-  ROUGH: 4,
-  BUNKER: 5,
-  WATER: 6
-};
-
 export default class Hole {
   constructor(game) {
     this.game = game;
     //this.loaded = false;
-    this.image = document.getElementById("hole");
+    this.image = document.getElementById("hole" + this.game.holeNum);
     
     this.palette = new Palette();
     /*
@@ -23,6 +13,9 @@ export default class Hole {
     };
     this.image.src = "./assets/holes/hole".concat(holeNum.toString()).concat(".png");
     */
+    
+    this.tee = { x: -1, y: -1 };
+    this.map;
   }
   
   draw(ctx) {

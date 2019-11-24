@@ -15,6 +15,7 @@ export default class IdleState {
     this.game.bag.draw(ctx);
     
     this.game.powerbar.draw(ctx);
+    this.game.status.draw(ctx);
   }
   
   handleEnter() { }
