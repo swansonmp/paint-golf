@@ -4,13 +4,22 @@ export default class EvaluateState {
   }
   
   update(deltaTime) {
-    if (this.game.ball.inHole()) {
-      this.game.holeNum++;
-      this.game.setState(this.game.getLoadState());
+    if (this.game.ball.inHole()) {                  //if the ball is in the hole
+      this.game.holeNum++;                          //increment hole
+      this.game.setState(this.game.getLoadState()); //load next hole
     }
     else {
-      this.game.strokes++;
-      this.game.setState(this.game.getIdleState());
+      if (this.game.ball.inWater()) {               //if the ball is in the water
+        this.game.strokes++;                        //add penalty stroke
+        this.game.ball.reset(
+            this.game.ball.lastPosition.x, 
+            this.game.ball.lastPosition.y, 
+            this.game.ball.lastPosition.z
+        );
+      }
+      this.game.strokes++;                          //add stroke
+      this.game.ball.setLastPosition();
+      this.game.setState(this.game.getIdleState()); //go to idle state
     }
   }
   

@@ -32,10 +32,15 @@ export default class Ball {
 
   reset(xp, yp, zp) {
     this.position = { x: xp, y: yp, z: zp };
+    this.lastPosition = { x: xp, y: yp, z: zp };
     this.speed = 0;
     this.zvel = 0;
     this.angle = 0;
     this.dangle = 0;
+  }
+  
+  setLastPosition(xp, yp, zp) {
+    this.lastPosition = this.position;
   }
 
   isMoving() {
@@ -139,5 +144,9 @@ export default class Ball {
   
   inHole() {
     return this.game.hole.map[Math.floor(this.position.x)][Math.floor(this.position.y)] == PIXEL_TYPE.HOLE;
+  }
+  
+  inWater() {
+    return this.game.hole.map[Math.floor(this.position.x)][Math.floor(this.position.y)] == PIXEL_TYPE.WATER;
   }
 }

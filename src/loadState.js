@@ -1,5 +1,6 @@
 import Hole from "./hole.js";
 
+
 export default class LoadState {
   constructor(game) {
     this.game = game;
