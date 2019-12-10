@@ -5,6 +5,11 @@ export default class AccuracyState {
   
   update(deltaTime) {
     this.game.powerbar.update(deltaTime);
+    //go to striking if current is -10
+    if (this.game.powerbar.getCurrent() <= -10) {
+      this.game.setState(this.game.getStrikingState());
+      return;
+    }
   }
   
   draw(ctx) {
@@ -17,8 +22,11 @@ export default class AccuracyState {
   handleEnter() { }
   
   handleSpace() {
-    this.game.powerbar.setAccuracy();
-    this.game.setState(this.game.getStrikingState());
+    //only set accuracy is current is valid
+    if (this.game.powerbar.getCurrent() <= 10) {
+      this.game.powerbar.setAccuracy();
+      this.game.setState(this.game.getStrikingState());
+    }
   }
   
   handleUpArrow() { }

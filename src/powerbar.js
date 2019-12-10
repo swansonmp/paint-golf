@@ -26,28 +26,14 @@ export default class PowerBar {
     this.accuracy = 0;
   }
   
-  setPower() {
-    this.power = this.current;
-  }
-  
-  setAccuracy() {
-    this.accuracy = this.current;
-  }
-  
-  getCurrent() {
-    return this.current;
-  }
-  
-  getPower() {
-    return this.power / 100;
-  }
-  
-  getAccuracy() {
-    return this.accuracy / 10;
-  }
+  setPower() { this.power = this.current; }
+  setAccuracy() { this.accuracy = this.current; }
+  getCurrent() { return this.current; }
+  getPower() { return this.power / 100; }
+  getAccuracy() { return this.accuracy / 10; }
   
   update(deltaTime) {
-    const RATE = 8;
+    const RATE = 10;
     deltaTime /= RATE;
     
     if (this.dir === DIR.INCREASING) {
