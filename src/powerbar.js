@@ -47,8 +47,8 @@ export default class PowerBar {
     );
     //late sends ball left
     this.game.ball.strike(
-        this.game.bag.getClub().speed * this.power / 100, 
-        this.game.bag.getClub().zvel, 
+        this.game.bag.getClub().horizontal * this.power / 100, 
+        this.game.bag.getClub().vertical, 
         this.accuracy / 10);
     this.reset();
   }

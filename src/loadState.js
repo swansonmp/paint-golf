@@ -8,6 +8,8 @@ export default class LoadState {
   }
   
   update(deltaTime) {
+    this.game.stroke = 0;
+    
     //load the hole
     this.game.hole = new Hole(this.game);
     this.game.loader.loadHole(this.game.hole);

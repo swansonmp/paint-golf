@@ -1,7 +1,7 @@
 export default class Club {
-  constructor(name, speed, zvel) {
+  constructor(name, horizontal, vertical) {
     this.name = name;
-    this.speed = speed;
-    this.zvel = zvel;
+    this.horizontal = horizontal;
+    this.vertical = vertical;
   }
 }

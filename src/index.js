@@ -4,8 +4,11 @@ import Game from "./game.js";
 let canvas = document.getElementById("gameScreen");
 let ctx = canvas.getContext("2d");
 
-const GAME_WIDTH = 800;
-const GAME_HEIGHT = 600;
+canvas.width = 800; //document.body.clientWidth;
+canvas.height = 600; //document.body.clientHeight;
+
+const GAME_WIDTH = canvas.width;
+const GAME_HEIGHT = canvas.height;
 
 let loader = new Loader(GAME_WIDTH, GAME_HEIGHT, ctx);
 let game = new Game(GAME_WIDTH, GAME_HEIGHT, loader);

@@ -26,6 +26,14 @@ export default class Ball {
     
     this.image = document.getElementById("img_ball");
     this.size = DEFAULT_SIZE;
+    this.mass = 0.25;
+    this.gravity = -9.8;
+    this.friction = 0.95;
+    this.radius = 0.0625;
+    this.c = 0.5;
+    this.rho = 1.2;
+    this.A = Math.PI * Math.pow(this.radius, 2)
+    this.cRhoA = this.c * this.rho * this.A;
 	
     this.reset();
   }
@@ -33,37 +41,45 @@ export default class Ball {
   reset(xp, yp, zp) {
     this.position = { x: xp, y: yp, z: zp };
     this.lastPosition = { x: xp, y: yp, z: zp };
-    this.speed = 0;
-    this.zvel = 0;
+    this.velocity = { x: 0, y: 0, z: 0 };
+    this.fnet = { x: 0, y: (this.gravity * this.mass), z: 0 };
+    
     this.angle = 0;
     this.dangle = 0;
   }
   
-  setLastPosition(xp, yp, zp) {
+  setLastPosition() {
     this.lastPosition = this.position;
   }
 
   isMoving() {
-    return (this.position.z > 1 || this.zvel < -0.5 || this.zvel > 0.5 || this.speed > 0.05);
+    return (Math.abs(this.position.z) > 0.05 || Math.abs(this.velocity.x) > 0.05 || Math.abs(this.velocity.y) > 0.05 || Math.abs(this.velocity.z) > 0.05);
   }
 
-  strike(speed, zvel, dangle) {
-    this.speed = speed * this.getLieRate();
-    this.zvel = zvel;
-    this.dangle = dangle;
+  strike(horizontal, vertical, dangle) {
+    this.velocity.x = Math.cos(this.angle) * horizontal * this.getLieRate() * this.mass;
+    this.velocity.y = Math.sin(this.angle) * horizontal * this.getLieRate() * this.mass;
+    this.velocity.z = vertical * this.getLieRate();
+    
+    this.dangle = dangle; //TODO
   }
   
   incAngle() {
-	this.angle += 0.075;
+	this.angle += 0.05;
     if (this.angle >= Math.PI * 2)
       this.angle -= Math.PI * 2;
   }
   
   decAngle() {
-    this.angle -= 0.075;
+    this.angle -= 0.05;
     if (this.angle <= 0)
       this.angle += Math.PI * 2;
   }
+  
+  /*
+   *  x = r * cos(a)  //r=1 for a unit circle
+   *  y = r * sin(a)
+   */
 
   draw(ctx) {
     //calculate size
@@ -86,40 +102,55 @@ export default class Ball {
   
   update(deltaTime) {
     if (!this.isMoving()) {
-      this.speed = 0;
-      this.zvel = 0;
+      this.velocity.x = 0;
+      this.velocity.y = 0;
+      this.velocity.z = 0;
       return;
     }
-
-    const DECAY = 0.1;
-    const ZDECAY = 0.05;
-    const BOUNCE = 6;
-    const DANGLERATE = 0.025;
-	
+    
+    const RATE = 150;
+    deltaTime /= RATE;
+    
     //update positions
-    this.position.x += this.speed * Math.cos(this.angle);
-    this.position.y += this.speed * Math.sin(this.angle);
-    this.position.z += this.zvel;
+    this.position.x += this.velocity.x / this.mass * deltaTime;
+    this.position.y += this.velocity.y / this.mass * deltaTime;
+    this.position.z += this.velocity.z / this.mass * deltaTime;
     
-    //update speed
-    if (this.speed > DECAY) this.speed -= DECAY;
-    else this.speed = 0;
-	
-    //update zvel while calculating bounce
-    if (this.position.z < 0) {
-      let lieRate = this.getLieRate();
-      if (this.zvel < 0) {
-        this.position.z = -this.position.z / BOUNCE * lieRate;
-        this.zvel = -this.zvel / BOUNCE * lieRate;
-        this.speed += this.zvel * BOUNCE * lieRate;
-      }
-    }
-    else if (this.position.z > 0) {
-      this.zvel -= ZDECAY;
+    this.velocity.x += this.fnet.x * deltaTime;
+    this.velocity.y += this.fnet.y * deltaTime;
+    this.velocity.z += this.fnet.z * deltaTime;
+    
+    //calculate bounce
+    if (this.position.z <= 0) {
+      this.velocity.z = this.velocity.z * this.getLieRate() * -0.7;
     }
     
-    //update angle
-    this.angle += this.dangle * DANGLERATE;
+    //calculate friction
+    if (this.position.z < 1 && Math.abs(this.velocity.z) < 1) {
+      this.position.z = 0;
+      this.velocity.z = 0;
+      this.velocity.x *= this.friction;
+      this.velocity.y *= this.friction;
+    }
+    
+    //calculate wind resistance
+    let magveldivmass = Math.sqrt(
+        Math.pow(this.velocity.x / this.mass, 2) + 
+        Math.pow(this.velocity.y / this.mass, 2) + 
+        Math.pow(this.velocity.z / this.mass, 2)
+    );
+    
+    let magvel = Math.sqrt(
+        Math.pow(this.velocity.x, 2) + 
+        Math.pow(this.velocity.y, 2) + 
+        Math.pow(this.velocity.z, 2)
+    );
+    
+    this.fnet.x = ( -0.5 * this.cRhoA * Math.pow(magveldivmass, 2) * this.velocity.x / magvel );
+    this.fnet.y = ( -0.5 * this.cRhoA * Math.pow(magveldivmass, 2) * this.velocity.y / magvel );
+    this.fnet.z = ( this.gravity * this.mass - 0.5 * this.cRhoA * Math.pow(magveldivmass, 2) * this.velocity.z / magvel );
+    
+    this.debug();
   }
   
   getLieRate() {
@@ -148,5 +179,11 @@ export default class Ball {
   
   inWater() {
     return this.game.hole.map[Math.floor(this.position.x)][Math.floor(this.position.y)] == PIXEL_TYPE.WATER;
+  }
+  
+  debug() {
+    console.log(
+        this.position.x + " " + this.position.y + " " + this.position.z + "\n"
+        ); 
   }
 }
