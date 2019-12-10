@@ -48,7 +48,7 @@ export default class Ball {
     this.spin = 0; //TODO TEMP
     
     this.angle = 0;
-    this.dangle = 0;
+    this.dtheta = 0;
   }
   
   setLastPosition() {
@@ -59,14 +59,15 @@ export default class Ball {
     return (Math.abs(this.position.z) > 0.05 || Math.abs(this.velocity.x) > 0.05 || Math.abs(this.velocity.y) > 0.05 || Math.abs(this.velocity.z) > 0.05);
   }
 
-  strike(horizontal, vertical, dangle) {
+  strike(horizontal, vertical, dtheta) {
     this.velocity.x = Math.cos(this.angle) * horizontal * this.getLieRate() * this.mass;
     this.velocity.y = Math.sin(this.angle) * horizontal * this.getLieRate() * this.mass;
     this.velocity.z = vertical * this.getLieRate();
     
     this.spin; //TODO TEMP
     
-    this.dangle = dangle; //TODO
+    const INACCURACY = 0.015625;
+    this.dtheta = dtheta * INACCURACY;
   }
   
   incAngle() {
@@ -80,11 +81,6 @@ export default class Ball {
     if (this.angle <= 0)
       this.angle += Math.PI * 2;
   }
-  
-  /*
-   *  x = r * cos(a)  //r=1 for a unit circle
-   *  y = r * sin(a)
-   */
 
   draw(ctx) {
     //calculate size
@@ -115,7 +111,7 @@ export default class Ball {
     
     this.debug(); //TODO
     
-    const RATE = 150;
+    const RATE = 200;
     deltaTime /= RATE;
     
     //update positions
@@ -123,6 +119,12 @@ export default class Ball {
     this.position.y += this.velocity.y / this.mass * deltaTime;
     this.position.z += this.velocity.z / this.mass * deltaTime;
     
+    //apply inaccuracy using rotation matrix
+    let xv = this.velocity.x; //the unmodified xvel
+    this.velocity.x = this.velocity.x * Math.cos(this.dtheta) - this.velocity.y * Math.sin(this.dtheta);
+    this.velocity.y = xv * Math.sin(this.dtheta) + this.velocity.y * Math.cos(this.dtheta);
+    
+    //update velocities
     this.velocity.x += this.fnet.x * deltaTime;
     this.velocity.y += this.fnet.y * deltaTime;
     this.velocity.z += this.fnet.z * deltaTime;
@@ -190,6 +192,6 @@ export default class Ball {
   debug() {
     console.log(
         this.position.x + "," + this.position.y + "," + this.position.z
-        ); 
+    ); 
   }
 }

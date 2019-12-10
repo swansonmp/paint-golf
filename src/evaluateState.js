@@ -7,6 +7,7 @@ export default class EvaluateState {
     if (this.game.ball.inHole()) {                  //if the ball is in the hole
       this.game.holeNum++;                          //increment hole
       this.game.setState(this.game.getLoadState()); //load next hole
+      this.game.strokes = 0;
     }
     else {
       if (this.game.ball.inWater()) {               //if the ball is in the water

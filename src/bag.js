@@ -5,7 +5,12 @@ export default class Bag {
     this.game = game;
     
     this.bag = [
-        new Club("1W", 35, 10) 
+        new Club("P", 50, 0),
+        new Club("LW", 30, 10),
+        new Club("SW", 48, 10.125),
+        new Club("9I", 80, 11),
+        new Club("5I", 140, 12),
+        new Club("1W", 300, 17.5)
     ];
     this.cur = this.bag.length - 1;
   }

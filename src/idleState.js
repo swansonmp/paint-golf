@@ -18,7 +18,12 @@ export default class IdleState {
     this.game.status.draw(ctx);
   }
   
-  handleEnter() { }
+  //TODO debug command
+  handleEnter() {
+    this.game.ball.reset(0, 0, 0);
+    this.game.ball.strike(this.game.bag.getClub().horizontal, this.game.bag.getClub().vertical, 0);
+    this.game.setState(this.game.getRunningState());  //go to running state
+  }
   
   handleSpace() {
     this.game.powerbar.reset();

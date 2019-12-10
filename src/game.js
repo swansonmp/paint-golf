@@ -61,7 +61,7 @@ export default class Game {
    *  Outputs relevant debug information to the console.
    */
   debug() {
-    console.log("Gamestate: " + this.gamestate + "\n"
+    console.log("Gamestate: " + this.state + "\n"
         + "Position: x:" + this.ball.position.x + ", y:" + this.ball.position.y + ", z:" + this.ball.position.z + "\n"
         + "Speed: " + this.ball.speed + "\n"
         + "Angle: " + this.ball.angle + "\n"
