@@ -1,14 +1,3 @@
-const GAME_WIDTH = 800;
-const GAME_HEIGHT = 600;
-
-const BAR_X = GAME_WIDTH / 4;
-const BAR_Y = GAME_HEIGHT - 50;
-const BAR_WIDTH = GAME_WIDTH / 2;
-const BAR_HEIGHT = GAME_HEIGHT / 20;
-const PADDING = BAR_HEIGHT / 20;
-
-const BARSTART = BAR_X + BAR_WIDTH - BAR_WIDTH / 11;
-
 const DIR = {
   DECREASING: -1,
   IDLE: 0,
@@ -19,6 +8,15 @@ export default class PowerBar {
   constructor(game) {
     this.game = game;
     this.reset();
+    
+    //fields for drawing
+    this.BAR_X = this.game.GAME_WIDTH / 4;
+    this.BAR_Y = this.game.GAME_HEIGHT - 50;
+    this.BAR_WIDTH = this.game.GAME_WIDTH / 2;
+    this.BAR_HEIGHT = this.game.GAME_HEIGHT / 20;
+    this.PADDING = this.BAR_HEIGHT / 20;
+    this.BARSTART = this.BAR_X + this.BAR_WIDTH - this.BAR_WIDTH / 11;
+    this.CURSOR_WIDTH = 4;
   }
   
   reset() {
@@ -71,34 +69,33 @@ export default class PowerBar {
   draw(ctx) {
     //draw center
     ctx.fillStyle = "rgba(128,82,0,1)";
-    ctx.fillRect(BAR_X, BAR_Y, BAR_WIDTH, BAR_HEIGHT);
+    ctx.fillRect(this.BAR_X, this.BAR_Y, this.BAR_WIDTH, this.BAR_HEIGHT);
     
     //draw active
     ctx.fillStyle = "rgba(255,165,0,1)";
-    ctx.fillRect(this.getBarActiveX(), BAR_Y, this.getBarActiveWidth(), BAR_HEIGHT);
+    ctx.fillRect(this.getBarActiveX(), this.BAR_Y, this.getBarActiveWidth(), this.BAR_HEIGHT);
     
     //draw cursor
-    const CURSOR_WIDTH = 4;
     ctx.fillStyle = "rgba(255,255,255,1)";
-    ctx.fillRect(this.getCursorX(), BAR_Y, CURSOR_WIDTH, BAR_HEIGHT);
+    ctx.fillRect(this.getCursorX(), this.BAR_Y, this.CURSOR_WIDTH, this.BAR_HEIGHT);
     
     //draw outline
     ctx.strokeStyle = "rgba(0,0,0,1)";
-    ctx.lineWidth = PADDING;
-    ctx.strokeRect(BAR_X, BAR_Y, BAR_WIDTH, BAR_HEIGHT);
+    ctx.lineWidth = this.PADDING;
+    ctx.strokeRect(this.BAR_X, this.BAR_Y, this.BAR_WIDTH, this.BAR_HEIGHT);
   }
   
   getBarActiveX() {
-    return BARSTART - this.current * (BAR_WIDTH / 110);
+    return this.BARSTART - this.current * (this.BAR_WIDTH / 110);
   }
   
   getBarActiveWidth() {   
-    return BARSTART - this.getBarActiveX();
+    return this.BARSTART - this.getBarActiveX();
   }
   
   getCursorX() {
     if (this.power > 0)
-      return BARSTART - this.power * (BAR_WIDTH / 110);
+      return this.BARSTART - this.power * (this.BAR_WIDTH / 110);
     else
       return this.getBarActiveX();
   }
