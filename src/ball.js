@@ -11,13 +11,13 @@ const PIXEL_TYPE = {
 };
   
 const PIXEL_RATE = {
-  TEE: 1.05,
+  TEE: 1,
   HOLE: 0,
-  GREEN: 1,
+  GREEN: 0.99,
   FAIRWAY: 0.98,
   ROUGH: 0.8,
   BUNKER: 0.6,
-  WATER: 0
+  WATER: 0.1
 };
 
 export default class Ball {
@@ -28,7 +28,8 @@ export default class Ball {
     this.size = DEFAULT_SIZE;
     this.mass = 0.25;
     this.gravity = -9.8;
-    this.friction = 0.95;
+    this.friction = 0.90;
+    this.bounce = -0.5;
     this.radius = 0.0625;
     this.c = 0.5;
     this.rho = 1.2;
@@ -108,6 +109,8 @@ export default class Ball {
       return;
     }
     
+    this.debug(); //TODO
+    
     const RATE = 150;
     deltaTime /= RATE;
     
@@ -121,16 +124,17 @@ export default class Ball {
     this.velocity.z += this.fnet.z * deltaTime;
     
     //calculate bounce
-    if (this.position.z <= 0) {
-      this.velocity.z = this.velocity.z * this.getLieRate() * -0.7;
+    if (this.position.z < 0) {
+      this.position.z = 0;
+      this.velocity.z *= this.getLieRate() * this.bounce;
     }
     
     //calculate friction
-    if (this.position.z < 1 && Math.abs(this.velocity.z) < 1) {
+    if (this.position.z < 0.325 && Math.abs(this.velocity.z) < 0.325) {
       this.position.z = 0;
       this.velocity.z = 0;
-      this.velocity.x *= this.friction;
-      this.velocity.y *= this.friction;
+      this.velocity.x *= this.friction * this.getLieRate();
+      this.velocity.y *= this.friction * this.getLieRate();
     }
     
     //calculate wind resistance
@@ -149,8 +153,6 @@ export default class Ball {
     this.fnet.x = ( -0.5 * this.cRhoA * Math.pow(magveldivmass, 2) * this.velocity.x / magvel );
     this.fnet.y = ( -0.5 * this.cRhoA * Math.pow(magveldivmass, 2) * this.velocity.y / magvel );
     this.fnet.z = ( this.gravity * this.mass - 0.5 * this.cRhoA * Math.pow(magveldivmass, 2) * this.velocity.z / magvel );
-    
-    this.debug();
   }
   
   getLieRate() {
@@ -183,7 +185,7 @@ export default class Ball {
   
   debug() {
     console.log(
-        this.position.x + " " + this.position.y + " " + this.position.z + "\n"
+        this.position.x + "," + this.position.y + "," + this.position.z
         ); 
   }
 }
