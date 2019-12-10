@@ -10,6 +10,7 @@ import LoadState from "./loadState.js";
 import IdleState from "./idleState.js";
 import PowerState from "./powerState.js";
 import AccuracyState from "./accuracyState.js";
+import StrikingState from "./strikingState.js";
 import RunningState from "./runningState.js";
 import EvaluateState from "./evaluateState.js";
 
@@ -24,6 +25,7 @@ export default class Game {
     this.powerbar = new PowerBar(this);
     this.bag = new Bag(this);
     this.status = new Status(this);
+    
     this.strokes = 0;
     this.holeNum = 1;
     this.hole;
@@ -35,6 +37,7 @@ export default class Game {
     this.idleState = new IdleState(this);
     this.powerState = new PowerState(this);
     this.accuracyState = new AccuracyState(this);
+    this.strikingState = new StrikingState(this);
     this.runningState = new RunningState(this);
     this.evaluateState = new EvaluateState(this);
     
@@ -46,6 +49,7 @@ export default class Game {
   getIdleState() { return this.idleState; }
   getPowerState() { return this.powerState; }
   getAccuracyState() { return this.accuracyState; }
+  getStrikingState() { return this.strikingState; }
   getRunningState() { return this.runningState; }
   getEvaluateState() { return this.evaluateState; }
   

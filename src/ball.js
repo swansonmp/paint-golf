@@ -45,6 +45,8 @@ export default class Ball {
     this.velocity = { x: 0, y: 0, z: 0 };
     this.fnet = { x: 0, y: (this.gravity * this.mass), z: 0 };
     
+    this.spin = 0; //TODO TEMP
+    
     this.angle = 0;
     this.dangle = 0;
   }
@@ -61,6 +63,8 @@ export default class Ball {
     this.velocity.x = Math.cos(this.angle) * horizontal * this.getLieRate() * this.mass;
     this.velocity.y = Math.sin(this.angle) * horizontal * this.getLieRate() * this.mass;
     this.velocity.z = vertical * this.getLieRate();
+    
+    this.spin; //TODO TEMP
     
     this.dangle = dangle; //TODO
   }

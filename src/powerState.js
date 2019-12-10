@@ -4,6 +4,12 @@ export default class PowerState {
   }
   
   update(deltaTime) {
+    //if current is -10, go to idle
+    if (this.game.powerbar.getCurrent() <= -10) {
+      this.game.setState(this.game.getIdleState());
+      return;
+    }
+    //else update powerbar
     this.game.powerbar.update(deltaTime);
   }
   
@@ -17,8 +23,7 @@ export default class PowerState {
   handleEnter() { }
   
   handleSpace() {
-    this.game.powerbar.handle();
-    
+    this.game.powerbar.setPower();
     this.game.setState(this.game.getAccuracyState());
   }
   

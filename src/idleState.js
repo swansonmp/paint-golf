@@ -21,7 +21,7 @@ export default class IdleState {
   handleEnter() { }
   
   handleSpace() {
-    this.game.powerbar.start();
+    this.game.powerbar.reset();
     this.game.setState(this.game.getPowerState());
   }
   

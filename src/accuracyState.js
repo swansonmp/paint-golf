@@ -17,9 +17,8 @@ export default class AccuracyState {
   handleEnter() { }
   
   handleSpace() {
-    this.game.powerbar.handle();
-    
-    this.game.setState(this.game.getRunningState());
+    this.game.powerbar.setAccuracy();
+    this.game.setState(this.game.getStrikingState());
   }
   
   handleUpArrow() { }
