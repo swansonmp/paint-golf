@@ -37,9 +37,9 @@ export default class Bag {
     ctx.font = "small-caps bold 50px monospace";
     ctx.strokeStyle = "black";
     ctx.lineWidth = 5;
+    ctx.textAlign = "left";
     ctx.strokeText(this.getClub().name, PADDING, this.game.GAME_HEIGHT - PADDING);
     ctx.fillStyle = "white";
-    ctx.textAlign = "left";
     ctx.fillText(this.getClub().name, PADDING, this.game.GAME_HEIGHT - PADDING);
     
   }

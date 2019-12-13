@@ -202,6 +202,10 @@ export default class Ball {
     }
   }
   
+  getPixelType() {
+    return this.game.hole.map[Math.floor(this.position.x)][Math.floor(this.position.y)];
+  }
+  
   inHole() {
     return this.game.hole.map[Math.floor(this.position.x)][Math.floor(this.position.y)] == PIXEL_TYPE.HOLE;
   }
