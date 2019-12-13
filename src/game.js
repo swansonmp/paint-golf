@@ -23,7 +23,7 @@ export default class Game {
     this.loader = loader;
     
     this.ball = new Ball(this);
-    this.cursor = new Cursor(this.ball);
+    this.cursor = new Cursor(this);
     this.powerbar = new PowerBar(this);
     this.bag = new Bag(this);
     this.status = new Status(this);

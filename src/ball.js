@@ -20,14 +20,14 @@ const PIXEL_RATE = {
   WATER: 0.1
 };
 
-const SCALE = 2;
+const ANGLE_INCREMENT = 0.03125;
 
 export default class Ball {
   constructor(game) {
     this.game = game;
     
     this.image = document.getElementById("img_ball");
-    this.size = DEFAULT_SIZE;
+    this.scale = 2;
     this.mass = 0.25;
     this.gravity = -9.8;
     this.friction = 0.90;
@@ -61,7 +61,7 @@ export default class Ball {
     return (Math.abs(this.position.z) > 0.05 || Math.abs(this.velocity.x) > 0.05 || Math.abs(this.velocity.y) > 0.05 || Math.abs(this.velocity.z) > 0.05);
   }
 
-  strike(horizontal, vertical, dtheta) {
+  strike(horizontal, vertical, dtheta) {    
     this.velocity.x = Math.cos(this.angle) * horizontal * this.getLieRate() * this.mass;
     this.velocity.y = Math.sin(this.angle) * horizontal * this.getLieRate() * this.mass;
     this.velocity.z = vertical * this.getLieRate();
@@ -73,13 +73,13 @@ export default class Ball {
   }
   
   incAngle() {
-	this.angle += 0.05;
+	this.angle += ANGLE_INCREMENT;
     if (this.angle >= Math.PI * 2)
       this.angle -= Math.PI * 2;
   }
   
   decAngle() {
-    this.angle -= 0.05;
+    this.angle -= ANGLE_INCREMENT;
     if (this.angle <= 0)
       this.angle += Math.PI * 2;
   }

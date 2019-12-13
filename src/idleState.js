@@ -4,7 +4,7 @@ export default class IdleState {
   }
   
   update(deltaTime) {
-    //nothing to update!
+    this.game.cursor.update(deltaTime);
   }
   
   draw(ctx) {
