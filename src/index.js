@@ -4,14 +4,17 @@ import Game from "./game.js";
 let canvas = document.getElementById("gameScreen");
 let ctx = canvas.getContext("2d");
 
-canvas.width = 800; //document.body.clientWidth;
-canvas.height = 600; //document.body.clientHeight;
+let course = document.getElementById("course");
+const COURSE_WIDTH = course.width;
+const COURSE_HEIGHT = course.height;
 
+canvas.width = document.body.clientWidth;
+canvas.height = document.body.clientHeight;
 const GAME_WIDTH = canvas.width;
 const GAME_HEIGHT = canvas.height;
 
-let loader = new Loader(GAME_WIDTH, GAME_HEIGHT, ctx);
-let game = new Game(GAME_WIDTH, GAME_HEIGHT, loader);
+let loader = new Loader(COURSE_WIDTH, COURSE_HEIGHT, ctx);
+let game = new Game(COURSE_WIDTH, COURSE_HEIGHT, GAME_WIDTH, GAME_HEIGHT, loader);
 
 let lastTime = 0;
 

@@ -22,7 +22,7 @@ export default class LoadState {
   }
   
   draw(ctx) {
-    this.game.hole.draw(ctx);
+    this.game.hole.drawCourse(ctx);
     //this.drawLoadScreen(ctx);
   }
   

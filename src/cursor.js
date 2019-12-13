@@ -8,8 +8,8 @@ export default class Cursor {
   }
   
   draw(ctx) {
-    let curx = this.ball.position.x + CURLEN * Math.cos(this.ball.angle);
-    let cury = this.ball.position.y + CURLEN * Math.sin(this.ball.angle);
+    let curx = this.ball.getDrawX() + CURLEN * Math.cos(this.ball.angle);
+    let cury = this.ball.getDrawY() + CURLEN * Math.sin(this.ball.angle);
   
     ctx.drawImage(
       this.image,

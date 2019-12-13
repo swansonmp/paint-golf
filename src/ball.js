@@ -20,6 +20,8 @@ const PIXEL_RATE = {
   WATER: 0.1
 };
 
+const SCALE = 2;
+
 export default class Ball {
   constructor(game) {
     this.game = game;
@@ -90,15 +92,34 @@ export default class Ball {
     else {
       this.size = DEFAULT_SIZE + this.position.z / 4;
     }
-	
+
     //draw ball
     ctx.drawImage(
       this.image,
-      this.position.x - this.size / 2,
-      this.position.y - this.size / 2,
+      this.getDrawX(),
+      this.getDrawY(),
       this.size,
       this.size
     );
+  }
+  
+  getDrawX() {
+    let drawX = this.game.GAME_WIDTH / 2 - this.size / 2;
+    if (this.position.x < this.game.GAME_WIDTH / 2) {
+      drawX -= this.game.GAME_WIDTH / 2 - this.position.x;
+    }
+    else if (this.position.y > this.game.COURSE_WIDTH - this.game.GAME_WIDTH / 2) {
+      drawX += this.game.GAME_WIDTH / 2 + this.game.COURSE_WIDTH - this.position.x;
+    }
+    return drawX;
+  }
+  
+  getDrawY() {
+    let drawY = this.game.GAME_HEIGHT / 2 - this.size / 2;
+    if (this.position.y < this.game.GAME_HEIGHT / 2) {
+      drawY -= this.game.GAME_HEIGHT / 2 - this.position.y;
+    }
+    return drawY;
   }
   
   update(deltaTime) {

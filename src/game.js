@@ -15,7 +15,9 @@ import RunningState from "./runningState.js";
 import EvaluateState from "./evaluateState.js";
 
 export default class Game {
-  constructor(GAME_WIDTH, GAME_HEIGHT, loader) {
+  constructor(COURSE_WIDTH, COURSE_HEIGHT, GAME_WIDTH, GAME_HEIGHT, loader) {
+    this.COURSE_WIDTH = COURSE_WIDTH;
+    this.COURSE_HEIGHT = COURSE_HEIGHT; 
     this.GAME_WIDTH = GAME_WIDTH;
     this.GAME_HEIGHT = GAME_HEIGHT;
     this.loader = loader;
