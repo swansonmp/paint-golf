@@ -21,9 +21,9 @@ import EvaluateState from "./evaluateState.js";
 
 export default class Game {
   constructor(GAME_WIDTH, GAME_HEIGHT, CTX) {
-    this.course = document.getElementById("course");
-    this.COURSE_WIDTH = course.width;
-    this.COURSE_HEIGHT = course.height; 
+    this.courseImage = document.getElementById("course");
+    this.COURSE_WIDTH = this.courseImage.width;
+    this.COURSE_HEIGHT = this.courseImage.height; 
     this.GAME_WIDTH = GAME_WIDTH;
     this.GAME_HEIGHT = GAME_HEIGHT;
     this.loader = new Loader(this, CTX);
@@ -36,7 +36,7 @@ export default class Game {
     
     this.strokes = 0;
     this.holeNum = 1;
-    this.hole;
+    this.course;
 
     new InputHandler(this);
     
@@ -71,17 +71,8 @@ export default class Game {
     this.state = state;
   }
   
-  /*
-   *  Outputs relevant debug information to the console.
-   */
   debug() {
-    console.log("Gamestate: " + this.state + "\n"
-        + "Position: x:" + this.ball.position.x + ", y:" + this.ball.position.y + ", z:" + this.ball.position.z + "\n"
-        + "Speed: " + this.ball.speed + "\n"
-        + "Angle: " + this.ball.angle + "\n"
-        + "ZVel: " + this.ball.zvel + "\n"
-        + "Is moving: " + this.ball.isMoving() + "\n"
-        + "Club: " + this.bag.getClub().name); 
+    
   }
   
   update(deltaTime) {

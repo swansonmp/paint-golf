@@ -1,4 +1,3 @@
-//const CURLEN = 48;
 const CURSIZE = 16;
 const RATE = 100;
 

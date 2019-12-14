@@ -13,7 +13,7 @@ export default class RunningState {
   }
   
   draw(ctx) {
-    this.game.hole.draw(ctx);
+    this.game.course.draw(ctx);
     this.game.ball.draw(ctx);
   }
   

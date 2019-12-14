@@ -31,7 +31,7 @@ export default class Status {
     
     //draw lie rate
     //draw inside
-    ctx.fillStyle = this.game.hole.palette.getHexColor(this.game.ball.getPixelType());
+    ctx.fillStyle = this.game.course.palette.getHexColor(this.game.ball.getPixelType());
     ctx.fillRect(this.game.GAME_WIDTH - SIZE - PADDING, this.game.GAME_HEIGHT - SIZE - PADDING - 22, SIZE, SIZE);
     //draw ball
     ctx.drawImage(

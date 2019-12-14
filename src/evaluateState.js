@@ -6,8 +6,9 @@ export default class EvaluateState {
   update(deltaTime) {
     if (this.game.ball.inHole()) {                  //if the ball is in the hole
       this.game.holeNum++;                          //increment hole
-      this.game.setState(this.game.getLoadState()); //load next hole
       this.game.strokes = 0;
+      this.game.ball.reset(this.game.course.tees[holeNum].x, this.game.course.tees[holeNum].y, 0);
+      this.game.setState(this.game.getIdleState()); //load next hole
     }
     else {
       if (this.game.ball.inWater()) {               //if the ball is in the water
@@ -25,7 +26,7 @@ export default class EvaluateState {
   }
   
   draw(ctx) {
-    this.game.hole.draw(ctx);
+    this.game.course.draw(ctx);
     this.game.ball.draw(ctx);
   }
   

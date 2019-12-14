@@ -1,4 +1,4 @@
-import Hole from "./hole.js";
+import Course from "./course.js";
 
 
 export default class LoadState {
@@ -9,19 +9,19 @@ export default class LoadState {
   update(deltaTime) {
     this.game.stroke = 0;
     
-    //load the hole
-    this.game.hole = new Hole(this.game);
-    this.game.loader.loadHole(this.game.hole);
+    //load the course
+    this.game.course = new Course(this.game);
+    this.game.loader.loadHole(this.game.course);
     
     //set ball
-    this.game.ball.reset(this.game.hole.tee.x, this.game.hole.tee.y, 0);
+    this.game.ball.reset(this.game.course.tees[1].x, this.game.course.tees[1].y, 0);
     
     //go to idle state
     this.game.setState(this.game.getIdleState());
   }
   
   draw(ctx) {
-    this.game.hole.drawCourse(ctx);
+    this.game.course.drawCourse(ctx);
   }
   
   handleEnter() { }

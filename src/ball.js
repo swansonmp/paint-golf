@@ -183,7 +183,7 @@ export default class Ball {
   }
   
   getLieRate() {
-    let lie = this.game.hole.map[Math.floor(this.position.x)][Math.floor(this.position.y)];
+    let lie = this.game.course.map[Math.floor(this.position.x)][Math.floor(this.position.y)];
     switch (lie) {
       case PIXEL_TYPE.TEE:
         return PIXEL_RATE.TEE;
@@ -203,15 +203,15 @@ export default class Ball {
   }
   
   getPixelType() {
-    return this.game.hole.map[Math.floor(this.position.x)][Math.floor(this.position.y)];
+    return this.game.course.map[Math.floor(this.position.x)][Math.floor(this.position.y)];
   }
   
   inHole() {
-    return this.game.hole.map[Math.floor(this.position.x)][Math.floor(this.position.y)] == PIXEL_TYPE.HOLE;
+    return this.game.course.map[Math.floor(this.position.x)][Math.floor(this.position.y)] == PIXEL_TYPE.HOLE;
   }
   
   inWater() {
-    return this.game.hole.map[Math.floor(this.position.x)][Math.floor(this.position.y)] == PIXEL_TYPE.WATER;
+    return this.game.course.map[Math.floor(this.position.x)][Math.floor(this.position.y)] == PIXEL_TYPE.WATER;
   }
   
   debug() {

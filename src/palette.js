@@ -48,7 +48,7 @@ export default class Palette {
       case PIXEL_TYPE.WATER:
         return this.HEX_COLOR.WATER;
       default:
-        return "#000000";
+        return "#ff00ff";
     }
   }
 }
