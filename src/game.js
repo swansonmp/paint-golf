@@ -1,3 +1,5 @@
+import Loader from "./loader.js";
+
 import Ball from "./ball.js";
 import Cursor from "./cursor.js";
 import Bag from "./bag.js";
@@ -15,12 +17,13 @@ import RunningState from "./runningState.js";
 import EvaluateState from "./evaluateState.js";
 
 export default class Game {
-  constructor(COURSE_WIDTH, COURSE_HEIGHT, GAME_WIDTH, GAME_HEIGHT, loader) {
-    this.COURSE_WIDTH = COURSE_WIDTH;
-    this.COURSE_HEIGHT = COURSE_HEIGHT; 
+  constructor(GAME_WIDTH, GAME_HEIGHT, CTX) {
+    this.course =  document.getElementById("course");
+    this.COURSE_WIDTH = course.width;
+    this.COURSE_HEIGHT = course.height; 
     this.GAME_WIDTH = GAME_WIDTH;
     this.GAME_HEIGHT = GAME_HEIGHT;
-    this.loader = loader;
+    this.loader = new Loader(this, CTX);
     
     this.ball = new Ball(this);
     this.cursor = new Cursor(this);

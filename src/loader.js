@@ -1,12 +1,11 @@
 import Palette from "./palette.js";
 
 export default class Loader {
-  constructor(COURSE_WIDTH, COURSE_HEIGHT, ctx) {
-    this.COURSE_WIDTH = COURSE_WIDTH;
-    this.COURSE_HEIGHT = COURSE_HEIGHT;
-    this.CTX = ctx;
+  constructor(game, CTX) {
+    this.game = game;
+    this.CTX = CTX;
     
-    this.holeMap = this.create2DArray(this.COURSE_WIDTH);
+    this.holeMap = this.create2DArray(this.game.COURSE_WIDTH);
   }
   
   loadHole(hole) {
@@ -31,16 +30,16 @@ export default class Loader {
       WATER: 6
     };
     
-    let imgData = this.CTX.getImageData(0, 0, this.COURSE_WIDTH, this.COURSE_HEIGHT);
+    let imgData = this.CTX.getImageData(0, 0, this.game.COURSE_WIDTH, this.game.COURSE_HEIGHT);
     let i;
     let row = 0;
     let col = 0;
     for (i = 0; i < imgData.data.length; i += 4) {
-      if (col >= this.COURSE_HEIGHT) {
+      if (col >= this.game.COURSE_HEIGHT) {
         hole.map = this.holeMap;
         return;
       }
-      if (row >= this.COURSE_WIDTH - 1) {
+      if (row >= this.game.COURSE_WIDTH - 1) {
         row = 0;
         col++;
       }

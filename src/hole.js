@@ -3,7 +3,6 @@ import Palette from "./palette.js";
 export default class Hole {
   constructor(game) {
     this.game = game;
-    this.image = document.getElementById("course");
     
     this.palette = new Palette();
     
@@ -13,7 +12,7 @@ export default class Hole {
   
   draw(ctx) {
     ctx.drawImage(
-        this.image,
+        this.game.course,
         this.getDrawX(),
         this.getDrawY(), 
         this.game.GAME_WIDTH, 
@@ -54,7 +53,7 @@ export default class Hole {
   }
   
   drawCourse(ctx) {
-    ctx.drawImage(this.image, 0, 0, this.game.COURSE_WIDTH, this.game.COURSE_HEIGHT);
+    ctx.drawImage(this.game.course, 0, 0, this.game.COURSE_WIDTH, this.game.COURSE_HEIGHT);
   }
   
   update(deltaTime) {

@@ -1,4 +1,5 @@
 const DEFAULT_SIZE = 4;
+const RATE = 200;
 
 const PIXEL_TYPE = {
   TEE: 0,
@@ -132,7 +133,6 @@ export default class Ball {
     
     this.debug(); //TODO
     
-    const RATE = 200;
     deltaTime /= RATE;
     
     //update positions
