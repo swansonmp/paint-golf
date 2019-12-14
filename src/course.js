@@ -62,6 +62,20 @@ export default class Course {
     
   }
   
+  getPar(n) {
+    let distance = this.getDistance(n);
+    if (distance <= 250) return 3;
+    else if (distance <= 470) return 4;
+    else return 5;
+  }
+  
+  getDistance(n) {
+    return Math.sqrt(
+        Math.pow(this.holes[n].x - this.tees[n].x, 2) + 
+        Math.pow(this.holes[n].y - this.tees[n].y, 2)
+    ) / this.game.ball.scale;
+  }
+  
   createCourseCoordinateList() {
     let list = [];
     let i;

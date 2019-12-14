@@ -1,5 +1,7 @@
 const CURSIZE = 16;
 const RATE = 100;
+const TEXT_SIZE = 20;
+const TEXT_PADDING = 2;
 
 export default class Cursor {
   constructor(game) {
@@ -27,13 +29,13 @@ export default class Cursor {
     );
     
     //draw text
-    ctx.font = "small-caps bold 20px monospace";
+    ctx.font = "small-caps bold " + TEXT_SIZE + "px monospace";
     ctx.strokeStyle = "black";
     ctx.lineWidth = 2;
     ctx.textAlign = "center";
-    ctx.strokeText(this.game.bag.getClub().carry + "y", this.curX, this.curY - 22);
+    ctx.strokeText(this.game.bag.getClub().carry + "y", this.curX, this.curY - TEXT_SIZE - TEXT_PADDING);
     ctx.fillStyle = "white";
-    ctx.fillText(this.game.bag.getClub().carry + "y", this.curX, this.curY - 22);
+    ctx.fillText(this.game.bag.getClub().carry + "y", this.curX, this.curY - TEXT_SIZE - TEXT_PADDING);
   }
   
   update(deltaTime) {

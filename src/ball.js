@@ -1,5 +1,9 @@
 const DEFAULT_SIZE = 4;
-const RATE = 200;
+const ANGLE_INCREMENT = 1/32;
+const RATE = 750;
+const SIZE_INCREASE = 3;
+const SPIN_RATE = 3;
+const INACCURACY = 1/128;
 
 const PIXEL_TYPE = {
   TEE: 0,
@@ -20,8 +24,6 @@ const PIXEL_RATE = {
   BUNKER: 0.6,
   WATER: 0.1
 };
-
-const ANGLE_INCREMENT = 0.03125;
 
 export default class Ball {
   constructor(game) {
@@ -66,16 +68,20 @@ export default class Ball {
     return (Math.abs(this.position.z) > 0.05 || Math.abs(this.velocity.x) > 0.05 || Math.abs(this.velocity.y) > 0.05 || Math.abs(this.velocity.z) > 0.05);
   }
 
-  strike(horizontal, vertical, dtheta) {    
+  strike(horizontal, vertical, dtheta) {
+    //log last position
+    this.lastPosition.x = this.position.x;
+    this.lastPosition.y = this.position.y;
+    this.lastPosition.z = this.position.z;
+    
     this.velocity.x = Math.cos(this.angle) * horizontal * this.getLieRate() * this.mass;
     this.velocity.y = Math.sin(this.angle) * horizontal * this.getLieRate() * this.mass;
     this.velocity.z = vertical * this.getLieRate();
     
-    const SPIN_RATE = 3;
+    
     this.spin.x = -vertical / horizontal * SPIN_RATE * Math.cos(this.angle);
     this.spin.y = -vertical / horizontal * SPIN_RATE * Math.sin(this.angle);
     
-    const INACCURACY = 0.015625;
     this.dtheta = dtheta * INACCURACY;
   }
   
@@ -97,7 +103,7 @@ export default class Ball {
       this.size = DEFAULT_SIZE;
     }
     else {
-      this.size = DEFAULT_SIZE + this.position.z / 4;
+      this.size = DEFAULT_SIZE + this.position.z / SIZE_INCREASE;
     }
 
     //draw ball
