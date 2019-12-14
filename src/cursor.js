@@ -38,8 +38,8 @@ export default class Cursor {
   
   update(deltaTime) {
     //calculate location
-    this.curX = this.game.ball.getDrawX() + this.game.bag.getClub().carry * Math.cos(this.game.ball.angle);
-    this.curY = this.game.ball.getDrawY() + this.game.bag.getClub().carry * Math.sin(this.game.ball.angle);
+    this.curX = this.game.ball.getDrawX() + this.game.bag.getClub().carry * this.game.ball.scale * Math.cos(this.game.ball.angle);
+    this.curY = this.game.ball.getDrawY() + this.game.bag.getClub().carry * this.game.ball.scale * Math.sin(this.game.ball.angle);
     
     //calculate animation
     this.lastTime += deltaTime;

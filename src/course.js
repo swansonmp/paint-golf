@@ -27,7 +27,7 @@ export default class Course {
   }
   
   getDrawX() {
-    let drawX = this.game.ball.position.x - this.game.GAME_WIDTH / 2;
+    let drawX = this.game.ball.getScaledX() - this.game.GAME_WIDTH / 2;
     if (drawX < 0) {
       drawX = 0;
     }
@@ -41,7 +41,7 @@ export default class Course {
   }
   
   getDrawY() {
-    let drawY = this.game.ball.position.y - this.game.GAME_HEIGHT / 2;
+    let drawY = this.game.ball.getScaledY() - this.game.GAME_HEIGHT / 2;
     if (drawY < 0) {
       drawY = 0;
     }

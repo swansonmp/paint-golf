@@ -43,15 +43,19 @@ export default class Ball {
   }
 
   reset(xp, yp, zp) {
+    xp /= this.scale;
+    yp /= this.scale;
+    zp /= this.scale;
+    
     this.position = { x: xp, y: yp, z: zp };
     this.lastPosition = { x: xp, y: yp, z: zp };
     this.velocity = { x: 0, y: 0, z: 0 };
     this.fnet = { x: 0, y: (this.gravity * this.mass), z: 0 };
     
-    this.spin = 0; //TODO TEMP
-    
     this.angle = 0;
     this.dtheta = 0;
+    
+    this.spin = { x: 0 , y: 0 , z: 0 };
   }
   
   setLastPosition() {
@@ -67,7 +71,9 @@ export default class Ball {
     this.velocity.y = Math.sin(this.angle) * horizontal * this.getLieRate() * this.mass;
     this.velocity.z = vertical * this.getLieRate();
     
-    this.spin; //TODO TEMP
+    const SPIN_RATE = 3;
+    this.spin.x = -vertical / horizontal * SPIN_RATE * Math.cos(this.angle);
+    this.spin.y = -vertical / horizontal * SPIN_RATE * Math.sin(this.angle);
     
     const INACCURACY = 0.015625;
     this.dtheta = dtheta * INACCURACY;
@@ -106,19 +112,22 @@ export default class Ball {
   
   getDrawX() {
     let drawX = this.game.GAME_WIDTH / 2 - this.size / 2;
-    if (this.position.x < this.game.GAME_WIDTH / 2) {
-      drawX -= this.game.GAME_WIDTH / 2 - this.position.x;
+    if (this.getScaledX() < this.game.GAME_WIDTH / 2) {
+      drawX -= this.game.GAME_WIDTH / 2 - this.getScaledX();
     }
-    else if (this.position.y > this.game.COURSE_WIDTH - this.game.GAME_WIDTH / 2) {
-      drawX += this.game.GAME_WIDTH / 2 + this.game.COURSE_WIDTH - this.position.x;
+    else if (this.getScaledX() > this.game.COURSE_WIDTH - this.game.GAME_WIDTH / 2) {
+      drawX += this.game.GAME_WIDTH / 2 + this.game.COURSE_WIDTH - this.getScaledX()
     }
     return drawX;
   }
   
   getDrawY() {
     let drawY = this.game.GAME_HEIGHT / 2 - this.size / 2;
-    if (this.position.y < this.game.GAME_HEIGHT / 2) {
-      drawY -= this.game.GAME_HEIGHT / 2 - this.position.y;
+    if (this.getScaledY() < this.game.GAME_HEIGHT / 2) {
+      drawY -= this.game.GAME_HEIGHT / 2 - this.getScaledY();
+    }
+    else if (this.getScaledY() > this.game.COURSE_HEIGHT - this.game.GAME_HEIGHT / 2) {
+      drawY += this.game.GAME_HEIGHT / 2 + this.game.COURSE_HEIGHT - this.getScaledY();
     }
     return drawY;
   }
@@ -144,6 +153,10 @@ export default class Ball {
     let xv = this.velocity.x; //the unmodified xvel
     this.velocity.x = this.velocity.x * Math.cos(this.dtheta) - this.velocity.y * Math.sin(this.dtheta);
     this.velocity.y = xv * Math.sin(this.dtheta) + this.velocity.y * Math.cos(this.dtheta);
+    //apply inaccuracy to spin
+    //let xs = this.spin.x;
+    //this.spin.x = this.spin.x * Math.cos(this.dtheta) - this.spin.y * Math.sin(this.dtheta);
+    //this.spin.y = xs * Math.sin(this.dtheta) + this.spin.y * Math.cos(this.dtheta);
     
     //update velocities
     this.velocity.x += this.fnet.x * deltaTime;
@@ -154,6 +167,12 @@ export default class Ball {
     if (this.position.z < 0) {
       this.position.z = 0;
       this.velocity.z *= this.getLieRate() * this.bounce;
+      
+      //calculate spin
+      this.velocity.x += this.spin.x;
+      this.velocity.y += this.spin.y;
+      this.spin.x *= 0.5;
+      this.spin.y *= 0.5;
     }
     
     //calculate friction
@@ -183,7 +202,7 @@ export default class Ball {
   }
   
   getLieRate() {
-    let lie = this.game.course.map[Math.floor(this.position.x)][Math.floor(this.position.y)];
+    let lie = this.getPixelType();
     switch (lie) {
       case PIXEL_TYPE.TEE:
         return PIXEL_RATE.TEE;
@@ -203,16 +222,19 @@ export default class Ball {
   }
   
   getPixelType() {
-    return this.game.course.map[Math.floor(this.position.x)][Math.floor(this.position.y)];
+    return this.game.course.map[Math.floor(this.getScaledX())][Math.floor(this.getScaledY())];
   }
   
   inHole() {
-    return this.game.course.map[Math.floor(this.position.x)][Math.floor(this.position.y)] == PIXEL_TYPE.HOLE;
+    return this.getPixelType() == PIXEL_TYPE.HOLE;
   }
   
   inWater() {
-    return this.game.course.map[Math.floor(this.position.x)][Math.floor(this.position.y)] == PIXEL_TYPE.WATER;
+    return this.getPixelType() == PIXEL_TYPE.WATER;
   }
+  
+  getScaledX() { return this.position.x * this.scale; }
+  getScaledY() { return this.position.y * this.scale; }
   
   debug() {
     console.log(
