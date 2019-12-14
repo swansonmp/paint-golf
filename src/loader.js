@@ -11,15 +11,7 @@ export default class Loader {
   loadHole(hole) {
     hole.drawCourse(this.CTX);
     
-    //let palette = new Palette();
-    const PIXEL_COLOR = {
-      TEE: 0x000001,
-      HOLE: 0xed1c24,
-      GREEN: 0xb5e61d,
-      ROUGH: 0x22b14c,
-      BUNKER: 0xefe4b0,
-      WATER: 0x00a2e8
-    };
+    let palette = new Palette();
     const PIXEL_TYPE = {
       TEE: 0,
       HOLE: 1,
@@ -47,28 +39,35 @@ export default class Loader {
         row++;
       }
       switch(this.rgbToDec(imgData.data[i], imgData.data[i + 1], imgData.data[i + 2])) {
-        case PIXEL_COLOR.TEE:
+        case palette.COLOR.TEE:
           hole.tee.x = row;
           hole.tee.y = col;
           break;
-        case PIXEL_COLOR.HOLE:
+        case palette.COLOR.HOLE:
           this.holeMap[row][col] = PIXEL_TYPE.HOLE;
           break;
-        case PIXEL_COLOR.GREEN:
+        case palette.COLOR.GREEN:
           this.holeMap[row][col] = PIXEL_TYPE.GREEN;
           break;
-        case PIXEL_COLOR.ROUGH:
+        case palette.COLOR.ROUGH:
           this.holeMap[row][col] = PIXEL_TYPE.ROUGH;
           break;
-        case PIXEL_COLOR.BUNKER:
+        case palette.COLOR.BUNKER:
           this.holeMap[row][col] = PIXEL_TYPE.BUNKER;
           break;
-        case PIXEL_COLOR.WATER:
+        case palette.COLOR.WATER:
           this.holeMap[row][col] = PIXEL_TYPE.WATER;
           break;
         default:
           this.holeMap[row][col] = PIXEL_TYPE.FAIRWAY;
       }
+    }
+    
+    //error checking
+    if (hole.tee.x == -1 && hole.tee.y == -1) {
+      console.log("ERROR: TEE NOT FOUND");
+      hole.tee.x = 0;
+      hole.tee.y = 0;
     }
     
     hole.map = this.holeMap;

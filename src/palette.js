@@ -21,7 +21,7 @@ export default class Palette {
     };
     
     this.HEX_COLOR = {
-      TEE: "#000000",
+      TEE: "#000001",
       HOLE: "#ed1c24",
       GREEN: "#b5e61d",
       FAIRWAY: "#b5e61d",

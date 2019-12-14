@@ -7,7 +7,10 @@ import PowerBar from "./powerbar.js";
 import Status from "./status.js";
 import InputHandler from "./input.js";
 
-import MenuState from "./menuState.js";
+import TitleState from "./titleState.js";
+import MainState from "./mainState.js";
+import OpenState from "./openState.js";
+import SettingsState from "./settingsState.js";
 import LoadState from "./loadState.js";
 import IdleState from "./idleState.js";
 import PowerState from "./powerState.js";
@@ -18,7 +21,7 @@ import EvaluateState from "./evaluateState.js";
 
 export default class Game {
   constructor(GAME_WIDTH, GAME_HEIGHT, CTX) {
-    this.course =  document.getElementById("course");
+    this.course = document.getElementById("course");
     this.COURSE_WIDTH = course.width;
     this.COURSE_HEIGHT = course.height; 
     this.GAME_WIDTH = GAME_WIDTH;
@@ -37,7 +40,10 @@ export default class Game {
 
     new InputHandler(this);
     
-    this.menuState = new MenuState(this);
+    this.titleState = new TitleState(this);
+    this.mainState = new MainState(this);
+    this.openState = new OpenState(this);
+    this.settingsState = new SettingsState(this);
     this.loadState = new LoadState(this);
     this.idleState = new IdleState(this);
     this.powerState = new PowerState(this);
@@ -46,10 +52,13 @@ export default class Game {
     this.runningState = new RunningState(this);
     this.evaluateState = new EvaluateState(this);
     
-    this.setState(this.getMenuState());
+    this.setState(this.getTitleState());
   }
   
-  getMenuState() { return this.menuState; }
+  getTitleState() { return this.titleState; }
+  getMainState() { return this.mainState; }
+  getOpenState() { return this.openState; }
+  getSettingsState() { return this.settingsState; }
   getLoadState() { return this.loadState; }
   getIdleState() { return this.idleState; }
   getPowerState() { return this.powerState; }
