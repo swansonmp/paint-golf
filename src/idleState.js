@@ -45,5 +45,9 @@ export default class IdleState {
   handleRightArrow() {
     this.game.ball.incAngle();
   }
+  
+  handleEscape() {
+    this.game.setState(this.game.getMenuState());
+  }
 
 }

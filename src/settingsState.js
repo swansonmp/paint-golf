@@ -1,87 +1,36 @@
-const PADDING_X = 100;
-const PADDING_Y = 30;
-
 export default class SettingsState {
-  constructor(game) {
+  constructor(game, menuState) {
     this.game = game;
+    this.menuState = menuState;
     
     this.index = 0;
+    this.name = "Settings";
     this.items = [
-      "some settings"
+      "Scale",
+      "Another Setting",
+    ];
+    this.values = [
+      this.game.ball.scale,
+      0
     ];
   }
   
   update(deltaTime) {
-
+    this.game.ball.scale = this.values[0];
   }
-  
-  draw(ctx) {
-    //draw background
-    ctx.rect(0, 0, this.game.GAME_WIDTH, this.game.GAME_HEIGHT);
-    ctx.fillStyle = "rgba(34,177,76,1)";
-    ctx.fill();
-    
-    //draw heading
-    ctx.font = "bold 96px monospace";
-    ctx.fillStyle = "white";
-    ctx.textAlign = "left";
-    ctx.fillText(
-      "Settings",
-      PADDING_X,
-      PADDING_Y + 96
-    );
-    
-    let drawY = PADDING_Y * 2 + 96;
-    
-    //draw items
-    let i;
-    for (i = 0; i < this.items.length; i++) {
-      drawY += PADDING_Y + 72;
-      ctx.font = "bold 72px monospace";
-      if (i == this.index) ctx.fillStyle = "white";
-      else ctx.fillStyle = "DimGrey";
-      ctx.fillText(
-          this.items[i],
-          PADDING_X * 2,
-          drawY
-      );
-    }
+  draw(ctx) { 
+    this.menuState.drawValues(ctx, this);
   }
   
   handleConfirm() {
-    /*
-    switch (this.index) {
-      case 0:
-        this.game.setState(this.game.getLoadState());
-        break;
-      case 1:
-        this.game.setState(this.game.getOpenState());
-        break;
-      case 2:
-        this.game.setState(this.game.getSettingsState());
-        break;
-      default:
-        this.game.setState(this.game.getTitleState());
-    }
-    */
-  }
-  handleEnter() { this.handleConfirm(); }
-  handleSpace() { this.handleConfirm(); }
-  handleRightArrow() { this.handleConfirm(); }
-  
-  handleUpArrow() {
-    this.index--;
-    this.index %= this.items.length; 
-  }
-  handleDownArrow() {
-    this.index++;
-    this.index %= this.items.length; 
+
   }
   
   handleBack() {
-    this.game.setState(this.game.getMainState());
+    this.menuState.setState(this.menuState.getMainState());
   }
   
-  handleLeftArrow() { this.handleBack(); }
+  handleIncrement() { this.values[this.index]++; }
+  handleDecrement() { this.values[this.index]--; }
 
 }

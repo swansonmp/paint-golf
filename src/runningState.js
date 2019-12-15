@@ -23,5 +23,6 @@ export default class RunningState {
   handleDownArrow() { }
   handleLeftArrow() { }
   handleRightArrow() { }
+  handleEscape() { }
   
 }

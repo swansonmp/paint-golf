@@ -37,21 +37,23 @@ export default class Status {
   }
   
   drawHoleInfo(ctx) {
-    ctx.font = "small-caps bold 50px monospace";
+    //Par indicator
+    ctx.font = "bold 50px monospace";
     ctx.textAlign = "left";
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 5;
+    ctx.strokeText("Par " + this.game.course.getPar(this.game.holeNum), PADDING, 50);
     ctx.fillStyle = "white";
     ctx.fillText("Par " + this.game.course.getPar(this.game.holeNum), PADDING, 50);
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 1;
-    ctx.strokeText("Par " + this.game.course.getPar(this.game.holeNum), PADDING, 50);
     
+    //Hole yardage indicator
     ctx.font = "small-caps bold 50px monospace";
     ctx.textAlign = "left";
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 5;
+    ctx.strokeText(this.game.course.getDistance(this.game.holeNum) + "y", PADDING, 50 + 50);
     ctx.fillStyle = "white";
     ctx.fillText(this.game.course.getDistance(this.game.holeNum) + "y", PADDING, 50 + 50);
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 1;
-    ctx.strokeText(this.game.course.getDistance(this.game.holeNum) + "y", PADDING, 50 + 50);
   }
   
   drawLieIndicator(ctx) {

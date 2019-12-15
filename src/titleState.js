@@ -1,40 +1,17 @@
-const RATE = 50;
-const BALL_SIZE = 8;
+const TITLE_SIZE = 96;
+const HEADING_SIZE = 48;
 
 export default class TitleState {
-  constructor(game) {
+  constructor(game, menuState) {
     this.game = game;
-    
-    this.ballX = 0;
-    this.ballY = this.game.GAME_HEIGHT / 2 - BALL_SIZE / 2;
+    this.menuState = menuState;
   }
   
-  update(deltaTime) {
-    deltaTime /= RATE;
-    this.ballX += deltaTime;
-    if (this.ballX >= this.game.GAME_WIDTH) {
-      this.ballY = Math.floor(Math.random() * this.game.GAME_HEIGHT);
-      this.ballX %= this.game.GAME_WIDTH;
-    }
-  }
+  update(deltaTime) { }
   
   draw(ctx) {
-    //draw background
-    ctx.rect(0, 0, this.game.GAME_WIDTH, this.game.GAME_HEIGHT);
-    ctx.fillStyle = "rgba(34,177,76,1)";
-    ctx.fill();
-    
-    //draw ball
-    ctx.drawImage(
-      this.game.ball.image,
-      this.ballX,
-      this.ballY,
-      BALL_SIZE,
-      BALL_SIZE
-    );
-    
     //draw title
-    ctx.font = "bold 96px monospace";
+    ctx.font = "bold " + TITLE_SIZE + "px monospace";
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
     ctx.fillText(
@@ -44,7 +21,7 @@ export default class TitleState {
     );
     
     //draw subtitle
-    ctx.font = "small-caps bold 48px monospace";
+    ctx.font = "bold " + HEADING_SIZE + "px monospace";
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
     ctx.fillText(
@@ -55,14 +32,11 @@ export default class TitleState {
   }
   
   handleConfirm() {
-    this.game.setState(this.game.getMainState());
+    this.menuState.setState(this.menuState.getMainState());
   }
   
-  handleEnter() { this.handleConfirm(); }
-  handleSpace() { this.handleConfirm(); }
-  handleUpArrow() { }
-  handleDownArrow() { }
-  handleLeftArrow() { }
-  handleRightArrow() { this.handleConfirm(); }
+  handleBack() { }
+  handleIncrement() { }
+  handleDecrement() { }
   
 }

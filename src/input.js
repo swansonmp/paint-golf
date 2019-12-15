@@ -5,6 +5,9 @@ export default class InputHandler {
         case 13:
           game.state.handleEnter();
           break;
+        case 27:
+          game.state.handleEscape();
+          break;
         case 32:
           game.state.handleSpace();
           break;

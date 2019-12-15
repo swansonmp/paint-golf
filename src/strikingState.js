@@ -24,5 +24,6 @@ export default class StrikingState {
   handleDownArrow() { }
   handleLeftArrow() { }
   handleRightArrow() { }
+  handleEscape() { }
   
 }

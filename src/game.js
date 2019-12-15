@@ -7,10 +7,7 @@ import PowerBar from "./powerbar.js";
 import Status from "./status.js";
 import InputHandler from "./input.js";
 
-import TitleState from "./titleState.js";
-import MainState from "./mainState.js";
-import OpenState from "./openState.js";
-import SettingsState from "./settingsState.js";
+import MenuState from "./menuState.js";
 import LoadState from "./loadState.js";
 import IdleState from "./idleState.js";
 import PowerState from "./powerState.js";
@@ -40,10 +37,7 @@ export default class Game {
 
     new InputHandler(this);
     
-    this.titleState = new TitleState(this);
-    this.mainState = new MainState(this);
-    this.openState = new OpenState(this);
-    this.settingsState = new SettingsState(this);
+    this.menuState = new MenuState(this);
     this.loadState = new LoadState(this);
     this.idleState = new IdleState(this);
     this.powerState = new PowerState(this);
@@ -52,13 +46,10 @@ export default class Game {
     this.runningState = new RunningState(this);
     this.evaluateState = new EvaluateState(this);
     
-    this.setState(this.getTitleState());
+    this.setState(this.getMenuState());
   }
   
-  getTitleState() { return this.titleState; }
-  getMainState() { return this.mainState; }
-  getOpenState() { return this.openState; }
-  getSettingsState() { return this.settingsState; }
+  getMenuState() { return this.menuState; }
   getLoadState() { return this.loadState; }
   getIdleState() { return this.idleState; }
   getPowerState() { return this.powerState; }
