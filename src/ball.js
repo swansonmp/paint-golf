@@ -122,7 +122,7 @@ export default class Ball {
       drawX -= this.game.GAME_WIDTH / 2 - this.getScaledX();
     }
     else if (this.getScaledX() > this.game.COURSE_WIDTH - this.game.GAME_WIDTH / 2) {
-      drawX += this.game.GAME_WIDTH / 2 + this.game.COURSE_WIDTH - this.getScaledX()
+      drawX += this.game.GAME_WIDTH / 2 - this.game.COURSE_WIDTH + this.getScaledX();
     }
     return drawX;
   }
@@ -133,7 +133,7 @@ export default class Ball {
       drawY -= this.game.GAME_HEIGHT / 2 - this.getScaledY();
     }
     else if (this.getScaledY() > this.game.COURSE_HEIGHT - this.game.GAME_HEIGHT / 2) {
-      drawY += this.game.GAME_HEIGHT / 2 + this.game.COURSE_HEIGHT - this.getScaledY();
+      drawY += this.game.GAME_HEIGHT / 2 - this.game.COURSE_HEIGHT + this.getScaledY();
     }
     return drawY;
   }
