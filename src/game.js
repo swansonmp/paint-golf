@@ -18,9 +18,8 @@ import EvaluateState from "./evaluateState.js";
 
 export default class Game {
   constructor(GAME_WIDTH, GAME_HEIGHT, CTX) {
-    this.courseImage = document.getElementById("course");
-    this.COURSE_WIDTH = this.courseImage.width;
-    this.COURSE_HEIGHT = this.courseImage.height; 
+    this.getCourse("course");
+    this.course;
     this.GAME_WIDTH = GAME_WIDTH;
     this.GAME_HEIGHT = GAME_HEIGHT;
     this.loader = new Loader(this, CTX);
@@ -33,7 +32,6 @@ export default class Game {
     
     this.strokes = 0;
     this.holeNum = 1;
-    this.course;
 
     new InputHandler(this);
     
@@ -72,6 +70,23 @@ export default class Game {
   
   draw(ctx) {
     this.state.draw(ctx);
+  }
+  
+  getCourse(name) {
+    document.getElementById("course").src = "./assets/holes/" + name + ".png";
+    document.getElementById("vanity").src = "./assets/holes/" + name + "-vanity.png";
+    this.courseImage = document.getElementById("course");
+    this.COURSE_WIDTH = this.courseImage.width;
+    this.COURSE_HEIGHT = this.courseImage.height; 
+    this.vanityImage = document.getElementById("vanity");
+    if (this.vanityImage.width == 0) {
+      console.error(name + "-vanity.png not found");
+      this.vanityImage = this.courseImage;
+    }
+    else if (this.vanityImage.width != this.courseImage.width || this.vanityImage.height != this.courseImage.height) {
+      console.error(name + "-vanity.png's dimensions do not match that of " + name + ".png");
+      this.vanityImage = this.courseImage;
+    }
   }
   
 }

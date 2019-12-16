@@ -1,4 +1,5 @@
 const PADDING = 20;
+const TEXT_SIZE = 50;
 
 export default class HoleInfo {
   constructor(game) {
@@ -7,31 +8,31 @@ export default class HoleInfo {
   
   draw(ctx) {
     //Hole number indicator
-    ctx.font = "bold 50px monospace";
+    ctx.font = "bold " + TEXT_SIZE + "px monospace";
     ctx.textAlign = "left";
     ctx.strokeStyle = "black";
     ctx.lineWidth = 5;
-    ctx.strokeText("Hole " + this.holeNum, PADDING, 50);
+    ctx.strokeText("Hole " + this.holeNum, PADDING, TEXT_SIZE);
     ctx.fillStyle = "white";
-    ctx.fillText("Hole " + this.holeNum, PADDING, 50);
+    ctx.fillText("Hole " + this.holeNum, PADDING, TEXT_SIZE);
     
     //Par indicator
-    ctx.font = "bold 50px monospace";
+    ctx.font = "bold " + TEXT_SIZE + "px monospace";
     ctx.textAlign = "left";
     ctx.strokeStyle = "black";
     ctx.lineWidth = 5;
-    ctx.strokeText("Par " + this.par, PADDING, 50 * 2);
+    ctx.strokeText("Par " + this.par, PADDING, TEXT_SIZE * 2);
     ctx.fillStyle = "white";
-    ctx.fillText("Par " + this.par, PADDING, 50 * 2);
+    ctx.fillText("Par " + this.par, PADDING, TEXT_SIZE * 2);
     
     //Hole yardage indicator
-    ctx.font = "small-caps bold 50px monospace";
+    ctx.font = "small-caps bold " + TEXT_SIZE + "px monospace";
     ctx.textAlign = "left";
     ctx.strokeStyle = "black";
     ctx.lineWidth = 5;
-    ctx.strokeText(this.distance + "y", PADDING, 50 * 3);
+    ctx.strokeText(this.distance + "y", PADDING, TEXT_SIZE * 3);
     ctx.fillStyle = "white";
-    ctx.fillText(this.distance + "y", PADDING, 50 * 3);
+    ctx.fillText(this.distance + "y", PADDING, TEXT_SIZE * 3);
   }
   
   update(deltaTime) {

@@ -4,11 +4,11 @@ export default class Loader {
   constructor(game, CTX) {
     this.game = game;
     this.CTX = CTX;
-    
-    this.courseMap = this.create2DArray(this.game.COURSE_WIDTH);
   }
   
   loadHole(course) {
+    this.courseMap = this.create2DArray(this.game.COURSE_WIDTH);
+    
     course.drawCourse(this.CTX);
     
     let palette = new Palette();

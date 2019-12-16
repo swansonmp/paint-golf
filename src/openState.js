@@ -6,8 +6,8 @@ export default class OpenState {
     this.index = 0;
     this.name = "Load";
     this.items = [
-      "course.png",
-      "test.png"
+      "course",
+      "test"
     ];
   }
   
@@ -15,7 +15,7 @@ export default class OpenState {
   draw(ctx) { }
   
   handleConfirm() {
-    document.getElementById("course").src = "./assets/holes/" + this.items[this.index];
+    this.game.getCourse(this.items[this.index]);
     this.menuState.setState(this.menuState.getMainState());
   }
   

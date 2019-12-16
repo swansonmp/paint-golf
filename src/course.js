@@ -9,12 +9,12 @@ export default class Course {
     this.tees = this.createCourseCoordinateList();
     this.holes = this.createCourseCoordinateList();
     
-    this.map;
+    this.map = [0];
   }
   
   draw(ctx) {
     ctx.drawImage(
-        this.game.courseImage,
+        this.game.vanityImage,
         this.getDrawX(),
         this.getDrawY(), 
         this.game.GAME_WIDTH, 
