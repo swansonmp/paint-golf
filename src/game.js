@@ -9,6 +9,7 @@ import InputHandler from "./input.js";
 
 import MenuState from "./menuState.js";
 import LoadState from "./loadState.js";
+import PrepareState from "./prepareState.js";
 import IdleState from "./idleState.js";
 import PowerState from "./powerState.js";
 import AccuracyState from "./accuracyState.js";
@@ -37,6 +38,7 @@ export default class Game {
     
     this.menuState = new MenuState(this);
     this.loadState = new LoadState(this);
+    this.prepareState = new PrepareState(this);
     this.idleState = new IdleState(this);
     this.powerState = new PowerState(this);
     this.accuracyState = new AccuracyState(this);
@@ -49,6 +51,7 @@ export default class Game {
   
   getMenuState() { return this.menuState; }
   getLoadState() { return this.loadState; }
+  getPrepareState() { return this.prepareState; }
   getIdleState() { return this.idleState; }
   getPowerState() { return this.powerState; }
   getAccuracyState() { return this.accuracyState; }
@@ -60,25 +63,34 @@ export default class Game {
     this.state = state;
   }
   
-  debug() {
-    
+  debug(ctx) {
+    ctx.font = "bold 50px monospace";
+    ctx.textAlign = "right";
+    ctx.fillStyle = "yellow";
+    ctx.fillText(
+        (1000 / this.dt).toFixed(0),
+        this.GAME_WIDTH - 20,
+        70
+    );
   }
   
   update(deltaTime) {
+    this.dt = deltaTime;
     this.state.update(deltaTime);
   }
   
   draw(ctx) {
     this.state.draw(ctx);
+    this.debug(ctx);
   }
   
   getCourse(name) {
-    document.getElementById("course").src = "./assets/holes/" + name + ".png";
-    document.getElementById("vanity").src = "./assets/holes/" + name + "-vanity.png";
     this.courseImage = document.getElementById("course");
+    this.vanityImage = document.getElementById("vanity");
+    this.courseImage.src = "./assets/holes/" + name + ".png";
+    this.vanityImage.src = "./assets/holes/" + name + "-vanity.png";
     this.COURSE_WIDTH = this.courseImage.width;
     this.COURSE_HEIGHT = this.courseImage.height; 
-    this.vanityImage = document.getElementById("vanity");
     if (this.vanityImage.width == 0) {
       console.error(name + "-vanity.png not found");
       this.vanityImage = this.courseImage;

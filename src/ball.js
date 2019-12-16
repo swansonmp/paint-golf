@@ -146,7 +146,7 @@ export default class Ball {
       return;
     }
     
-    this.debug(); //TODO
+    //this.debug(); //TODO
     
     deltaTime /= RATE;
     
@@ -241,6 +241,13 @@ export default class Ball {
   
   getScaledX() { return this.position.x * this.scale; }
   getScaledY() { return this.position.y * this.scale; }
+  
+  angleToHole() {
+    this.angle =  Math.atan2(
+        this.game.course.holes[this.game.holeNum].y - this.getScaledY(), 
+        this.game.course.holes[this.game.holeNum].x - this.getScaledX()
+    );
+  }
   
   debug() {
     console.log(

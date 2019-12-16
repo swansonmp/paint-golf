@@ -21,8 +21,8 @@ export default class EvaluateState {
       }
       this.game.strokes++;                          //add stroke
       this.game.ball.setLastPosition();
-      this.game.status.update(deltaTime);
-      this.game.setState(this.game.getIdleState()); //go to idle state
+      
+      this.game.setState(this.game.getPrepareState()); //go to idle state
     }
   }
   
