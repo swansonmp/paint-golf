@@ -125,9 +125,9 @@ export default class MenuState {
     this.state.index++;
     if (this.state.index >= this.state.items.length) this.state.index = 0; 
   }
-  handleWKey() { }  //map to up
-  handleAKey() { }  //map to left
-  handleSKey() { }  //map to down
-  handleDKey() { }  //map to right
+  handleWKey() { this.handleUpArrow(); }
+  handleAKey() { this.state.handleDecrement(); }
+  handleSKey() { this.handleDownArrow(); }
+  handleDKey() { this.state.handleIncrement(); }
   
 }

@@ -43,7 +43,6 @@ export default class InputHandler {
     });
     
     window.addEventListener("resize", resize => {
-      console.log("window resized");
       let c = document.getElementById("gameScreen");
       c.width = document.body.clientWidth;
       c.height = document.body.clientHeight;
