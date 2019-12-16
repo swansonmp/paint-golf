@@ -26,5 +26,9 @@ export default class RunningState {
   handleLeftArrow() { }
   handleRightArrow() { }
   handleEscape() { }
+  handleWKey() { }
+  handleAKey() { }
+  handleSKey() { }
+  handleDKey() { }
   
 }

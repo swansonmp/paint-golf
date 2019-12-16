@@ -32,5 +32,9 @@ export default class PowerState {
   handleDownArrow() { }
   handleLeftArrow() { }
   handleRightArrow() { }
+  handleWKey() { }
+  handleAKey() { }
+  handleSKey() { }
+  handleDKey() { }
   
 }

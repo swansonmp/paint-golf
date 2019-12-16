@@ -124,7 +124,7 @@ export default class Ball {
     else if (this.getScaledX() > this.game.COURSE_WIDTH - this.game.GAME_WIDTH / 2) {
       drawX += this.game.GAME_WIDTH / 2 - this.game.COURSE_WIDTH + this.getScaledX();
     }
-    return drawX;
+    return drawX - this.game.viewOffsetX;
   }
   
   getDrawY() {
@@ -135,7 +135,7 @@ export default class Ball {
     else if (this.getScaledY() > this.game.COURSE_HEIGHT - this.game.GAME_HEIGHT / 2) {
       drawY += this.game.GAME_HEIGHT / 2 - this.game.COURSE_HEIGHT + this.getScaledY();
     }
-    return drawY;
+    return drawY - this.game.viewOffsetY;
   }
   
   update(deltaTime) {

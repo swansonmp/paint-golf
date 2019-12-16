@@ -8,7 +8,6 @@ export default class Course {
     
     this.tees = this.createCourseCoordinateList();
     this.holes = this.createCourseCoordinateList();
-    
     this.map = [0];
   }
   
@@ -37,7 +36,7 @@ export default class Course {
         drawX = maxX;
       }
     }
-    return drawX;
+    return drawX + this.game.viewOffsetX;
   }
   
   getDrawY() {
@@ -51,7 +50,7 @@ export default class Course {
         drawY = maxY;
       }
     }
-    return drawY;
+    return drawY + this.game.viewOffsetY;
   }
   
   drawCourse(ctx) {

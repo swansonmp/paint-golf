@@ -30,5 +30,9 @@ export default class PrepareState {
   handleLeftArrow() { }
   handleRightArrow() { }
   handleEscape() { }
+  handleWKey() { }
+  handleAKey() { }
+  handleSKey() { }
+  handleDKey() { }
   
 }

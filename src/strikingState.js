@@ -27,5 +27,9 @@ export default class StrikingState {
   handleLeftArrow() { }
   handleRightArrow() { }
   handleEscape() { }
+  handleWKey() { }
+  handleAKey() { }
+  handleSKey() { }
+  handleDKey() { }
   
 }

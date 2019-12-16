@@ -32,5 +32,9 @@ export default class LoadState {
   handleLeftArrow() { }
   handleRightArrow() { }
   handleEscape() { }
+  handleWKey() { }
+  handleAKey() { }
+  handleSKey() { }
+  handleDKey() { }
   
 }

@@ -40,5 +40,9 @@ export default class EvaluateState {
   handleLeftArrow() { }
   handleRightArrow() { }
   handleEscape() { }
+  handleWKey() { }
+  handleAKey() { }
+  handleSKey() { }
+  handleDKey() { }
   
 }

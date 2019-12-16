@@ -34,5 +34,9 @@ export default class AccuracyState {
   handleDownArrow() { }
   handleLeftArrow() { }
   handleRightArrow() { }
+  handleWKey() { }
+  handleAKey() { }
+  handleSKey() { }
+  handleDKey() { }
   
 }

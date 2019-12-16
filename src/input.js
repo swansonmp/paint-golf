@@ -23,8 +23,21 @@ export default class InputHandler {
         case 40:
           game.state.handleDownArrow();
           break;
+        case 65:
+          game.state.handleAKey();
+          break;
+        case 68:
+          game.state.handleDKey();
+          break;
+        case 83:
+          game.state.handleSKey();
+          break;
+        case 87:
+          game.state.handleWKey();
+          break;
         case 192:
           game.toggleDebug();
+          break;
         default:
       }
     });

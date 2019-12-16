@@ -11,11 +11,14 @@ import MenuState from "./menuState.js";
 import LoadState from "./loadState.js";
 import PrepareState from "./prepareState.js";
 import IdleState from "./idleState.js";
+import PanState from "./panState.js";
 import PowerState from "./powerState.js";
 import AccuracyState from "./accuracyState.js";
 import StrikingState from "./strikingState.js";
 import RunningState from "./runningState.js";
 import EvaluateState from "./evaluateState.js";
+
+const PAN_RATE = 10;
 
 export default class Game {
   constructor(GAME_WIDTH, GAME_HEIGHT, CTX) {
@@ -32,6 +35,8 @@ export default class Game {
     this.status = new Status(this);
     
     this.debug = false;
+    this.viewOffsetX = 0;
+    this.viewOffsetY = 0;
     this.strokes = 0;
     this.holeNum = 1;
 
@@ -41,6 +46,7 @@ export default class Game {
     this.loadState = new LoadState(this);
     this.prepareState = new PrepareState(this);
     this.idleState = new IdleState(this);
+    this.panState = new PanState(this);
     this.powerState = new PowerState(this);
     this.accuracyState = new AccuracyState(this);
     this.strikingState = new StrikingState(this);
@@ -54,6 +60,7 @@ export default class Game {
   getLoadState() { return this.loadState; }
   getPrepareState() { return this.prepareState; }
   getIdleState() { return this.idleState; }
+  getPanState() { return this.panState; }
   getPowerState() { return this.powerState; }
   getAccuracyState() { return this.accuracyState; }
   getStrikingState() { return this.strikingState; }
@@ -87,6 +94,23 @@ export default class Game {
   
   toggleDebug() {
     this.debug = !this.debug;
+  }
+  
+  incrementViewOffsetX() { 
+    if (this.course.getDrawX() + this.viewOffsetX < this.COURSE_WIDTH - this.GAME_WIDTH / 2) 
+      this.viewOffsetX += PAN_RATE;
+  }
+  incrementViewOffsetY() {
+    if (this.course.getDrawY() + this.viewOffsetY < this.COURSE_HEIGHT - this.GAME_HEIGHT / 2)
+      this.viewOffsetY += PAN_RATE;
+  }
+  decrementViewOffsetX() {
+    if (this.course.getDrawX() + this.viewOffsetX > 0)
+      this.viewOffsetX -= PAN_RATE;
+  }
+  decrementViewOffsetY() {
+    if (this.course.getDrawY() + this.viewOffsetY > 0)
+      this.viewOffsetY -= PAN_RATE;
   }
   
   getCourse(name) {
