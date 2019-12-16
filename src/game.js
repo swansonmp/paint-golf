@@ -31,6 +31,7 @@ export default class Game {
     this.bag = new Bag(this);
     this.status = new Status(this);
     
+    this.debug = false;
     this.strokes = 0;
     this.holeNum = 1;
 
@@ -63,7 +64,17 @@ export default class Game {
     this.state = state;
   }
   
-  debug(ctx) {
+  update(deltaTime) {
+    this.dt = deltaTime;
+    this.state.update(deltaTime);
+  }
+  
+  draw(ctx) {
+    this.state.draw(ctx);
+    if (this.debug) this.drawFPS(ctx);
+  }
+  
+  drawFPS(ctx) {
     ctx.font = "bold 50px monospace";
     ctx.textAlign = "right";
     ctx.fillStyle = "yellow";
@@ -74,14 +85,8 @@ export default class Game {
     );
   }
   
-  update(deltaTime) {
-    this.dt = deltaTime;
-    this.state.update(deltaTime);
-  }
-  
-  draw(ctx) {
-    this.state.draw(ctx);
-    this.debug(ctx);
+  toggleDebug() {
+    this.debug = !this.debug;
   }
   
   getCourse(name) {

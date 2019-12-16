@@ -169,7 +169,11 @@ export default class Ball {
     this.velocity.y += this.fnet.y * deltaTime;
     this.velocity.z += this.fnet.z * deltaTime;
     
-    //calculate bounce
+    //calculate OoB bounce
+    if (this.getScaledX() < 0 || this.getScaledX() > this.game.COURSE_WIDTH) this.velocity.x *= -1;
+    if (this.getScaledY() < 0 || this.getScaledY() > this.game.COURSE_HEIGHT) this.velocity.y *= -1;
+    
+    //calculate floor bounce
     if (this.position.z < 0) {
       this.position.z = 0;
       this.velocity.z *= this.getLieRate() * this.bounce;

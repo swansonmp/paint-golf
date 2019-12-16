@@ -23,6 +23,8 @@ export default class InputHandler {
         case 40:
           game.state.handleDownArrow();
           break;
+        case 192:
+          game.toggleDebug();
         default:
       }
     });
