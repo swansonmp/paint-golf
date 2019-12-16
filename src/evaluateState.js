@@ -7,7 +7,7 @@ export default class EvaluateState {
     if (this.game.ball.inHole()) {                  //if the ball is in the hole
       this.game.holeNum++;                          //increment hole
       this.game.strokes = 0;
-      this.game.ball.reset(this.game.course.tees[holeNum].x, this.game.course.tees[holeNum].y, 0);
+      this.game.ball.reset(this.game.course.tees[this.game.holeNum].x, this.game.course.tees[this.game.holeNum].y, 0);
       this.game.setState(this.game.getIdleState()); //load next hole
     }
     else {
@@ -21,6 +21,7 @@ export default class EvaluateState {
       }
       this.game.strokes++;                          //add stroke
       this.game.ball.setLastPosition();
+      this.game.status.update(deltaTime);
       this.game.setState(this.game.getIdleState()); //go to idle state
     }
   }
@@ -28,6 +29,8 @@ export default class EvaluateState {
   draw(ctx) {
     this.game.course.draw(ctx);
     this.game.ball.draw(ctx);
+    this.game.bag.draw(ctx);
+    this.game.status.draw(ctx);
   }
   
   handleEnter() { }

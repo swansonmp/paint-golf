@@ -17,6 +17,7 @@ export default class LoadState {
       this.game.ball.reset(this.game.course.tees[1].x, this.game.course.tees[1].y, 0);
     }
     
+    this.game.status.update(deltaTime);
     //go to idle state
     this.game.setState(this.game.getIdleState());
   }

@@ -16,8 +16,9 @@ export default class PowerState {
   draw(ctx) {
     this.game.course.draw(ctx);
     this.game.ball.draw(ctx);
-    
     this.game.powerbar.draw(ctx);
+    this.game.bag.draw(ctx);
+    this.game.status.draw(ctx);
   }
   
   handleEnter() { }

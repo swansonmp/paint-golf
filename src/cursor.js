@@ -2,6 +2,7 @@ const CURSIZE = 16;
 const RATE = 100;
 const TEXT_SIZE = 20;
 const TEXT_PADDING = 2;
+const LINE_WIDTH = 2;
 
 export default class Cursor {
   constructor(game) {
@@ -18,7 +19,15 @@ export default class Cursor {
     ];
   }
   
-  draw(ctx) {    
+  draw(ctx) {
+    //draw line
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
+    ctx.lineWidth = LINE_WIDTH;
+    ctx.beginPath();
+    ctx.moveTo(this.game.ball.getDrawX() + 2, this.game.ball.getDrawY() + 2);
+    ctx.lineTo(this.curX, this.curY);
+    ctx.stroke();
+    
     //draw cursor
     ctx.drawImage(
       this.image[this.imageIndex],
