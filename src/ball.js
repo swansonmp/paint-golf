@@ -1,6 +1,5 @@
 const DEFAULT_SIZE = 4;
 const ANGLE_INCREMENT = 1/32;
-const RATE = 750;
 const SIZE_INCREASE = 3;
 const SPIN_RATE = 3;
 const INACCURACY = 1/128;
@@ -30,6 +29,7 @@ export default class Ball {
       WATER: 0.1
     };
     
+    this.rate = 750;
     this.scale = 2;
     this.mass = 0.25;
     this.gravity = -9.8;
@@ -148,7 +148,7 @@ export default class Ball {
     
     //this.debug(); //TODO
     
-    deltaTime /= RATE;
+    deltaTime /= this.rate;
     
     //update positions
     this.position.x += this.velocity.x / this.mass * deltaTime;

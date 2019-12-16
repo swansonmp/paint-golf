@@ -28,5 +28,14 @@ export default class InputHandler {
         default:
       }
     });
+    
+    window.addEventListener("resize", resize => {
+      console.log("window resized");
+      let c = document.getElementById("gameScreen");
+      c.width = document.body.clientWidth;
+      c.height = document.body.clientHeight;
+      game.GAME_WIDTH = c.width;
+      game.GAME_HEIGHT = c.height;
+    });
   }
 }

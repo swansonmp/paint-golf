@@ -7,16 +7,17 @@ export default class SettingsState {
     this.name = "Settings";
     this.items = [
       "Scale",
-      "Another Setting",
+      "Game speed",
     ];
     this.values = [
       this.game.ball.scale,
-      0
+      this.game.ball.rate
     ];
   }
   
   update(deltaTime) {
     this.game.ball.scale = this.values[0];
+    this.game.ball.rate = this.values[1];
   }
   draw(ctx) { 
     this.menuState.drawValues(ctx, this);
