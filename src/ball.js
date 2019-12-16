@@ -5,31 +5,31 @@ const SIZE_INCREASE = 3;
 const SPIN_RATE = 3;
 const INACCURACY = 1/128;
 
-const PIXEL_TYPE = {
-  TEE: 0,
-  HOLE: 1,
-  GREEN: 2,
-  FAIRWAY: 3,
-  ROUGH: 4,
-  BUNKER: 5,
-  WATER: 6
-};
-  
-const PIXEL_RATE = {
-  TEE: 1,
-  HOLE: 0,
-  GREEN: 0.99,
-  FAIRWAY: 0.98,
-  ROUGH: 0.8,
-  BUNKER: 0.6,
-  WATER: 0.1
-};
-
 export default class Ball {
   constructor(game) {
     this.game = game;
     
     this.image = document.getElementById("img_ball");
+    
+    this.PIXEL_TYPE = {
+      TEE: 0,
+      HOLE: 1,
+      GREEN: 2,
+      FAIRWAY: 3,
+      ROUGH: 4,
+      BUNKER: 5,
+      WATER: 6
+    };
+    this.PIXEL_RATE = {
+      TEE: 1,
+      HOLE: 0,
+      GREEN: 0.99,
+      FAIRWAY: 0.98,
+      ROUGH: 0.8,
+      BUNKER: 0.6,
+      WATER: 0.1
+    };
+    
     this.scale = 2;
     this.mass = 0.25;
     this.gravity = -9.8;
@@ -214,20 +214,20 @@ export default class Ball {
   getLieRate() {
     let lie = this.getPixelType();
     switch (lie) {
-      case PIXEL_TYPE.TEE:
-        return PIXEL_RATE.TEE;
-      case PIXEL_TYPE.HOLE:
-        return PIXEL_RATE.HOLE;
-      case PIXEL_TYPE.GREEN:
-        return PIXEL_RATE.GREEN;
-      case PIXEL_TYPE.ROUGH:
-        return PIXEL_RATE.ROUGH;
-      case PIXEL_TYPE.BUNKER:
-        return PIXEL_RATE.BUNKER;
-      case PIXEL_TYPE.WATER:
-        return PIXEL_RATE.WATER;
+      case this.PIXEL_TYPE.TEE:
+        return this.PIXEL_RATE.TEE;
+      case this.PIXEL_TYPE.HOLE:
+        return this.PIXEL_RATE.HOLE;
+      case this.PIXEL_TYPE.GREEN:
+        return this.PIXEL_RATE.GREEN;
+      case this.PIXEL_TYPE.ROUGH:
+        return this.PIXEL_RATE.ROUGH;
+      case this.PIXEL_TYPE.BUNKER:
+        return this.PIXEL_RATE.BUNKER;
+      case this.PIXEL_TYPE.WATER:
+        return this.PIXEL_RATE.WATER;
       default:
-        return PIXEL_RATE.FAIRWAY;
+        return this.PIXEL_RATE.FAIRWAY;
     }
   }
   
@@ -236,11 +236,11 @@ export default class Ball {
   }
   
   inHole() {
-    return this.getPixelType() == PIXEL_TYPE.HOLE;
+    return this.getPixelType() == this.PIXEL_TYPE.HOLE;
   }
   
   inWater() {
-    return this.getPixelType() == PIXEL_TYPE.WATER;
+    return this.getPixelType() == this.PIXEL_TYPE.WATER;
   }
   
   getScaledX() { return this.position.x * this.scale; }

@@ -1,15 +1,7 @@
-const PIXEL_TYPE = {
-  TEE: 0,
-  HOLE: 1,
-  GREEN: 2,
-  FAIRWAY: 3,
-  ROUGH: 4,
-  BUNKER: 5,
-  WATER: 6
-};
-
 export default class Palette {
-  constructor() {
+  constructor(game) {
+    this.game = game;
+    
     this.COLOR = {
       TEE: 0x000001,
       HOLE: 0xed1c24,
@@ -21,31 +13,36 @@ export default class Palette {
     };
     
     this.HEX_COLOR = {
-      TEE: "#000001",
-      HOLE: "#ed1c24",
-      GREEN: "#b5e61d",
-      FAIRWAY: "#b5e61d",
-      ROUGH: "#22b14c",
-      BUNKER: "#efe5b0",
-      WATER: "#00a2e8"
+      TEE: this.toHexString(this.COLOR.TEE),
+      HOLE: this.toHexString(this.COLOR.HOLE),
+      GREEN: this.toHexString(this.COLOR.GREEN),
+      FAIRWAY: this.toHexString(this.COLOR.FAIRWAY),
+      ROUGH: this.toHexString(this.COLOR.ROUGH),
+      BUNKER: this.toHexString(this.COLOR.BUNKER),
+      WATER: this.toHexString(this.COLOR.WATER)
     };
+  }
+  
+  toHexString(n) {
+    let str = (n).toString(16);
+    return "#" + "0".repeat(6 - str.length) + str;
   }
   
   getHexColor(lie) {
     switch (lie) {
-      case PIXEL_TYPE.TEE:
+      case this.game.ball.PIXEL_TYPE.TEE:
         return this.HEX_COLOR.TEE;
-      case PIXEL_TYPE.HOLE:
+      case this.game.ball.PIXEL_TYPE.HOLE:
         return this.HEX_COLOR.HOLE;
-      case PIXEL_TYPE.GREEN:
+      case this.game.ball.PIXEL_TYPE.GREEN:
         return this.HEX_COLOR.GREEN;
-      case PIXEL_TYPE.FAIRWAY:
+      case this.game.ball.PIXEL_TYPE.FAIRWAY:
         return this.HEX_COLOR.FAIRWAY;
-      case PIXEL_TYPE.ROUGH:
+      case this.game.ball.PIXEL_TYPE.ROUGH:
         return this.HEX_COLOR.ROUGH;
-      case PIXEL_TYPE.BUNKER:
+      case this.game.ball.PIXEL_TYPE.BUNKER:
         return this.HEX_COLOR.BUNKER;
-      case PIXEL_TYPE.WATER:
+      case this.game.ball.PIXEL_TYPE.WATER:
         return this.HEX_COLOR.WATER;
       default:
         return "#ff00ff";

@@ -11,16 +11,7 @@ export default class Loader {
     
     course.drawCourse(this.CTX);
     
-    let palette = new Palette();
-    const PIXEL_TYPE = {
-      TEE: 0,
-      HOLE: 1,
-      GREEN: 2,
-      FAIRWAY: 3,
-      ROUGH: 4,
-      BUNKER: 5,
-      WATER: 6
-    };
+    let palette = new Palette(this.game);
     
     let imgData = this.CTX.getImageData(0, 0, this.game.COURSE_WIDTH, this.game.COURSE_HEIGHT);
     let i;
@@ -43,32 +34,32 @@ export default class Loader {
       if (imgData.data[i] == 0 && imgData.data[i + 1] == 0) {
         if (imgData.data[i + 2] <= course.tees.length) {
           course.tees[imgData.data[i + 2]] = { x: row, y: col };
-          this.courseMap[row][col] = PIXEL_TYPE.TEE;
+          this.courseMap[row][col] = this.game.ball.PIXEL_TYPE.TEE;
         }
       }
       //check if a hole
       else if (imgData.data[i] == 255 && imgData.data[i + 1] == 0) {
         if (imgData.data[i + 2] <= course.holes.length) {
           course.holes[imgData.data[i + 2]] = { x: row, y: col };
-          this.courseMap[row][col] = PIXEL_TYPE.HOLE;
+          this.courseMap[row][col] = this.game.ball.PIXEL_TYPE.HOLE;
         }
       }
       else {
         switch(this.rgbToDec(imgData.data[i], imgData.data[i + 1], imgData.data[i + 2])) {
           case palette.COLOR.GREEN:
-            this.courseMap[row][col] = PIXEL_TYPE.GREEN;
+            this.courseMap[row][col] = this.game.ball.PIXEL_TYPE.GREEN;
             break;
           case palette.COLOR.ROUGH:
-            this.courseMap[row][col] = PIXEL_TYPE.ROUGH;
+            this.courseMap[row][col] = this.game.ball.PIXEL_TYPE.ROUGH;
             break;
           case palette.COLOR.BUNKER:
-            this.courseMap[row][col] = PIXEL_TYPE.BUNKER;
+            this.courseMap[row][col] = this.game.ball.PIXEL_TYPE.BUNKER;
             break;
           case palette.COLOR.WATER:
-            this.courseMap[row][col] = PIXEL_TYPE.WATER;
+            this.courseMap[row][col] = this.game.ball.PIXEL_TYPE.WATER;
             break;
           default:
-            this.courseMap[row][col] = PIXEL_TYPE.FAIRWAY;
+            this.courseMap[row][col] = this.game.ball.PIXEL_TYPE.FAIRWAY;
         }
       }
     }

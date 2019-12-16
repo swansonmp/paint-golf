@@ -4,7 +4,7 @@ export default class Course {
   constructor(game) {
     this.game = game;
     
-    this.palette = new Palette();
+    this.palette = new Palette(game);
     
     this.tees = this.createCourseCoordinateList();
     this.holes = this.createCourseCoordinateList();

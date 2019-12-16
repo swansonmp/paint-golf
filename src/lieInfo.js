@@ -4,16 +4,6 @@ const BALL_SIZE = 25;
 const TEXT_SIZE = 30;
 const TEXT_PADDING = 2;
 
-const PIXEL_TYPE = {
-  TEE: 0,
-  HOLE: 1,
-  GREEN: 2,
-  FAIRWAY: 3,
-  ROUGH: 4,
-  BUNKER: 5,
-  WATER: 6
-};
-
 export default class LieInfo {
   constructor(game) {
     this.game = game;
