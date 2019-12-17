@@ -7,7 +7,7 @@ export default class MainState {
     this.name = "Main";
     this.items = [
       "Play",
-      "Load",
+      "Select",
       "Settings"
     ];
   }
@@ -21,7 +21,7 @@ export default class MainState {
         this.game.setState(this.game.getLoadState());
         break;
       case 1:
-        this.menuState.setState(this.menuState.getOpenState());
+        this.menuState.setState(this.menuState.getSelectState());
         break;
       case 2:
         this.menuState.setState(this.menuState.getSettingsState());

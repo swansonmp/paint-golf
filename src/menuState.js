@@ -1,6 +1,8 @@
 import TitleState from "./titleState.js";
 import MainState from "./mainState.js";
-import OpenState from "./openState.js";
+import SelectState from "./selectState.js";
+import LocalState from "./localState.js";
+import UploadState from "./uploadState.js";
 import SettingsState from "./settingsState.js";
 
 const RATE = 50;
@@ -17,7 +19,9 @@ export default class MenuState {
     
     this.titleState = new TitleState(game, this);
     this.mainState = new MainState(game, this);
-    this.openState = new OpenState(game, this);
+    this.selectState = new SelectState(game, this);
+    this.localState = new LocalState(game, this);
+    this.uploadState = new UploadState(game, this);
     this.settingsState = new SettingsState(game, this);
     
     this.setState(this.getTitleState());
@@ -28,7 +32,9 @@ export default class MenuState {
   
   getTitleState() { return this.titleState; }
   getMainState() { return this.mainState; }
-  getOpenState() { return this.openState; }
+  getSelectState() { return this.selectState; }
+  getLocalState() { return this.localState; }
+  getUploadState() { return this.uploadState; }
   getSettingsState() { return this.settingsState; }
   
   setState(state) {

@@ -130,4 +130,12 @@ export default class Game {
     }
   }
   
+  getCustomCourse() {
+    this.courseImage = document.getElementById("custom");
+    this.vanityImage = this.courseImage;
+    this.COURSE_WIDTH = this.courseImage.width;
+    this.COURSE_HEIGHT = this.courseImage.height;
+    console.log(this.COURSE_WIDTH + ", " + this.COURSE_HEIGHT);
+  }
+  
 }
