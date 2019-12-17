@@ -11,7 +11,7 @@ export default class LoadState {
     if (this.game.course == null) { //TODO also must check to see if new course has been selected to load    
       //load the course
       this.game.course = new Course(this.game);
-      this.game.loader.loadHole(this.game.course);
+      this.game.loader.loadCourse(this.game.course);
       
       //set ball
       this.game.ball.reset(this.game.course.tees[1].x, this.game.course.tees[1].y, 0);
@@ -21,9 +21,7 @@ export default class LoadState {
     this.game.setState(this.game.getPrepareState());
   }
   
-  draw(ctx) {
-    this.game.course.drawCourse(ctx);
-  }
+  draw(ctx) { }
   
   handleEnter() { }
   handleSpace() { }

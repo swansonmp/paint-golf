@@ -41,8 +41,6 @@
 
 ## Other Fixes
 
-* Draw cursor before ball
 * Fix pan limits on bottom and right
 * Lie oddities on far right and far bottom of course
 * Refactor menuState code to change handleIncrement and handle arrows
-* Frame drops in menus that are resolved on course load

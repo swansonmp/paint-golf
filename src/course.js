@@ -53,8 +53,8 @@ export default class Course {
     return drawY + this.game.viewOffsetY;
   }
   
-  drawCourse(ctx) {
-    ctx.drawImage(this.game.courseImage, 0, 0, this.game.COURSE_WIDTH, this.game.COURSE_HEIGHT);
+  drawCourse(ctx, xOffset, yOffset, width, height) {
+    ctx.drawImage(this.game.courseImage, xOffset, yOffset, width, height);
   }
   
   update(deltaTime) {

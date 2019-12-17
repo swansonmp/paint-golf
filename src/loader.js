@@ -6,76 +6,120 @@ export default class Loader {
     this.CTX = CTX;
   }
   
-  loadHole(course) {
-    this.courseMap = this.create2DArray(this.game.COURSE_WIDTH);
+  loadCourse(course) {
+    this.course = course;
+    this.course.map = this.create2DArray(this.game.COURSE_WIDTH);
+    this.palette = new Palette(this.game);
     
-    course.drawCourse(this.CTX);
-    
-    let palette = new Palette(this.game);
-    
-    let imgData = this.CTX.getImageData(0, 0, this.game.COURSE_WIDTH, this.game.COURSE_HEIGHT);
-    let i;
-    let row = 0;
-    let col = 0;
-    for (i = 0; i < imgData.data.length; i += 4) {
-      if (row >= this.game.COURSE_WIDTH - 1) {
-        row = 0;
-        col++;
+    this.yOffset = 0;
+    while (this.yOffset + this.game.GAME_HEIGHT < this.game.COURSE_HEIGHT) {
+      this.xOffset = 0;
+      //do full widths
+      while (this.xOffset + this.game.GAME_WIDTH < this.game.COURSE_WIDTH) {
+        this.parseSection(this.game.GAME_WIDTH, this.game.GAME_HEIGHT);
+        this.xOffset += this.game.GAME_WIDTH;  
       }
-      else {
-        row++;
-      }
-      
-      if (col >= this.game.COURSE_HEIGHT) {
-        break;
-      }
-
-      //check if a tee
-      if (imgData.data[i] == 0 && imgData.data[i + 1] == 0) {
-        if (imgData.data[i + 2] <= course.tees.length) {
-          course.tees[imgData.data[i + 2]] = { x: row, y: col };
-          this.courseMap[row][col] = this.game.ball.PIXEL_TYPE.TEE;
-        }
-      }
-      //check if a hole
-      else if (imgData.data[i] == 255 && imgData.data[i + 1] == 0) {
-        if (imgData.data[i + 2] <= course.holes.length) {
-          course.holes[imgData.data[i + 2]] = { x: row, y: col };
-          this.courseMap[row][col] = this.game.ball.PIXEL_TYPE.HOLE;
-        }
-      }
-      else {
-        switch(this.rgbToDec(imgData.data[i], imgData.data[i + 1], imgData.data[i + 2])) {
-          case palette.COLOR.GREEN:
-            this.courseMap[row][col] = this.game.ball.PIXEL_TYPE.GREEN;
-            break;
-          case palette.COLOR.ROUGH:
-            this.courseMap[row][col] = this.game.ball.PIXEL_TYPE.ROUGH;
-            break;
-          case palette.COLOR.BUNKER:
-            this.courseMap[row][col] = this.game.ball.PIXEL_TYPE.BUNKER;
-            break;
-          case palette.COLOR.WATER:
-            this.courseMap[row][col] = this.game.ball.PIXEL_TYPE.WATER;
-            break;
-          default:
-            this.courseMap[row][col] = this.game.ball.PIXEL_TYPE.FAIRWAY;
-        }
-      }
+      //do the rest of x
+      this.parseSection(this.game.COURSE_WIDTH - this.xOffset, this.game.GAME_HEIGHT);
+      this.yOffset += this.game.GAME_HEIGHT;
     }
+    //do the rest of y
+    this.xOffset = 0;
+    //do full widths
+    while (this.xOffset + this.game.GAME_WIDTH < this.game.COURSE_WIDTH) {
+      this.parseSection(this.game.GAME_WIDTH, this.game.COURSE_HEIGHT - this.yOffset);
+      this.xOffset += this.game.GAME_WIDTH;  
+    }
+    //do the rest of x of the rest of y
+    this.parseSection(this.game.COURSE_WIDTH - this.xOffset, this.game.COURSE_HEIGHT - this.yOffset);
     
-    course.map = this.courseMap;
+    this.debug();
   }
   
-  debug(course) {
+  debug() {
     let i;
-    for (i = 0; i < course.tees.length; i++) {
+    for (i = 0; i < this.course.tees.length; i++) {
       console.log(
           "Hole " + i + ":\n" +
-          "    Tee:  " + course.tees[i].x + " " + course.tees[i].y + "\n" +
-          "    Hole: " + course.holes[i].x + " " + course.holes[i].y
+          "    Tee:  " + this.course.tees[i].x + " " + this.course.tees[i].y + "\n" +
+          "    Hole: " + this.course.holes[i].x + " " + this.course.holes[i].y
       );
+      
+      //error handline TODO
+      /*
+      if (this.course.tees[i].x == -1) this.course.tees[i].x = 0;
+      if (this.course.tees[i].y == -1) this.course.tees[i].y = 0;
+      if (this.course.holes[i].x == -1) this.course.holes[i].x = 0;
+      if (this.course.holes[i].y == -1) this.course.holes[i].y = 0;
+      */
     }
+  }
+  
+  parseSection(width, height) {
+    console.log(this.xOffset + ", " + this.yOffset + " | " + width + ", " + height);  //TODO debug
+    this.course.drawCourse(this.CTX, this.xOffset, this.yOffset, width, height);
+    this.imgData = this.CTX.getImageData(0, 0, width, height);
+    this.row = 0;
+    this.col = 0;
+    let i;
+    for (i = 0; i < this.imgData.data.length; i += 4) {
+      //check rows and cols
+      if (this.row >= width - 1) { this.row = 0; this.col++; }
+      else { this.row++; }
+      if (this.col >= height) { break; }
+      //checking pixel values
+      if (!this.checkTeeOrHole(this.imgData.data[i], this.imgData.data[i + 1], this.imgData.data[i + 2])) {
+        this.setPixel(this.imgData.data[i], this.imgData.data[i + 1], this.imgData.data[i + 2]);
+      }
+    }
+  }
+  
+  checkTeeOrHole(r, g, b) {
+    console.log(r + " " + g + " " + b); //TODO debug
+    //check if a tee
+    if (r == 0 && g == 0) {
+      if (b <= this.course.tees.length) {
+        if (b > 0 )console.log("Found tee!"); //TODO
+        this.course.tees[b] = { x: this.row, y: this.col };
+        this.course.map[this.row + this.xOffset][this.col + this.yOffset] = this.game.ball.PIXEL_TYPE.TEE;
+      }
+      return true;
+    }
+    //check if a hole
+    else if (r == 255 && g == 0) {
+      if (b > 0 )console.log("Found hole!"); //TODO
+      if (b <= this.course.holes.length) {
+        this.course.holes[b] = { x: this.row, y: this.col };
+        this.course.map[this.row + this.xOffset][this.col + this.yOffset] = this.game.ball.PIXEL_TYPE.HOLE;
+      }
+      return true;
+    }
+    return false;
+  }
+  
+  setPixel(r, g, b) {
+    let t;
+    switch(this.rgbToDec(r, g, b)) {
+      case this.palette.COLOR.GREEN:
+        t = this.game.ball.PIXEL_TYPE.GREEN;
+        break;
+      case this.palette.COLOR.ROUGH:
+        t = this.game.ball.PIXEL_TYPE.ROUGH;
+        break;
+      case this.palette.COLOR.BUNKER:
+        t = this.game.ball.PIXEL_TYPE.BUNKER;
+        break;
+      case this.palette.COLOR.WATER:
+        t = this.game.ball.PIXEL_TYPE.WATER;
+        break;
+      default:
+        t = this.game.ball.PIXEL_TYPE.FAIRWAY;
+    }
+    this.course.map[this.row + this.xOffset][this.col + this.yOffset] = t;
+  }
+  
+  rgbToDec(r, g, b) {
+    return (r << 16) + (g << 8) + (b);
   }
   
   create2DArray(rows) {
@@ -86,7 +130,4 @@ export default class Loader {
     return arr;
   }
   
-  rgbToDec(r, g, b) {
-    return (r << 16) + (g << 8) + (b);
-  }
 }
