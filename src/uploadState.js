@@ -9,12 +9,21 @@ export default class LocalState {
       "Browse",
       "Upload"
     ];
+    this.values = [
+      "",
+      ""
+    ];
     
     this.img = new Image();
   }
   
-  update(deltaTime) { }
-  draw(ctx) { }
+  update(deltaTime) { 
+  
+  }
+  
+  draw(ctx) { 
+    this.menuState.drawValues(ctx, this);
+  }
   
   handleConfirm() {
     switch (this.index) {
@@ -32,7 +41,7 @@ export default class LocalState {
   browse() {
     var input = document.createElement('input');
     input.type = 'file';
-    
+    let us = this;
     input.addEventListener('change', function(e) {
       let file = input.files[0];
       let imageType = /image.*/;
@@ -41,11 +50,12 @@ export default class LocalState {
           reader.onload = function(e) {
             this.img = new Image();
             document.getElementById("custom").src = reader.result;
+            us.values[0] = file.name;  
           }
-          reader.readAsDataURL(file);  
+          reader.readAsDataURL(file);       
       }
       else {
-        console.error("File type not supported.");
+        us.values[0] = "Invalid file type"; 
       }
     });
     

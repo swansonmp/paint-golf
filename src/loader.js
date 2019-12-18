@@ -42,8 +42,8 @@ export default class Loader {
     for (i = 0; i < this.course.tees.length; i++) {
       console.log(
           "Hole " + i + ":\n" +
-          "  Tee:  " + this.course.tees[i].x + " " + this.course.tees[i].y + " | " +
-          "Hole: " + this.course.holes[i].x + " " + this.course.holes[i].y
+          "  Tee:  " + this.course.tees[i].x + " " + this.course.tees[i].y + "\n" +
+          "  Hole: " + this.course.holes[i].x + " " + this.course.holes[i].y
       );
     }
   }

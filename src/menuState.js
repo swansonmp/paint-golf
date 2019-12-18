@@ -11,7 +11,7 @@ const PADDING_X = 100;
 const PADDING_Y = 25;
 const HEADING_SIZE = 80;
 const ITEM_SIZE = 50;
-const TAB = 750;
+const TAB = 600;
 
 export default class MenuState {
   constructor(game) {
