@@ -30,9 +30,9 @@ export default class HoleInfo {
     ctx.textAlign = "left";
     ctx.strokeStyle = "black";
     ctx.lineWidth = 5;
-    ctx.strokeText(this.distance + "y", PADDING, TEXT_SIZE * 3);
+    ctx.strokeText(this.distance.toFixed(0) + "y", PADDING, TEXT_SIZE * 3);
     ctx.fillStyle = "white";
-    ctx.fillText(this.distance + "y", PADDING, TEXT_SIZE * 3);
+    ctx.fillText(this.distance.toFixed(0) + "y", PADDING, TEXT_SIZE * 3);
   }
   
   update(deltaTime) {

@@ -54,7 +54,18 @@ export default class Course {
   }
   
   drawCourse(ctx, xOffset, yOffset, width, height) {
-    ctx.drawImage(this.game.courseImage, xOffset, yOffset, width, height);
+    ctx.drawImage(
+        this.game.courseImage,
+        xOffset,
+        yOffset, 
+        width, 
+        height,
+        0,
+        0,
+        width, 
+        height
+    );
+    //if (xOffset > 900) { throw new Error("Killed at draw: " + xOffset + ", " + yOffset + ", " + width + ", " + height); }
   }
   
   update(deltaTime) {

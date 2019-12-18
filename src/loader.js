@@ -9,6 +9,7 @@ export default class Loader {
   loadCourse(course) {
     this.course = course;
     this.course.map = this.create2DArray(this.game.COURSE_WIDTH);
+    
     this.palette = new Palette(this.game);
     
     this.yOffset = 0;
@@ -41,22 +42,14 @@ export default class Loader {
     for (i = 0; i < this.course.tees.length; i++) {
       console.log(
           "Hole " + i + ":\n" +
-          "    Tee:  " + this.course.tees[i].x + " " + this.course.tees[i].y + "\n" +
-          "    Hole: " + this.course.holes[i].x + " " + this.course.holes[i].y
+          "  Tee:  " + this.course.tees[i].x + " " + this.course.tees[i].y + " | " +
+          "Hole: " + this.course.holes[i].x + " " + this.course.holes[i].y
       );
-      
-      //error handline TODO
-      /*
-      if (this.course.tees[i].x == -1) this.course.tees[i].x = 0;
-      if (this.course.tees[i].y == -1) this.course.tees[i].y = 0;
-      if (this.course.holes[i].x == -1) this.course.holes[i].x = 0;
-      if (this.course.holes[i].y == -1) this.course.holes[i].y = 0;
-      */
     }
   }
   
   parseSection(width, height) {
-    console.log(this.xOffset + ", " + this.yOffset + " | " + width + ", " + height);  //TODO debug
+    //console.log("Drawing: " + this.xOffset + ", " + this.yOffset + ", " + width + ", " + height); //todo///////////////////
     this.course.drawCourse(this.CTX, this.xOffset, this.yOffset, width, height);
     this.imgData = this.CTX.getImageData(0, 0, width, height);
     this.row = 0;
@@ -75,21 +68,18 @@ export default class Loader {
   }
   
   checkTeeOrHole(r, g, b) {
-    console.log(r + " " + g + " " + b); //TODO debug
     //check if a tee
     if (r == 0 && g == 0) {
       if (b <= this.course.tees.length) {
-        if (b > 0 )console.log("Found tee!"); //TODO
-        this.course.tees[b] = { x: this.row, y: this.col };
+        this.course.tees[b] = { x: this.row + this.xOffset, y: this.col + this.yOffset };
         this.course.map[this.row + this.xOffset][this.col + this.yOffset] = this.game.ball.PIXEL_TYPE.TEE;
       }
       return true;
     }
     //check if a hole
     else if (r == 255 && g == 0) {
-      if (b > 0 )console.log("Found hole!"); //TODO
       if (b <= this.course.holes.length) {
-        this.course.holes[b] = { x: this.row, y: this.col };
+        this.course.holes[b] = { x: this.row + this.xOffset, y: this.col + this.yOffset };
         this.course.map[this.row + this.xOffset][this.col + this.yOffset] = this.game.ball.PIXEL_TYPE.HOLE;
       }
       return true;
