@@ -79,8 +79,8 @@ export default class Ball {
     this.velocity.z = vertical * this.getLieRate();
     
     
-    this.spin.x = -vertical / horizontal * SPIN_RATE * Math.cos(this.angle);
-    this.spin.y = -vertical / horizontal * SPIN_RATE * Math.sin(this.angle);
+    this.spin.x = -this.game.bag.getClub().vertical / this.game.bag.getClub().horizontal * SPIN_RATE * Math.cos(this.angle);
+    this.spin.y = -this.game.bag.getClub().vertical / this.game.bag.getClub().horizontal * SPIN_RATE * Math.sin(this.angle);
     
     this.dtheta = dtheta * INACCURACY;
   }

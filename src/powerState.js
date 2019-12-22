@@ -6,6 +6,7 @@ export default class PowerState {
   update(deltaTime) {
     //if current is -10, go to idle
     if (this.game.powerbar.getCurrent() <= -10) {
+      this.game.powerbar.reset();
       this.game.setState(this.game.getIdleState());
       return;
     }

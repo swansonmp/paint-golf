@@ -28,6 +28,7 @@
 * Refactor pan feature to a View class
   * Move methods and change references in Course, Ball, and PanState
 * Add prompt to reset pan camera
+* Uploadable tee and pin locations
 
 
 ## UI
