@@ -36,7 +36,7 @@ export default class Course {
         drawX = maxX;
       }
     }
-    return drawX + this.game.viewOffsetX;
+    return drawX + this.game.view.offsetX;
   }
   
   getDrawY() {
@@ -50,7 +50,7 @@ export default class Course {
         drawY = maxY;
       }
     }
-    return drawY + this.game.viewOffsetY;
+    return drawY + this.game.view.offsetY;
   }
   
   drawCourse(ctx, xOffset, yOffset, width, height) {
@@ -65,7 +65,6 @@ export default class Course {
         width, 
         height
     );
-    //if (xOffset > 900) { throw new Error("Killed at draw: " + xOffset + ", " + yOffset + ", " + width + ", " + height); }
   }
   
   update(deltaTime) {

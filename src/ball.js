@@ -61,7 +61,10 @@ export default class Ball {
   }
   
   setLastPosition() {
-    this.lastPosition = this.position;
+    //this.lastPosition = this.position;
+    this.lastPosition.x = this.getScaledX();
+    this.lastPosition.y = this.getScaledY();
+    this.lastPosition.z = this.position.z;
   }
 
   isMoving() {
@@ -69,16 +72,12 @@ export default class Ball {
   }
 
   strike(horizontal, vertical, dtheta) {
-    //log last position
-    this.lastPosition.x = this.position.x;
-    this.lastPosition.y = this.position.y;
-    this.lastPosition.z = this.position.z;
-    
+    //set velocities
     this.velocity.x = Math.cos(this.angle) * horizontal * this.getLieRate() * this.mass;
     this.velocity.y = Math.sin(this.angle) * horizontal * this.getLieRate() * this.mass;
     this.velocity.z = vertical * this.getLieRate();
     
-    
+    //set spin
     this.spin.x = -this.game.bag.getClub().vertical / this.game.bag.getClub().horizontal * SPIN_RATE * Math.cos(this.angle);
     this.spin.y = -this.game.bag.getClub().vertical / this.game.bag.getClub().horizontal * SPIN_RATE * Math.sin(this.angle);
     
@@ -124,7 +123,7 @@ export default class Ball {
     else if (this.getScaledX() > this.game.COURSE_WIDTH - this.game.GAME_WIDTH / 2) {
       drawX += this.game.GAME_WIDTH / 2 - this.game.COURSE_WIDTH + this.getScaledX();
     }
-    return drawX - this.game.viewOffsetX;
+    return drawX - this.game.view.offsetX;
   }
   
   getDrawY() {
@@ -135,7 +134,7 @@ export default class Ball {
     else if (this.getScaledY() > this.game.COURSE_HEIGHT - this.game.GAME_HEIGHT / 2) {
       drawY += this.game.GAME_HEIGHT / 2 - this.game.COURSE_HEIGHT + this.getScaledY();
     }
-    return drawY - this.game.viewOffsetY;
+    return drawY - this.game.view.offsetY;
   }
   
   update(deltaTime) {
@@ -146,7 +145,7 @@ export default class Ball {
       return;
     }
     
-    //this.debug(); //TODO
+    if (this.game.debug.active) this.debug();
     
     deltaTime /= this.rate;
     
@@ -159,10 +158,10 @@ export default class Ball {
     let xv = this.velocity.x; //the unmodified xvel
     this.velocity.x = this.velocity.x * Math.cos(this.dtheta) - this.velocity.y * Math.sin(this.dtheta);
     this.velocity.y = xv * Math.sin(this.dtheta) + this.velocity.y * Math.cos(this.dtheta);
-    //apply inaccuracy to spin
-    //let xs = this.spin.x;
-    //this.spin.x = this.spin.x * Math.cos(this.dtheta) - this.spin.y * Math.sin(this.dtheta);
-    //this.spin.y = xs * Math.sin(this.dtheta) + this.spin.y * Math.cos(this.dtheta);
+    
+    //apply wind
+    this.velocity.x += this.game.wind.getWind().x * this.position.z * this.game.wind.getHeightRate();
+    this.velocity.y += this.game.wind.getWind().y * this.position.z * this.game.wind.getHeightRate();
     
     //update velocities
     this.velocity.x += this.fnet.x * deltaTime;
@@ -255,7 +254,7 @@ export default class Ball {
   
   debug() {
     console.log(
-        this.position.x + "," + this.position.y + "," + this.position.z
+        this.position.x.toFixed(2) + "," + this.position.y.toFixed(2) + "," + this.position.z.toFixed(2)
     ); 
   }
 }

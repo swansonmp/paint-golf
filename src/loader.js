@@ -34,17 +34,19 @@ export default class Loader {
     //do the rest of x of the rest of y
     this.parseSection(this.game.COURSE_WIDTH - this.xOffset, this.game.COURSE_HEIGHT - this.yOffset);
     
-    this.debug();
+    if (this.game.debug.active) this.debug();
   }
   
   debug() {
     let i;
-    for (i = 0; i < this.course.tees.length; i++) {
-      console.log(
-          "Hole " + i + ":\n" +
-          "  Tee:  " + this.course.tees[i].x + " " + this.course.tees[i].y + "\n" +
-          "  Hole: " + this.course.holes[i].x + " " + this.course.holes[i].y
-      );
+    for (i = 1; i < this.course.tees.length; i++) {
+      if (this.course.tees[i].x != -1 || this.course.tees[i].y != -1) {
+        console.log(
+            "Hole " + i + ":\n" +
+            "  Tee:  " + this.course.tees[i].x + " " + this.course.tees[i].y + "\n" +
+            "  Hole: " + this.course.holes[i].x + " " + this.course.holes[i].y
+        );
+      }
     }
   }
   

@@ -1,32 +1,23 @@
-import HoleInfo from "./holeInfo.js";
-import LieInfo from "./lieInfo.js";
+import HoleInfo from "./ui/holeInfo.js";
+import LieInfo from "./ui/lieInfo.js";
+import StrokeInfo from "./ui/strokeInfo.js";
 
 export default class Status {
   constructor(game) {
-    this.game = game;
-    
     this.holeInfo = new HoleInfo(game);
     this.lieInfo = new LieInfo(game);
+    this.strokeInfo = new StrokeInfo(game);
   }
   
   draw(ctx) {
-    /*
-    //draw strokes
-    ctx.font = "small-caps bold 50px monospace";
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 5;
-    ctx.strokeText(this.game.strokes, this.game.GAME_WIDTH - PADDING * 4, this.game.GAME_HEIGHT - PADDING);
-    ctx.fillStyle = "white";
-    ctx.textAlign = "left";
-    ctx.fillText(this.game.strokes, this.game.GAME_WIDTH - PADDING * 4, this.game.GAME_HEIGHT - PADDING);
-    */
-    
     this.holeInfo.draw(ctx);
     this.lieInfo.draw(ctx);
+    this.strokeInfo.draw(ctx);
   }
   
   update(deltaTime) {
     this.holeInfo.update(deltaTime);
     this.lieInfo.update(deltaTime);
+    this.strokeInfo.update(deltaTime);
   }
 }

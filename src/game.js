@@ -1,24 +1,25 @@
 import Loader from "./loader.js";
 
 import Ball from "./ball.js";
+import Wind from "./wind.js";
 import Cursor from "./cursor.js";
 import Bag from "./bag.js";
 import PowerBar from "./powerbar.js";
 import Status from "./status.js";
 import InputHandler from "./input.js";
+import Debug from "./debug.js";
+import View from "./view.js";
 
-import MenuState from "./menuState.js";
-import LoadState from "./loadState.js";
-import PrepareState from "./prepareState.js";
-import IdleState from "./idleState.js";
-import PanState from "./panState.js";
-import PowerState from "./powerState.js";
-import AccuracyState from "./accuracyState.js";
-import StrikingState from "./strikingState.js";
-import RunningState from "./runningState.js";
-import EvaluateState from "./evaluateState.js";
-
-const PAN_RATE = 10;
+import MenuState from "./states/menuState.js";
+import LoadState from "./states/loadState.js";
+import PrepareState from "./states/prepareState.js";
+import IdleState from "./states/idleState.js";
+import PanState from "./states/panState.js";
+import PowerState from "./states/powerState.js";
+import AccuracyState from "./states/accuracyState.js";
+import StrikingState from "./states/strikingState.js";
+import RunningState from "./states/runningState.js";
+import EvaluateState from "./states/evaluateState.js";
 
 export default class Game {
   constructor(GAME_WIDTH, GAME_HEIGHT, CTX) {
@@ -29,14 +30,15 @@ export default class Game {
     this.loader = new Loader(this, CTX);
     
     this.ball = new Ball(this);
+    this.wind = new Wind(this);
     this.cursor = new Cursor(this);
     this.powerbar = new PowerBar(this);
     this.bag = new Bag(this);
     this.status = new Status(this);
     
-    this.debug = false;
-    this.viewOffsetX = 0;
-    this.viewOffsetY = 0;
+    this.debug = new Debug(this);
+    this.view = new View(this);
+    
     this.strokes = 0;
     this.holeNum = 1;
 
@@ -72,46 +74,15 @@ export default class Game {
   }
   
   update(deltaTime) {
-    this.dt = deltaTime;
     this.state.update(deltaTime);
+    this.debug.update(deltaTime);
   }
   
   draw(ctx) {
     this.state.draw(ctx);
-    if (this.debug) this.drawFPS(ctx);
+    this.debug.draw(ctx);
   }
   
-  drawFPS(ctx) {
-    ctx.font = "bold 50px monospace";
-    ctx.textAlign = "right";
-    ctx.fillStyle = "yellow";
-    ctx.fillText(
-        (1000 / this.dt).toFixed(0),
-        this.GAME_WIDTH - 20,
-        70
-    );
-  }
-  
-  toggleDebug() {
-    this.debug = !this.debug;
-  }
-  
-  incrementViewOffsetX() { 
-    if (this.course.getDrawX() + this.viewOffsetX < this.COURSE_WIDTH - this.GAME_WIDTH / 2) 
-      this.viewOffsetX += PAN_RATE;
-  }
-  incrementViewOffsetY() {
-    if (this.course.getDrawY() + this.viewOffsetY < this.COURSE_HEIGHT - this.GAME_HEIGHT / 2)
-      this.viewOffsetY += PAN_RATE;
-  }
-  decrementViewOffsetX() {
-    if (this.course.getDrawX() + this.viewOffsetX > 0)
-      this.viewOffsetX -= PAN_RATE;
-  }
-  decrementViewOffsetY() {
-    if (this.course.getDrawY() + this.viewOffsetY > 0)
-      this.viewOffsetY -= PAN_RATE;
-  }
   
   getCourse(name) {
     this.courseImage = document.getElementById("course");

@@ -36,7 +36,7 @@ export default class InputHandler {
           game.state.handleWKey();
           break;
         case 192:
-          game.toggleDebug();
+          game.debug.toggleDebug();
           break;
         default:
       }
