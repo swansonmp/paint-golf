@@ -12,8 +12,8 @@ export default class PowerBar {
     //fields for drawing
     this.BAR_X = this.game.GAME_WIDTH / 4;
     this.BAR_Y = this.game.GAME_HEIGHT - 50;
-    this.BAR_WIDTH = this.game.GAME_WIDTH / 2;
-    this.BAR_HEIGHT = this.game.GAME_HEIGHT / 20;
+    this.BAR_WIDTH = 600;
+    this.BAR_HEIGHT = 30;
     this.PADDING = this.BAR_HEIGHT / 20;
     this.BARSTART = this.BAR_X + this.BAR_WIDTH - this.BAR_WIDTH / 11;
     this.CURSOR_WIDTH = 4;
@@ -32,7 +32,7 @@ export default class PowerBar {
   getPower() { return this.power / 100; }
   getAccuracy() { return this.accuracy / 10; }
   
-  update(deltaTime) {
+  update(deltaTime) { 
     const RATE = 10;
     deltaTime /= RATE;
     
@@ -53,6 +53,11 @@ export default class PowerBar {
   }
   
   draw(ctx) {
+    //update draw positions
+    this.BAR_X = this.game.GAME_WIDTH / 4;
+    this.BAR_Y = this.game.GAME_HEIGHT - 50;
+    this.BARSTART = this.BAR_X + this.BAR_WIDTH - this.BAR_WIDTH / 11;
+    
     //draw center
     ctx.fillStyle = "rgba(128,82,0,1)";
     ctx.fillRect(this.BAR_X, this.BAR_Y, this.BAR_WIDTH, this.BAR_HEIGHT);

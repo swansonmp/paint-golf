@@ -42,6 +42,9 @@ export default class InputHandler {
       }
     });
     
+    //holds the current touches
+    this.currentTouches = [];
+    
     window.addEventListener("resize", resize => {
       let c = document.getElementById("gameScreen");
       c.width = document.body.clientWidth;
@@ -49,5 +52,68 @@ export default class InputHandler {
       game.GAME_WIDTH = c.width;
       game.GAME_HEIGHT = c.height;
     });
+    
+    //Touch start event listener
+    window.addEventListener("touchstart", e => {
+      let touches = e.changedTouches;
+      for (let i = 0; i < touches.length; i++) {
+        //console.log("touchstart: " + i + "...");
+        this.currentTouches.push(this.copyTouch(touches[i]));
+        //console.log("touchstart: " + i + " " + touches[i].pageX + "," + touches[i].pageY);
+        
+        game.state.handleTouchDown(touches[i]);
+      }
+    });
+    
+    //Touch move event listener
+    window.addEventListener("touchmove", e => {
+      let touches = e.changedTouches;
+      for (let i = 0; i < touches.length; i++) {
+        let index = this.currentTouchIndexById(touches[i].identifier);
+        if (index >= 0) {
+          //console.log("continuing touch " + index);
+          //console.log(this.currentTouches[index].pageX + "," + this.currentTouches[index].pageY);
+          //console.log(touches[i].pageX + "," + touches[i].pageY);
+          this.currentTouches.splice(index, 1, this.copyTouch(touches[i]));  // swap in the new touch record
+        }
+        else {
+          console.log("Error: Can't find which touch to continue");
+        }
+      }
+    });
+    
+    //Touch end event listener
+    window.addEventListener("touchend", e => {
+      let touches = e.changedTouches;
+      for (let i = 0; i < touches.length; i++) {
+        let index = this.currentTouchIndexById(touches[i].identifier);
+        if (index >= 0) {
+          //console.log(this.currentTouches[index].pageX + "," + this.currentTouches[index].pageY);
+          //console.log(touches[i].pageX + "," + touches[i].pageY);
+          this.currentTouches.splice(index, 1);  // remove it; we're done
+        } 
+        else {
+          console.log("Error: Can't find which touch to end");
+        }
+      }
+    });
+    
+    window.addEventListener("touchcancel", e => {
+      console.log("Touch cancel: ");
+    });
+    
+  }
+  
+  copyTouch({ identifier, pageX, pageY }) {
+    return { identifier, pageX, pageY };
+  }
+  
+  currentTouchIndexById(key) {
+    for (let i = 0; i < this.currentTouches.length; i++) {
+      if (this.currentTouches[i].identifier == key) {
+        return i;
+      }
+    }
+    return -1;    // not found
   }
 }

@@ -41,9 +41,7 @@ export default class MenuState {
     this.state = state;
   }
   
-  update(deltaTime) {
-    this.state.update(deltaTime);
-    
+  update(deltaTime) {    
     deltaTime /= RATE;
     this.ballX += deltaTime;
     if (this.ballX >= this.game.GAME_WIDTH) {
@@ -72,14 +70,14 @@ export default class MenuState {
       if (i == this.state.index) ctx.fillStyle = "white";
       else ctx.fillStyle = "DimGrey";
       ctx.fillText(
-          this.state.items[i],
+          this.state.items[i].name,
           PADDING_X * 2,
           drawY
       );
     }
   }
   
-  drawValues(ctx, state) {
+  drawValues(ctx) {
     let drawY = PADDING_Y * 2 + HEADING_SIZE;
     let i;
     for (i = 0; i < this.state.items.length; i++) {
@@ -88,7 +86,7 @@ export default class MenuState {
       if (i == this.state.index) ctx.fillStyle = "white";
       else ctx.fillStyle = "DimGrey";
       ctx.fillText(
-          this.state.values[i],
+          this.state.items[i].value,
           TAB,
           drawY
       );
@@ -113,9 +111,11 @@ export default class MenuState {
     if (this.state != this.getTitleState()) {
       this.drawHeading(ctx);
       this.drawItems(ctx);
+      this.drawValues(ctx);
     }
-    
-    this.state.draw(ctx);
+    else {
+      this.state.draw(ctx);
+    }
   }
   
   handleEnter() { this.state.handleConfirm(); }
@@ -135,5 +135,14 @@ export default class MenuState {
   handleAKey() { this.state.handleDecrement(); }
   handleSKey() { this.handleDownArrow(); }
   handleDKey() { this.state.handleIncrement(); }
+  
+  handleTouchDown(touch) {
+    if (touch.pageY < this.game.GAME_HEIGHT * 0.25) { this.handleUpArrow(); }
+    else if (touch.pageY >= this.game.GAME_HEIGHT * 0.75) { this.handleDownArrow(); }
+    else { 
+      if (touch.pageX < this.game.GAME_WIDTH * 0.5) { this.state.handleBack(); }
+      else { this.state.handleConfirm(); }
+    }
+  }
   
 }

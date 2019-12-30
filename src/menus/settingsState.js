@@ -1,3 +1,5 @@
+import MenuItem from "./menuItem.js";
+
 export default class SettingsState {
   constructor(game, menuState) {
     this.game = game;
@@ -6,32 +8,31 @@ export default class SettingsState {
     this.index = 0;
     this.name = "Settings";
     this.items = [
-      "Scale",
-      "Game speed",
+        new MenuItem(menuState,
+            "Scale", 
+            new Function ( '' ),
+            this.menuState.game.ball.scale,
+            this.inc,
+            this.dec,
+            new Function ( 'this.menuState.game.ball.setScale(this.value)' )
+        ),
+        new MenuItem(menuState,
+            "Game Speed",
+            new Function( '' ),
+            this.menuState.game.ball.rate,
+            this.inc,
+            this.dec,
+            new Function ( 'this.menuState.game.ball.setRate(this.value)' )
+        )
     ];
-    this.values = [
-      this.game.ball.scale,
-      this.game.ball.rate
-    ];
   }
   
-  update(deltaTime) {
-    this.game.ball.scale = this.values[0];
-    this.game.ball.rate = this.values[1];
-  }
-  draw(ctx) { 
-    this.menuState.drawValues(ctx, this);
-  }
+  handleConfirm() { }
+  handleBack() { this.menuState.setState(this.menuState.getMainState()); }
+  handleIncrement() { this.items[this.index].increment(); }
+  handleDecrement() { this.items[this.index].decrement(); }
   
-  handleConfirm() {
-
-  }
+  inc(n) { return n + 1; }
+  dec(n) { return n - 1; }
   
-  handleBack() {
-    this.menuState.setState(this.menuState.getMainState());
-  }
-  
-  handleIncrement() { this.values[this.index]++; }
-  handleDecrement() { this.values[this.index]--; }
-
 }

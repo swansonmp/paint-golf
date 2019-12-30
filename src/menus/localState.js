@@ -1,3 +1,5 @@
+import MenuItem from "./menuItem.js";
+
 export default class LocalState {
   constructor(game, menuState) {
     this.game = game;
@@ -6,16 +8,13 @@ export default class LocalState {
     this.index = 0;
     this.name = "Local";
     this.items = [
-      "course",
-      "test"
+        new MenuItem(menuState, "course"),
+        new MenuItem(menuState, "test")
     ];
   }
   
-  update(deltaTime) { }
-  draw(ctx) { }
-  
   handleConfirm() {
-    this.game.getCourse(this.items[this.index]);
+    this.menuState.game.getCourse(this.items[this.index].name);
     this.menuState.setState(this.menuState.getMainState());
   }
   

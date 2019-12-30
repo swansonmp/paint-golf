@@ -10,7 +10,8 @@ const SIZE = 75;
 const PADDING = 20;
 const TEXT_SIZE = 30;
 const LINE_COLOR = "rgba(64, 64, 255, 1)";
-const LINE_WIDTH = 3;
+const LINE_WIDTH = 4;
+const LINE_CAP = "round";
 const LINE_SIZE = SIZE / 2 * 0.8;
 const POINT_SIZE = LINE_SIZE / 3;
 const POINT_ROTATION = 4/5 * Math.PI;
@@ -83,6 +84,7 @@ export default class Wind {
     //draw main line
     ctx.strokeStyle = LINE_COLOR;
     ctx.lineWidth = LINE_WIDTH;
+    ctx.lineCap = LINE_CAP;
     ctx.beginPath();
     ctx.moveTo(start.x, start.y);
     ctx.lineTo(end.x, end.y);

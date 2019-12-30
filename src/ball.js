@@ -60,6 +60,14 @@ export default class Ball {
     this.spin = { x: 0 , y: 0 , z: 0 };
   }
   
+  setScale(scale) {
+    this.scale = scale;
+  }
+  
+  setRate(rate) {
+    this.rate = rate;
+  }
+  
   setLastPosition() {
     //this.lastPosition = this.position;
     this.lastPosition.x = this.getScaledX();

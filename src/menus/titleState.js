@@ -7,8 +7,6 @@ export default class TitleState {
     this.menuState = menuState;
   }
   
-  update(deltaTime) { }
-  
   draw(ctx) {
     //draw title
     ctx.font = "bold " + TITLE_SIZE + "px monospace";
@@ -31,10 +29,7 @@ export default class TitleState {
     );
   }
   
-  handleConfirm() {
-    this.menuState.setState(this.menuState.getMainState());
-  }
-  
+  handleConfirm() { this.menuState.setState(this.menuState.getMainState()); }
   handleBack() { }
   handleIncrement() { }
   handleDecrement() { }

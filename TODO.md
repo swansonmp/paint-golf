@@ -2,15 +2,11 @@
 
 ## Changes
 
-* Add wind and wind indicator
-* Fix bug where cursor wouldn't set after new hole
-* Refactor states and menu states to 'states' and 'menus' folders, respectively
-* Change ball striking
-* Refactor debug information to Debug class
-* Fix lastPosition logic
-* Refactor panning view offsets to View class
-* Refactor Status UI elements to 'ui' folder
-* Move stroke increment to StrikingState
+* Change wind indicator
+* Increase putter power
+* Set powerbar to fixed size
+* Add simple menu touch support
+* Overhaul menu contruction
 
 
 ## Logic
@@ -48,7 +44,7 @@
 
 * Implement smooth panning
 * Add current distance counter during runningState
-* Fix powerbar sizing and resizing
+* Overhaul powerbar
 * Add remaining yards indicator
 * Update stroke indicator
 
@@ -56,7 +52,6 @@
 ## Other Fixes
 
 * Fix pan limits on bottom and right
-* Refactor menuState code to change handleIncrement and handle arrows
 
 
 ## Far-Out Goals

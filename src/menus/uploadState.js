@@ -1,3 +1,5 @@
+import MenuItem from "./menuItem.js";
+
 export default class LocalState {
   constructor(game, menuState) {
     this.game = game;
@@ -6,42 +8,22 @@ export default class LocalState {
     this.index = 0;
     this.name = "Upload";
     this.items = [
-      "Browse",
-      "Upload"
+        new MenuItem(menuState, "Browse", 
+            this.browse ),
+        new MenuItem(menuState, "Upload",
+            this.upload )
     ];
-    this.values = [
-      "",
-      ""
-    ];
-    
-    this.img = new Image();
   }
   
-  update(deltaTime) { 
-  
-  }
-  
-  draw(ctx) { 
-    this.menuState.drawValues(ctx, this);
-  }
-  
-  handleConfirm() {
-    switch (this.index) {
-      case 0:
-        this.browse();
-        break;
-      case 1:
-        this.upload();
-        break;
-      default:
-        this.menuState.setState(this.menuState.getTitleState());
-    }
-  }
+  handleConfirm() { this.items[this.index].execute(); }
+  handleBack() { this.menuState.setState(this.menuState.getSelectState()); }
+  handleIncrement() { }
+  handleDecrement() { }
   
   browse() {
     var input = document.createElement('input');
     input.type = 'file';
-    let us = this;
+    let caller = this;
     input.addEventListener('change', function(e) {
       let file = input.files[0];
       let imageType = /image.*/;
@@ -50,12 +32,12 @@ export default class LocalState {
           reader.onload = function(e) {
             this.img = new Image();
             document.getElementById("custom").src = reader.result;
-            us.values[0] = file.name;  
+            caller.value = file.name;  
           }
           reader.readAsDataURL(file);       
       }
       else {
-        us.values[0] = "Invalid file type"; 
+        caller.value = "Invalid file type"; 
       }
     });
     
@@ -64,16 +46,9 @@ export default class LocalState {
   
   upload() {
     if (document.getElementById("custom").src != "") {
-      this.game.getCustomCourse();
+      this.menuState.game.getCustomCourse();
       this.menuState.setState(this.menuState.getMainState());
     }
   }
-  
-  handleBack() {
-    this.menuState.setState(this.menuState.getSelectState());
-  }
-  
-  handleIncrement() { }
-  handleDecrement() { }
   
 }
