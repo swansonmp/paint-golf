@@ -2,11 +2,7 @@
 
 ## Changes
 
-* Change wind indicator
-* Increase putter power
-* Set powerbar to fixed size
-* Add simple menu touch support
-* Overhaul menu contruction
+*
 
 
 ## Logic
