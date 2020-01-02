@@ -2,7 +2,8 @@
 
 ## Changes
 
-* Add DrawUtil. Simplify text drawing calls for in-game UI
+* Add sound framework
+* Work on View smoothing (not working)
 
 
 ## Logic

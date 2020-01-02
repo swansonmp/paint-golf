@@ -6,6 +6,7 @@ export default class PanState {
   update(deltaTime) {
     this.game.cursor.update(deltaTime);
     this.game.wind.update(deltaTime);
+    this.game.view.update(deltaTime);
   }
   
   draw(ctx) {
@@ -13,7 +14,6 @@ export default class PanState {
     this.game.cursor.draw(ctx);
     this.game.ball.draw(ctx);
     this.game.wind.draw(ctx);
-    //this.game.powerbar.draw(ctx);
     this.game.bag.draw(ctx);
     this.game.status.draw(ctx);
   }
