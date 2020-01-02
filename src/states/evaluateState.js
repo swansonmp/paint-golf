@@ -18,7 +18,6 @@ export default class EvaluateState {
             this.game.ball.lastPosition.z
         );
       }
-      this.game.ball.setLastPosition();
     }
     this.game.wind.update(deltaTime);
     this.game.setState(this.game.getPrepareState()); //go to prepare state

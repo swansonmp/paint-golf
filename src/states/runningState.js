@@ -7,6 +7,7 @@ export default class RunningState {
     this.game.wind.update(deltaTime);
     if (this.game.ball.isMoving()) {
       this.game.ball.update(deltaTime);
+      this.game.currentYards.update(deltaTime);
     }
     else {
       this.game.setState(this.game.getEvaluateState());
@@ -19,6 +20,7 @@ export default class RunningState {
     this.game.wind.draw(ctx);
     this.game.bag.draw(ctx);
     this.game.status.draw(ctx);
+    this.game.currentYards.draw(ctx);
   }
   
   handleEnter() { }

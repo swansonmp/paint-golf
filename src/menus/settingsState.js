@@ -23,6 +23,14 @@ export default class SettingsState {
             this.inc,
             this.dec,
             new Function ( 'this.menuState.game.ball.setRate(this.value)' )
+        ),
+        new MenuItem(menuState,
+            "Inaccuracy",
+            new Function( '' ),
+            this.menuState.game.ball.inaccuracyRate,
+            new Function ( 'n', 'return n * 4/3' ),
+            new Function ( 'n', 'return n * 3/4' ),
+            new Function ( 'this.menuState.game.ball.setInaccuracyRate(this.value)' )
         )
     ];
   }

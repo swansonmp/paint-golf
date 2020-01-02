@@ -2,7 +2,6 @@ const DEFAULT_SIZE = 4;
 const ANGLE_INCREMENT = 1/32;
 const SIZE_INCREASE = 3;
 const SPIN_RATE = 3;
-const INACCURACY = 1/128;
 
 export default class Ball {
   constructor(game) {
@@ -30,6 +29,7 @@ export default class Ball {
     };
     
     this.rate = 750;
+    this.inaccuracyRate = 1/128;
     this.scale = 2;
     this.mass = 0.25;
     this.gravity = -9.8;
@@ -50,7 +50,7 @@ export default class Ball {
     zp /= this.scale;
     
     this.position = { x: xp, y: yp, z: zp };
-    this.lastPosition = { x: xp, y: yp, z: zp };
+    this.lastPosition = this.setLastPosition();
     this.velocity = { x: 0, y: 0, z: 0 };
     this.fnet = { x: 0, y: (this.gravity * this.mass), z: 0 };
     
@@ -68,11 +68,16 @@ export default class Ball {
     this.rate = rate;
   }
   
+  setInaccuracyRate(inaccuracyRate) {
+    this.inaccuracyRate = inaccuracyRate;
+  }
+  
   setLastPosition() {
-    //this.lastPosition = this.position;
-    this.lastPosition.x = this.getScaledX();
-    this.lastPosition.y = this.getScaledY();
-    this.lastPosition.z = this.position.z;
+    console.log("Setting last pos...");
+    this.lastPosition = this.position;
+    //this.lastPosition.x = this.getScaledX();
+    //this.lastPosition.y = this.getScaledY();
+    //this.lastPosition.z = this.position.z;
   }
 
   isMoving() {
@@ -80,6 +85,8 @@ export default class Ball {
   }
 
   strike(horizontal, vertical, dtheta) {
+    this.game.ball.setLastPosition();
+    
     //set velocities
     this.velocity.x = Math.cos(this.angle) * horizontal * this.getLieRate() * this.mass;
     this.velocity.y = Math.sin(this.angle) * horizontal * this.getLieRate() * this.mass;
@@ -89,7 +96,7 @@ export default class Ball {
     this.spin.x = -this.game.bag.getClub().vertical / this.game.bag.getClub().horizontal * SPIN_RATE * Math.cos(this.angle);
     this.spin.y = -this.game.bag.getClub().vertical / this.game.bag.getClub().horizontal * SPIN_RATE * Math.sin(this.angle);
     
-    this.dtheta = dtheta * INACCURACY;
+    this.dtheta = dtheta * this.inaccuracyRate;
   }
   
   incAngle() {
@@ -146,41 +153,56 @@ export default class Ball {
   }
   
   update(deltaTime) {
+    this.setDeltaTime(deltaTime);
     if (!this.isMoving()) {
-      this.velocity.x = 0;
-      this.velocity.y = 0;
-      this.velocity.z = 0;
-      return;
+      this.reset(this.position.x, this.position.y, this.position.z);
     }
-    
-    if (this.game.debug.active) this.debug();
-    
-    deltaTime /= this.rate;
-    
-    //update positions
-    this.position.x += this.velocity.x / this.mass * deltaTime;
-    this.position.y += this.velocity.y / this.mass * deltaTime;
-    this.position.z += this.velocity.z / this.mass * deltaTime;
-    
-    //apply inaccuracy using rotation matrix
+    else {
+      this.debug();
+      this.updatePositions();
+      this.applyInaccuracy();
+      this.applyWind();
+      this.updateVelocities();
+      this.calculateOoBBounce();
+      this.calculateGroundBounce();
+      this.calculateFriction();
+      this.calculateWindResistance();
+    }
+  }
+  
+  setDeltaTime(deltaTime) {
+    this.deltaTime = deltaTime /= this.rate;
+  }
+  
+  updatePositions() {
+    this.position.x += this.velocity.x / this.mass * this.deltaTime;
+    this.position.y += this.velocity.y / this.mass * this.deltaTime;
+    this.position.z += this.velocity.z / this.mass * this.deltaTime;
+  }
+  
+  applyInaccuracy() {
     let xv = this.velocity.x; //the unmodified xvel
     this.velocity.x = this.velocity.x * Math.cos(this.dtheta) - this.velocity.y * Math.sin(this.dtheta);
     this.velocity.y = xv * Math.sin(this.dtheta) + this.velocity.y * Math.cos(this.dtheta);
-    
-    //apply wind
+  }
+  
+  applyWind() {
     this.velocity.x += this.game.wind.getWind().x * this.position.z * this.game.wind.getHeightRate();
     this.velocity.y += this.game.wind.getWind().y * this.position.z * this.game.wind.getHeightRate();
-    
-    //update velocities
-    this.velocity.x += this.fnet.x * deltaTime;
-    this.velocity.y += this.fnet.y * deltaTime;
-    this.velocity.z += this.fnet.z * deltaTime;
-    
-    //calculate OoB bounce
+  }
+  
+  updateVelocities() {
+    this.velocity.x += this.fnet.x * this.deltaTime;
+    this.velocity.y += this.fnet.y * this.deltaTime;
+    this.velocity.z += this.fnet.z * this.deltaTime;
+  }
+  
+  calculateOoBBounce() {
     if (this.getScaledX() < 0 || this.getScaledX() > this.game.COURSE_WIDTH) this.velocity.x *= -1;
     if (this.getScaledY() < 0 || this.getScaledY() > this.game.COURSE_HEIGHT) this.velocity.y *= -1;
-    
-    //calculate floor bounce
+  }
+  
+  calculateGroundBounce() {
     if (this.position.z < 0) {
       this.position.z = 0;
       this.velocity.z *= this.getLieRate() * this.bounce;
@@ -191,16 +213,18 @@ export default class Ball {
       this.spin.x *= 0.5;
       this.spin.y *= 0.5;
     }
-    
-    //calculate friction
+  }
+  
+  calculateFriction() {
     if (this.position.z < 0.325 && Math.abs(this.velocity.z) < 0.325) {
       this.position.z = 0;
       this.velocity.z = 0;
       this.velocity.x *= this.friction * this.getLieRate();
       this.velocity.y *= this.friction * this.getLieRate();
     }
-    
-    //calculate wind resistance
+  }
+  
+  calculateWindResistance() {
     let magveldivmass = Math.sqrt(
         Math.pow(this.velocity.x / this.mass, 2) + 
         Math.pow(this.velocity.y / this.mass, 2) + 
@@ -261,8 +285,10 @@ export default class Ball {
   }
   
   debug() {
-    console.log(
-        this.position.x.toFixed(2) + "," + this.position.y.toFixed(2) + "," + this.position.z.toFixed(2)
-    ); 
+    if (this.game.debug.active) {
+      console.log(
+          this.position.x.toFixed(2) + "," + this.position.y.toFixed(2) + "," + this.position.z.toFixed(2)
+      ); 
+    }
   }
 }

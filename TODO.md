@@ -2,7 +2,10 @@
 
 ## Changes
 
-*
+* Clean up ball.js
+* Reset all ball properties after each shot (as opposed to just velocity)
+* Refactor status.js
+* Start implementing a current yards UI element
 
 
 ## Logic
@@ -13,7 +16,6 @@
 
 ## Physics
 
-* Investigate whether fnet should be reset
 * Investigate partial-power shots
 * Fix spin
 * Seperate lie power and lie friction
@@ -24,14 +26,12 @@
 
 ## Features
 
+* Add zoom
 * Implement greens
 * Overhaul file uploading menu
 * Add support for user-uploaded vanity images
-* Add inaccuracy adjustment to settings menu
 * Add palette customization to main menu
 * Add bag customization
-* Refactor pan feature to a View class
-  * Move methods and change references in Course, Ball, and PanState
 * Add prompt to reset pan camera
 * Uploadable tee and pin locations
 

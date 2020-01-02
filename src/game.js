@@ -6,6 +6,7 @@ import Cursor from "./cursor.js";
 import Bag from "./bag.js";
 import PowerBar from "./powerbar.js";
 import Status from "./status.js";
+import CurrentYards from "./ui/currentYards.js";
 import InputHandler from "./input.js";
 import Debug from "./debug.js";
 import View from "./view.js";
@@ -35,6 +36,7 @@ export default class Game {
     this.powerbar = new PowerBar(this);
     this.bag = new Bag(this);
     this.status = new Status(this);
+    this.currentYards = new CurrentYards(this);
     
     this.debug = new Debug(this);
     this.view = new View(this);
