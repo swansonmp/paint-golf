@@ -102,14 +102,16 @@ export default class Wind {
     ctx.lineTo(end.x + Math.cos(a + POINT_ROTATION) * POINT_SIZE, end.y + Math.sin(a + POINT_ROTATION) * POINT_SIZE);
     ctx.stroke();
     
-    //draw speed
-    ctx.font = "small-caps bold " + TEXT_SIZE + "px monospace";
-    ctx.textAlign = "center";
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 3;
-    ctx.strokeText(this.speed.toFixed(1) + "m", this.game.GAME_WIDTH - PADDING - SIZE / 2, PADDING + SIZE + TEXT_SIZE);
-    ctx.fillStyle = "white";
-    ctx.fillText(this.speed.toFixed(1) + "m", this.game.GAME_WIDTH - PADDING - SIZE / 2, PADDING + SIZE + TEXT_SIZE);
+    //draw speed    
+    this.game.drawUtil.drawText( ctx,
+        this.speed.toFixed(1) + "m", 
+        this.game.GAME_WIDTH - this.game.drawUtil.getPadding() - SIZE / 2, 
+        this.game.drawUtil.getPadding() + SIZE + this.game.drawUtil.getDefaultTextSize() * 0.6,
+        "center",
+        this.game.drawUtil.getDefaultTextSize() * 0.6,
+        this.game.drawUtil.getDefaultStrokeWidth() * 0.6,
+        true
+    );
   }
   
 }

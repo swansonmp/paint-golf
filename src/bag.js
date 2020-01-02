@@ -31,16 +31,15 @@ export default class Bag {
     return this.bag[this.cur];
   }
   
-  draw(ctx) {
-    const PADDING = 20;
-    
-    ctx.font = "small-caps bold 50px monospace";
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 5;
-    ctx.textAlign = "left";
-    ctx.strokeText(this.getClub().name, PADDING, this.game.GAME_HEIGHT - PADDING);
-    ctx.fillStyle = "white";
-    ctx.fillText(this.getClub().name, PADDING, this.game.GAME_HEIGHT - PADDING);
-    
+  draw(ctx) {    
+    this.game.drawUtil.drawText( ctx,
+        this.getClub().name, 
+        this.game.drawUtil.getPadding(),
+        this.game.GAME_HEIGHT - this.game.drawUtil.getPadding(),
+        "left",
+        this.game.drawUtil.getDefaultTextSize(),
+        this.game.drawUtil.getDefaultStrokeWidth(),
+        true
+    );
   }
 }

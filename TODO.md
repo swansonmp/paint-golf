@@ -2,10 +2,7 @@
 
 ## Changes
 
-* Clean up ball.js
-* Reset all ball properties after each shot (as opposed to just velocity)
-* Refactor status.js
-* Start implementing a current yards UI element
+* Add DrawUtil. Simplify text drawing calls for in-game UI
 
 
 ## Logic

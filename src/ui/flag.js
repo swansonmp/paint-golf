@@ -16,13 +16,12 @@ export default class Flag {
     ctx.fillRect(PADDING, PADDING, FLAG_WIDTH, FLAG_HEIGHT);
     
     //Hole number indicator
-    ctx.font = "bold " + TEXT_SIZE + "px monospace";
-    ctx.textAlign = "center";
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 5;
-    ctx.strokeText(this.holeNum, PADDING + FLAG_WIDTH / 2, PADDING + FLAG_HEIGHT / 2 + TEXT_SIZE * 0.6 / 2);
-    ctx.fillStyle = "white";
-    ctx.fillText(this.holeNum, PADDING + FLAG_WIDTH / 2, PADDING + FLAG_HEIGHT / 2 + TEXT_SIZE * 0.6 / 2);
+    this.game.drawUtil.drawText( ctx,
+        this.holeNum, 
+        this.game.drawUtil.getPadding() + FLAG_WIDTH / 2,
+        this.game.drawUtil.getPadding() + FLAG_HEIGHT / 2 + this.game.drawUtil.getDefaultTextSize() * 0.6 / 2,
+        "center"
+    );
   }
   
   update(deltaTime) {

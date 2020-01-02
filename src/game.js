@@ -6,10 +6,11 @@ import Cursor from "./cursor.js";
 import Bag from "./bag.js";
 import PowerBar from "./powerbar.js";
 import Status from "./status.js";
-import CurrentYards from "./ui/currentYards.js";
+import CurrentYards from "./currentYards.js";
 import InputHandler from "./input.js";
 import Debug from "./debug.js";
 import View from "./view.js";
+import DrawUtil from "./drawUtil.js";
 
 import MenuState from "./states/menuState.js";
 import LoadState from "./states/loadState.js";
@@ -40,6 +41,7 @@ export default class Game {
     
     this.debug = new Debug(this);
     this.view = new View(this);
+    this.drawUtil = new DrawUtil(this);
     
     this.strokes = 0;
     this.holeNum = 1;

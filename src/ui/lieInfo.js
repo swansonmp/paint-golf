@@ -1,8 +1,7 @@
 const SIZE = 75;
-const PADDING = 20;
 const BALL_SIZE = 25;
-const TEXT_SIZE = 30;
 const TEXT_PADDING = 2;
+
 
 export default class LieInfo {
   constructor(game) {
@@ -12,34 +11,38 @@ export default class LieInfo {
   draw(ctx) {
     //draw inside
     ctx.fillStyle = this.fillStyle;
-    ctx.fillRect(this.game.GAME_WIDTH - SIZE - PADDING, this.game.GAME_HEIGHT - SIZE - PADDING - TEXT_SIZE - TEXT_PADDING, SIZE, SIZE);
+    ctx.fillRect(
+        this.game.GAME_WIDTH - SIZE - this.game.drawUtil.getPadding(), 
+        this.game.GAME_HEIGHT - SIZE - this.game.drawUtil.getPadding() - this.game.drawUtil.getDefaultTextSize() * 0.6 - TEXT_PADDING, 
+        SIZE, 
+        SIZE
+    );
     //draw ball
     ctx.drawImage(
-      this.game.ball.image,
-      this.game.GAME_WIDTH - PADDING - SIZE / 2 - BALL_SIZE / 2,
-      this.game.GAME_HEIGHT - PADDING - SIZE / 2 - BALL_SIZE / 2 - TEXT_SIZE - TEXT_PADDING,
-      BALL_SIZE,
-      BALL_SIZE
+        this.game.ball.image,
+        this.game.GAME_WIDTH - this.game.drawUtil.getPadding() - SIZE / 2 - BALL_SIZE / 2,
+        this.game.GAME_HEIGHT - this.game.drawUtil.getPadding() - SIZE / 2 - BALL_SIZE / 2 - this.game.drawUtil.getDefaultTextSize() * 0.6 - TEXT_PADDING,
+        BALL_SIZE,
+        BALL_SIZE
     );
     //draw outline
     ctx.strokeStyle = "rgba(0,0,0,1)";
     ctx.lineWidth = 3;
-    ctx.strokeRect(this.game.GAME_WIDTH - SIZE - PADDING, this.game.GAME_HEIGHT - SIZE - PADDING - TEXT_SIZE - TEXT_PADDING, SIZE, SIZE);
-    //draw text
-    ctx.font = "small-caps bold " + TEXT_SIZE + "px monospace";
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 3;
-    ctx.textAlign = "center";
-    ctx.strokeText(
-        this.lieRate * 100 +  "%",
-        this.game.GAME_WIDTH - SIZE / 2 - PADDING,
-        this.game.GAME_HEIGHT - PADDING
+    ctx.strokeRect(
+        this.game.GAME_WIDTH - SIZE - this.game.drawUtil.getPadding(), 
+        this.game.GAME_HEIGHT - SIZE - this.game.drawUtil.getPadding() - this.game.drawUtil.getDefaultTextSize() * 0.6 - TEXT_PADDING, 
+        SIZE, 
+        SIZE
     );
-    ctx.fillStyle = "white";
-    ctx.fillText(
-        this.lieRate * 100 +  "%",
-        this.game.GAME_WIDTH - SIZE / 2 - PADDING,
-        this.game.GAME_HEIGHT - PADDING
+    //draw text
+    this.game.drawUtil.drawText( ctx,
+        this.lieRate * 100 +  "%", 
+        this.game.GAME_WIDTH - SIZE / 2 - this.game.drawUtil.getPadding(),
+        this.game.GAME_HEIGHT - this.game.drawUtil.getPadding(),
+        "center",
+        this.game.drawUtil.getDefaultTextSize() * 0.6,
+        this.game.drawUtil.getDefaultStrokeWidth() * 0.6,
+        true
     );
   }
   

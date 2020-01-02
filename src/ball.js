@@ -73,7 +73,7 @@ export default class Ball {
   }
   
   setLastPosition() {
-    console.log("Setting last pos...");
+    //console.log("Setting last pos...");
     this.lastPosition = this.position;
     //this.lastPosition.x = this.getScaledX();
     //this.lastPosition.y = this.getScaledY();
