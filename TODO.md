@@ -2,8 +2,7 @@
 
 ## Changes
 
-* Add sound framework
-* Work on View smoothing (not working)
+* Start implementing vector.js
 
 
 ## Logic

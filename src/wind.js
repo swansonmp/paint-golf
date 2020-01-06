@@ -1,3 +1,5 @@
+import Vector from "./vector.js";
+
 const INITIAL_SPEED_MAX = 8;
 const ANGLE_RATE = 1;
 const SPEED_RATE = 0.5;
@@ -30,12 +32,12 @@ export default class Wind {
     
     this.angle = Math.random() * Math.PI * 2;
     this.speed = Math.random() * INITIAL_SPEED_MAX;
-    this.wind = { x: 0, y: 0 };
+    this.wind = new Vector();
     this.updateWind();
   }
   
   getWind() {
-    return { x: this.wind.x / INTERNAL_RATIO, y: this.wind.y / INTERNAL_RATIO };
+    return this.wind.divideScalar(INTERNAL_RATIO);
   }
   
   getHeightRate() {
@@ -48,8 +50,7 @@ export default class Wind {
     
     if (this.speed < 0) this.speed = 0;
     
-    this.wind.x = Math.cos(this.angle) * this.speed;
-    this.wind.y = Math.sin(this.angle) * this.speed;
+    this.wind.fromPolar(this.angle, this.speed);
   }
   
   update(deltaTime) {
