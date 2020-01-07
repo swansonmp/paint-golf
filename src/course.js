@@ -1,4 +1,5 @@
 import Palette from "./palette.js";
+import Vector from "./vector.js";
 
 export default class Course {
   constructor(game) {
@@ -67,9 +68,7 @@ export default class Course {
     );
   }
   
-  update(deltaTime) {
-    
-  }
+  update(deltaTime) { }
   
   getPar(n) {
     let distance = this.getDistance(n);
@@ -79,17 +78,14 @@ export default class Course {
   }
   
   getDistance(n) {
-    return Math.sqrt(
-        Math.pow(this.holes[n].x - this.tees[n].x, 2) + 
-        Math.pow(this.holes[n].y - this.tees[n].y, 2)
-    ) / this.game.ball.scale;
+    return this.holes[n].distance2D(this.tees[n]) / this.game.ball.scale;
   }
   
   createCourseCoordinateList() {
     let list = [];
     let i;
     for (i = 0; i <= 18; i++) {
-      list.push({ x: -1, y: -1 });
+      list.push(new Vector(-1, -1));
     }
     return list;
   }

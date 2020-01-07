@@ -4,7 +4,7 @@ const INITIAL_SPEED_MAX = 8;
 const ANGLE_RATE = 1;
 const SPEED_RATE = 0.5;
 const INTERNAL_RATIO = 256;
-const HEIGHT_RATE = 1/64;
+const HEIGHT_RATE = 1/128;
 
 const BACKGROUND_COLOR = "rgba(255, 255, 255, 0.85)";
 const OUTLINE_COLOR = "rgba(0, 0, 0, 1)";
@@ -37,7 +37,7 @@ export default class Wind {
   }
   
   getWind() {
-    return this.wind.divideScalar(INTERNAL_RATIO);
+    return this.wind.divide(INTERNAL_RATIO);
   }
   
   getHeightRate() {

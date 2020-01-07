@@ -73,7 +73,7 @@ export default class Loader {
     //check if a tee
     if (r == 0 && g == 0) {
       if (b <= this.course.tees.length) {
-        this.course.tees[b] = { x: this.row + this.xOffset, y: this.col + this.yOffset };
+        this.course.tees[b].setComponents(this.row + this.xOffset, this.col + this.yOffset);
         this.course.map[this.row + this.xOffset][this.col + this.yOffset] = this.game.ball.PIXEL_TYPE.TEE;
       }
       return true;
@@ -81,7 +81,7 @@ export default class Loader {
     //check if a hole
     else if (r == 255 && g == 0) {
       if (b <= this.course.holes.length) {
-        this.course.holes[b] = { x: this.row + this.xOffset, y: this.col + this.yOffset };
+        this.course.holes[b].setComponents(this.row + this.xOffset, this.col + this.yOffset);
         this.course.map[this.row + this.xOffset][this.col + this.yOffset] = this.game.ball.PIXEL_TYPE.HOLE;
       }
       return true;

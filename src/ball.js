@@ -4,6 +4,7 @@ const DEFAULT_SIZE = 4;
 const ANGLE_INCREMENT = 1/32;
 const SIZE_INCREASE = 3;
 const SPIN_RATE = 3;
+const SPIN_DECAY = 0.5;
 
 export default class Ball {
   constructor(game) {
@@ -33,27 +34,22 @@ export default class Ball {
     this.inaccuracyRate = 1/128;
     this.scale = 2;
     this.mass = 0.25;
-    this.gravity = -9.8;
+    this.gravity = new Vector(0, 0, -9.8);
     this.friction = 0.90;
     this.bounce = -0.5;
     this.radius = 0.0625;
     this.c = 0.5;
     this.rho = 1.2;
-    this.A = Math.PI * Math.pow(this.radius, 2)
-    this.cRhoA = this.c * this.rho * this.A;
+    this.A = Math.PI * Math.pow(this.radius, 2);
 	
     this.reset();
   }
 
-  reset(xp, yp, zp) {
-    xp /= this.scale;
-    yp /= this.scale;
-    zp /= this.scale;
-    
-    this.position = new Vector(xp, yp, zp);
+  reset(xp, yp, zp) {    
+    this.position = new Vector(xp / this.scale, yp / this.scale, zp / this.scale);
     this.lastPosition = this.setLastPosition();
     this.velocity = new Vector();
-    this.fnet = new Vector(0, this.gravity * this.mass, 0);
+    this.fnet = this.gravity.multiply(this.mass);
     
     this.angle = 0;
     this.dtheta = 0;
@@ -82,25 +78,21 @@ export default class Ball {
   }
 
   strike(horizontal, vertical, dtheta) {
+    //set last position
     this.game.ball.setLastPosition();
-    
-    //set velocities
-    this.velocity.x = Math.cos(this.angle) * horizontal * this.getLieRate() * this.mass;
-    this.velocity.y = Math.sin(this.angle) * horizontal * this.getLieRate() * this.mass;
+    //set velocity
+    this.velocity.fromPolar(this.angle, horizontal * this.getLieRate() * this.mass);
     this.velocity.z = vertical * this.getLieRate();
-    
+    //set wind resistance
+    this.fnet = this.gravity.multiply(this.mass);
     //set spin
-    
-    this.spin.x = -this.game.bag.getClub().vertical / this.game.bag.getClub().horizontal * SPIN_RATE * Math.cos(this.angle);
-    this.spin.y = -this.game.bag.getClub().vertical / this.game.bag.getClub().horizontal * SPIN_RATE * Math.sin(this.angle);
-    //TODO this is wrong
-    //this.spin.fromPolar(-this.game.bag.getClub().vertical / this.game.bag.getClub().horizontal * SPIN_RATE);
-    
+    this.spin.fromPolar(this.angle, -this.game.bag.getClub().vertical / this.game.bag.getClub().horizontal * SPIN_RATE);
+    //set inaccuracy
     this.dtheta = dtheta * this.inaccuracyRate;
   }
   
   incAngle() {
-	this.angle += ANGLE_INCREMENT;
+    this.angle += ANGLE_INCREMENT;
     if (this.angle >= Math.PI * 2)
       this.angle -= Math.PI * 2;
   }
@@ -150,24 +142,26 @@ export default class Ball {
   
   update(deltaTime) {
     this.setDeltaTime(deltaTime);
-    if (!this.isMoving()) {
-      this.reset(this.position.x, this.position.y, this.position.z);
-    }
-    else {
+    if (this.isMoving()) {
       this.debug();
       //update positions
-      this.position.addTo(this.velocity.multiplyScalar(this.deltaTime / this.mass));
-      
-      this.applyInaccuracy();
-      
+      this.position.addTo(this.velocity.multiply(this.deltaTime / this.mass));
+      //apply inaccuracy
+      this.velocity.rotate(this.dtheta);
       //apply wind
-      this.velocity.addTo(this.game.wind.getWind().multiplyScalar(this.position.z * this.game.wind.getHeightRate()));
+      this.velocity.addTo(this.game.wind.getWind().multiply(this.position.z * this.game.wind.getHeightRate()));
+      //update wind resistance
+      this.fnet = this.gravity.multiply(this.mass).subtract(
+          this.velocity.multiply(0.5 * this.c * this.rho * this.A * Math.pow(this.velocity.mag() / this.mass, 2)).divide(this.velocity.mag()));
       //update velocity
-      this.velocity.addTo(this.fnet.multiplyScalar(this.deltaTime));
+      this.velocity.addTo(this.fnet.multiply(this.deltaTime));
+      
       this.calculateOoBBounce();
       this.calculateGroundBounce();
       this.calculateFriction();
-      this.calculateWindResistance();
+    }
+    else {
+      this.reset(this.position.x, this.position.y, this.position.z);
     }
   }
   
@@ -175,15 +169,9 @@ export default class Ball {
     this.deltaTime = deltaTime /= this.rate;
   }
   
-  applyInaccuracy() {
-    let xv = this.velocity.x; //the unmodified xvel
-    this.velocity.x = this.velocity.x * Math.cos(this.dtheta) - this.velocity.y * Math.sin(this.dtheta);
-    this.velocity.y = xv * Math.sin(this.dtheta) + this.velocity.y * Math.cos(this.dtheta);
-  }
-  
   calculateOoBBounce() {
-    if (this.getScaledX() < 0 || this.getScaledX() > this.game.COURSE_WIDTH) this.velocity.x *= -1;
-    if (this.getScaledY() < 0 || this.getScaledY() > this.game.COURSE_HEIGHT) this.velocity.y *= -1;
+    if (this.getScaledX() < 0 || this.getScaledX() > this.game.COURSE_WIDTH) this.velocity.x *= -0.2;
+    if (this.getScaledY() < 0 || this.getScaledY() > this.game.COURSE_HEIGHT) this.velocity.y *= -0.2;
   }
   
   calculateGroundBounce() {
@@ -193,7 +181,7 @@ export default class Ball {
       
       //calculate spin
       this.velocity.addTo(this.spin);
-      this.spin.multiplyByScalar(0.5);
+      this.spin.multiplyBy(SPIN_DECAY);
     }
   }
   
@@ -201,15 +189,8 @@ export default class Ball {
     if (this.position.z < 0.325 && Math.abs(this.velocity.z) < 0.325) {
       this.position.z = 0;
       this.velocity.z = 0;
-      this.velocity.multiplyByScalar(this.friction * this.getLieRate());
+      this.velocity.multiplyBy(this.friction * this.getLieRate());
     }
-  }
-  
-  calculateWindResistance() {
-    
-    this.fnet.x =                          ( - 0.5 * this.cRhoA * Math.pow(this.velocity.mag() / this.mass, 2) * this.velocity.x / this.velocity.mag() );
-    this.fnet.y =                          ( - 0.5 * this.cRhoA * Math.pow(this.velocity.mag() / this.mass, 2) * this.velocity.y / this.velocity.mag() );
-    this.fnet.z = ( this.gravity * this.mass - 0.5 * this.cRhoA * Math.pow(this.velocity.mag() / this.mass, 2) * this.velocity.z / this.velocity.mag() );
   }
   
   getLieRate() {
@@ -246,7 +227,7 @@ export default class Ball {
   
   getScaledX() { return this.position.x * this.scale; }
   getScaledY() { return this.position.y * this.scale; }
-  getScaledPosition() { return this.position.multiplyScalar(this.scale) };
+  getScaledPosition() { return this.position.multiply(this.scale) };
   
   angleToHole() {
     this.angle =  Math.atan2(
@@ -256,10 +237,6 @@ export default class Ball {
   }
   
   debug() {
-    if (this.game.debug.active) {
-      console.log(
-          this.position.x.toFixed(2) + "," + this.position.y.toFixed(2) + "," + this.position.z.toFixed(2)
-      ); 
-    }
+    if (this.game.debug.active) console.log(this.position.toString()); 
   }
 }

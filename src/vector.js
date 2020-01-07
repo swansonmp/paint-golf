@@ -31,7 +31,7 @@ export default class Vector {
     this.z += v2.z;
   }
   
-  sub(v2) {
+  subtract(v2) {
     return new Vector(
         this.x - v2.x,
         this.y - v2.y,
@@ -39,38 +39,80 @@ export default class Vector {
     );
   }
   
-  subFrom(v2) {
+  subtractFrom(v2) {
     this.x -= v2.x;
     this.y -= v2.y;
     this.z -= v2.z;
   }
   
-  multiplyScalar(s) {
-    return new Vector(
-        this.x * s,
-        this.y * s,
-        this.z * s
-    );
+  multiply(v2) {
+    if (v2 instanceof Vector) {
+      return new Vector(
+          this.x * v2.x,
+          this.y * v2.y,
+          this.z * v2.z
+      );
+    }
+    else {
+      return new Vector(
+          this.x * v2,
+          this.y * v2,
+          this.z * v2
+      );
+    }
   }
   
-  multiplyByScalar(s) {
-    this.x *= s;
-    this.y *= s;
-    this.z *= s;
+  multiplyBy(v2) {
+    if (v2 instanceof Vector) {
+      this.x *= v2.x;
+      this.y *= v2.y;
+      this.z *= v2.z;
+    }
+    else {
+      this.x *= v2;
+      this.y *= v2;
+      this.z *= v2;
+    }
   }
   
-  divideScalar(s) {
-    return new Vector(
-        this.x / s,
-        this.y / s,
-        this.z / s
-    );
+  divide(v2) {
+    if (v2 instanceof Vector) {
+      return new Vector(
+          this.x / v2.x,
+          this.y / v2.y,
+          this.z / v2.z
+      );
+    }
+    else {
+      return new Vector(
+          this.x / v2,
+          this.y / v2,
+          this.z / v2
+      );
+    }
   }
   
-  divideByScalar(s) {
-    this.x *= s;
-    this.y *= s;
-    this.z *= s;
+  divideBy(v2) {
+    if (v2 instanceof Vector) {
+      this.x /= v2.x;
+      this.y /= v2.y;
+      this.z /= v2.z;
+    }
+    else {
+      this.x /= v2;
+      this.y /= v2;
+      this.z /= v2;
+    }
+  }
+  
+  rotate(theta) {
+    let x = this.x;
+    this.x = x * Math.cos(theta) - this.y * Math.sin(theta);
+    this.y = x * Math.sin(theta) + this.y * Math.cos(theta);
+  }
+  
+  fromPolar(theta, r) {
+    this.setComponents(Math.cos(theta) * r, Math.sin(theta) * r);
   }
   
   mag() {
@@ -81,14 +123,20 @@ export default class Vector {
     );
   }
   
-  /*
-  fromAngles(theta, phi) {
-    return new Vector(Math.cos(theta) * Math.cos(phi), Math.sin(phi), Math.sin(theta) * Math.cos(phi));
+  distance2D(v2) {
+    return Math.sqrt(Math.pow(this.x - v2.x, 2) + Math.pow(this.y - v2.y, 2));
   }
-  */
   
-  fromPolar(theta, r) {
-    this.setComponents(Math.cos(theta) * r, Math.sin(theta) * r);
+  equals(v2) {
+    if (v2 instanceof Vector) {
+      return this.x == v2.x && this.y == v2.y && this.z == v2.z;
+    }
+    else return false;
+  }
+  
+  toString(digits) {
+    if (digits == undefined) digits = 2;
+    return this.x.toFixed(digits) + "," + this.y.toFixed(digits) + "," + this.z.toFixed(digits);
   }
   
   copy() {

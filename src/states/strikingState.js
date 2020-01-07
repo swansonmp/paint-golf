@@ -15,10 +15,11 @@ export default class StrikingState {
     this.game.strokes++;                              //add stroke
     this.game.setState(this.game.getRunningState());  //go to running state
   }
-  
+
   draw(ctx) {
     this.game.course.draw(ctx);
     this.game.ball.draw(ctx);
+    this.game.powerbar.draw(ctx);
     this.game.wind.draw(ctx);
     this.game.bag.draw(ctx);
     this.game.status.draw(ctx);
