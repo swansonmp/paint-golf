@@ -1,14 +1,17 @@
-export default class AccuracyState {
+import State from "./state.js";
+
+export default class AccuracyState extends State {
   constructor(game) {
-    this.game = game;
+    super(game);
   }
   
   update(deltaTime) {
     this.game.powerbar.update(deltaTime);
     this.game.wind.update(deltaTime);
-    //go to striking if current is -10
-    if (this.game.powerbar.getCurrent() <= -10) {
-      this.game.setState(this.game.getStrikingState());
+    //go to striking if current is out of range
+    if (this.game.powerbar.outOfRange()) {
+      this.game.powerbar.setAccuracy();
+      this.game.setState(this.game.getPreStrikingState());
       return;
     }
   }
@@ -22,23 +25,12 @@ export default class AccuracyState {
     this.game.status.draw(ctx);
   }
   
-  handleEnter() { }
-  
   handleSpace() {
     //only set accuracy is current is valid
-    if (this.game.powerbar.getCurrent() <= 10) {
+    if (this.game.powerbar.validAccuracy()) {
       this.game.powerbar.setAccuracy();
-      this.game.setState(this.game.getStrikingState());
+      this.game.setState(this.game.getPreStrikingState());
     }
   }
-  
-  handleUpArrow() { }
-  handleDownArrow() { }
-  handleLeftArrow() { }
-  handleRightArrow() { }
-  handleWKey() { }
-  handleAKey() { }
-  handleSKey() { }
-  handleDKey() { }
   
 }

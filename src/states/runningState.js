@@ -1,6 +1,8 @@
-export default class RunningState {
+import State from "./state.js";
+
+export default class RunningState extends State {
   constructor(game) {
-    this.game = game;
+    super(game);
   }
   
   update(deltaTime) {
@@ -22,17 +24,5 @@ export default class RunningState {
     this.game.status.draw(ctx);
     this.game.currentYards.draw(ctx);
   }
-  
-  handleEnter() { }
-  handleSpace() { }
-  handleUpArrow() { }
-  handleDownArrow() { }
-  handleLeftArrow() { }
-  handleRightArrow() { }
-  handleEscape() { }
-  handleWKey() { }
-  handleAKey() { }
-  handleSKey() { }
-  handleDKey() { }
   
 }

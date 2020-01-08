@@ -1,8 +1,9 @@
+import State from "./state.js";
 import Course from "./../course.js";
 
-export default class LoadState {
+export default class LoadState extends State {
   constructor(game) {
-    this.game = game;
+    super(game);
   }
   
   update(deltaTime) {
@@ -18,19 +19,5 @@ export default class LoadState {
     //go to idle state
     this.game.setState(this.game.getPrepareState());
   }
-  
-  draw(ctx) { }
-  
-  handleEnter() { }
-  handleSpace() { }
-  handleUpArrow() { }
-  handleDownArrow() { }
-  handleLeftArrow() { }
-  handleRightArrow() { }
-  handleEscape() { }
-  handleWKey() { }
-  handleAKey() { }
-  handleSKey() { }
-  handleDKey() { }
   
 }

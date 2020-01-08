@@ -1,5 +1,9 @@
 import Loader from "./loader.js";
 
+import Debug from "./debug.js";
+import View from "./view.js";
+import DrawUtil from "./drawUtil.js";
+
 import Ball from "./ball.js";
 import Wind from "./wind.js";
 import Cursor from "./cursor.js";
@@ -8,9 +12,6 @@ import PowerBar from "./powerbar.js";
 import Status from "./status.js";
 import CurrentYards from "./currentYards.js";
 import InputHandler from "./input.js";
-import Debug from "./debug.js";
-import View from "./view.js";
-import DrawUtil from "./drawUtil.js";
 
 import MenuState from "./states/menuState.js";
 import LoadState from "./states/loadState.js";
@@ -19,6 +20,7 @@ import IdleState from "./states/idleState.js";
 import PanState from "./states/panState.js";
 import PowerState from "./states/powerState.js";
 import AccuracyState from "./states/accuracyState.js";
+import PreStrikingState from "./states/preStrikingState.js";
 import StrikingState from "./states/strikingState.js";
 import RunningState from "./states/runningState.js";
 import EvaluateState from "./states/evaluateState.js";
@@ -31,6 +33,10 @@ export default class Game {
     this.GAME_HEIGHT = GAME_HEIGHT;
     this.loader = new Loader(this, CTX);
     
+    this.debug = new Debug(this);
+    this.view = new View(this);
+    this.drawUtil = new DrawUtil(this);
+    
     this.ball = new Ball(this);
     this.wind = new Wind(this);
     this.cursor = new Cursor(this);
@@ -38,10 +44,6 @@ export default class Game {
     this.bag = new Bag(this);
     this.status = new Status(this);
     this.currentYards = new CurrentYards(this);
-    
-    this.debug = new Debug(this);
-    this.view = new View(this);
-    this.drawUtil = new DrawUtil(this);
     
     this.strokes = 0;
     this.holeNum = 1;
@@ -55,6 +57,7 @@ export default class Game {
     this.panState = new PanState(this);
     this.powerState = new PowerState(this);
     this.accuracyState = new AccuracyState(this);
+    this.preStrikingState = new PreStrikingState(this);
     this.strikingState = new StrikingState(this);
     this.runningState = new RunningState(this);
     this.evaluateState = new EvaluateState(this);
@@ -69,6 +72,7 @@ export default class Game {
   getPanState() { return this.panState; }
   getPowerState() { return this.powerState; }
   getAccuracyState() { return this.accuracyState; }
+  getPreStrikingState() { return this.preStrikingState; }
   getStrikingState() { return this.strikingState; }
   getRunningState() { return this.runningState; }
   getEvaluateState() { return this.evaluateState; }

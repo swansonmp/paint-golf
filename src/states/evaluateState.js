@@ -1,6 +1,8 @@
-export default class EvaluateState {
+import State from "./state.js";
+
+export default class EvaluateState extends State {
   constructor(game) {
-    this.game = game;
+    super(game);
   }
   
   update(deltaTime) {
@@ -30,17 +32,5 @@ export default class EvaluateState {
     this.game.bag.draw(ctx);
     this.game.status.draw(ctx);
   }
-  
-  handleEnter() { }
-  handleSpace() { }
-  handleUpArrow() { }
-  handleDownArrow() { }
-  handleLeftArrow() { }
-  handleRightArrow() { }
-  handleEscape() { }
-  handleWKey() { }
-  handleAKey() { }
-  handleSKey() { }
-  handleDKey() { }
   
 }

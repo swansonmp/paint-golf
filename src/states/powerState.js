@@ -1,18 +1,21 @@
-export default class PowerState {
+import State from "./state.js";
+
+export default class PowerState extends State {
   constructor(game) {
-    this.game = game;
+    super(game);
   }
   
   update(deltaTime) {
-    //if current is -10, go to idle
-    if (this.game.powerbar.getCurrent() <= -10) {
+    //if current is out of range, go to idle
+    if (this.game.powerbar.outOfRange()) {
       this.game.powerbar.reset();
       this.game.setState(this.game.getIdleState());
-      return;
     }
     //else update powerbar
-    this.game.powerbar.update(deltaTime);
-    this.game.wind.update(deltaTime);
+    else {
+      this.game.powerbar.update(deltaTime);
+      this.game.wind.update(deltaTime);
+    }
   }
   
   draw(ctx) {
@@ -24,20 +27,9 @@ export default class PowerState {
     this.game.status.draw(ctx);
   }
   
-  handleEnter() { }
-  
   handleSpace() {
     this.game.powerbar.setPower();
     this.game.setState(this.game.getAccuracyState());
   }
-  
-  handleUpArrow() { }
-  handleDownArrow() { }
-  handleLeftArrow() { }
-  handleRightArrow() { }
-  handleWKey() { }
-  handleAKey() { }
-  handleSKey() { }
-  handleDKey() { }
   
 }

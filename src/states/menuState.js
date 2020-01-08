@@ -1,3 +1,4 @@
+import State from "./state.js";
 import TitleState from "./../menus/titleState.js";
 import MainState from "./../menus/mainState.js";
 import SelectState from "./../menus/selectState.js";
@@ -13,9 +14,9 @@ const HEADING_SIZE = 80;
 const ITEM_SIZE = 50;
 const TAB = 600;
 
-export default class MenuState {
+export default class MenuState extends State {
   constructor(game) {
-    this.game = game;
+    super(game);
     
     this.titleState = new TitleState(game, this);
     this.mainState = new MainState(game, this);

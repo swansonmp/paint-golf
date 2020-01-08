@@ -1,6 +1,8 @@
-export default class IdleState {
+import State from "./state.js";
+
+export default class IdleState extends State {
   constructor(game) {
-    this.game = game;
+    super(game);
   }
   
   update(deltaTime) {

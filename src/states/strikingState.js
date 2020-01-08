@@ -1,6 +1,8 @@
-export default class StrikingState {
+import State from "./state.js";
+
+export default class StrikingState extends State {
   constructor(game) {
-    this.game = game;
+    super(game);
   }
   
   update(deltaTime) {
@@ -24,17 +26,5 @@ export default class StrikingState {
     this.game.bag.draw(ctx);
     this.game.status.draw(ctx);
   }
-  
-  handleEnter() { }
-  handleSpace() { }
-  handleUpArrow() { }
-  handleDownArrow() { }
-  handleLeftArrow() { }
-  handleRightArrow() { }
-  handleEscape() { }
-  handleWKey() { }
-  handleAKey() { }
-  handleSKey() { }
-  handleDKey() { }
   
 }

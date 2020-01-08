@@ -1,6 +1,8 @@
-export default class PrepareState {
+import State from "./state.js";
+
+export default class PrepareState extends State {
   constructor(game) {
-    this.game = game;
+    super(game);
   }
   
   update(deltaTime) { 
@@ -25,17 +27,5 @@ export default class PrepareState {
     this.game.ball.draw(ctx);
     this.game.bag.draw(ctx);
   }
-  
-  handleEnter() { }
-  handleSpace() { }
-  handleUpArrow() { }
-  handleDownArrow() { }
-  handleLeftArrow() { }
-  handleRightArrow() { }
-  handleEscape() { }
-  handleWKey() { }
-  handleAKey() { }
-  handleSKey() { }
-  handleDKey() { }
   
 }

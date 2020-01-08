@@ -1,6 +1,8 @@
-export default class PanState {
+import State from "./state.js";
+
+export default class PanState extends State {
   constructor(game) {
-    this.game = game;
+    super(game);
   }
   
   update(deltaTime) {

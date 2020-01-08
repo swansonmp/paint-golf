@@ -2,17 +2,9 @@
 
 ## Changes
 
-* Update these to utilize Vector:
-  * More of ball.js
-  * Course tees and holes
-  * CurrentYards
-* Changes to Vector:
-  * Combine scalar and non-scalar methods
-  * Add rotate, distance2D, equals, and toString methods
-* Changed wind height rate from 1/64 to 1/128, making wind less powerful
-* Add SPIN_DECAY constant
-* Lower OoB bounce rate from 1 to 0.2
-* Change CurrentYards to display 1 decimal place instead of 2
+* Overhaul powerbar
+* Add PreStrikingState, effectively adding a delay
+* Refactor state classes to inherit from state.js
 
 
 ## Logic
@@ -56,6 +48,7 @@
 
 * Fix pan limits on bottom and right
 * Derive club distances as opposed to listing them
+* Create cursor images in javascript
 
 
 ## Far-Out Goals
