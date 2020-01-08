@@ -17,5 +17,7 @@ export default class State {
   handleAKey() { }
   handleSKey() { }
   handleDKey() { }
+  handleMinusKey() { }
+  handleEqualKey() { }
   
 }

@@ -13,6 +13,7 @@ export default class EvaluateState extends State {
     }
     else {
       if (this.game.ball.inWater()) {               //if the ball is in the water
+        this.game.sounds.splash.play();
         this.game.strokes++;                        //add penalty stroke
         this.game.ball.reset(
             this.game.ball.lastPosition.x, 

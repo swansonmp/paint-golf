@@ -30,8 +30,7 @@ export default class Game {
   constructor(GAME_WIDTH, GAME_HEIGHT, CTX) {
     this.getCourse("course");
     this.course;
-    this.GAME_WIDTH = GAME_WIDTH;
-    this.GAME_HEIGHT = GAME_HEIGHT;
+    this.setGameSize(GAME_WIDTH, GAME_HEIGHT);
     this.loader = new Loader(this, CTX);
     
     this.debug = new Debug(this);
@@ -93,14 +92,12 @@ export default class Game {
     this.debug.draw(ctx);
   }
   
-  
   getCourse(name) {
     this.courseImage = document.getElementById("course");
     this.vanityImage = document.getElementById("vanity");
     this.courseImage.src = "./assets/holes/" + name + ".png";
     this.vanityImage.src = "./assets/holes/" + name + "-vanity.png";
-    this.COURSE_WIDTH = this.courseImage.width;
-    this.COURSE_HEIGHT = this.courseImage.height; 
+    this.setCourseSize(this.courseImage.width, this.courseImage.height);
     if (this.vanityImage.width == 0) {
       console.error(name + "-vanity.png not found");
       this.vanityImage = this.courseImage;
@@ -114,8 +111,22 @@ export default class Game {
   getCustomCourse() {
     this.courseImage = document.getElementById("custom");
     this.vanityImage = this.courseImage;
-    this.COURSE_WIDTH = this.courseImage.width;
-    this.COURSE_HEIGHT = this.courseImage.height;
+    this.setCourseSize(this.courseImage.width, this.courseImage.height);
+  }
+  
+  setGameSize(width, height) {
+    this.GAME_WIDTH = width;
+    this.GAME_HEIGHT = height;
+  }
+  
+  setCourseSize(width, height) {
+    this.COURSE_WIDTH = width;
+    this.COURSE_HEIGHT = height;
+  }
+  
+  setScreenSize(width, height) {
+    this.SCREEN_WIDTH = width;
+    this.SCREEN_HEIGHT = height;
   }
   
 }

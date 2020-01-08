@@ -57,5 +57,13 @@ export default class IdleState extends State {
   handleAKey() { this.game.setState(this.game.getPanState()); }
   handleSKey() { this.game.setState(this.game.getPanState()); }
   handleDKey() { this.game.setState(this.game.getPanState()); }
+  
+  handleMinusKey() {
+    
+  }
+  
+  handleEqualKey() {
+    
+  }
 
 }

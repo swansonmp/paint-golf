@@ -35,6 +35,12 @@ export default class InputHandler {
         case 87:
           game.state.handleWKey();
           break;
+        case 187:
+          game.state.handleEqualKey();
+          break;
+        case 189:
+          game.state.handleMinusKey();
+          break;
         case 192:
           game.debug.toggleDebug();
           break;
@@ -49,8 +55,7 @@ export default class InputHandler {
       let c = document.getElementById("gameScreen");
       c.width = document.body.clientWidth;
       c.height = document.body.clientHeight;
-      game.GAME_WIDTH = c.width;
-      game.GAME_HEIGHT = c.height;
+      game.setGameSize(c.width, c.height);
     });
     
     //Touch start event listener

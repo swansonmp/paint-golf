@@ -2,8 +2,10 @@
 
 ## Changes
 
-* Add sounds
-* Add volume adjustment in settings
+* Add new click sound
+* Add splash sound
+* Add '-' and '=' key handling
+* Add setters for various size parameters
 
 
 ## Logic

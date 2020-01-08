@@ -8,7 +8,8 @@ export default class GameSounds {
     this.goodStrike = new Sound(this.path + "goodStrike.wav");
     this.okayStrike = new Sound(this.path + "okayStrike.wav");
     this.badStrike = new Sound(this.path + "badStrike.wav");
-    this.click = new Sound(this.path + "click.wav");
+    this.click = new Sound(this.path + "click.ogg");
+    this.splash = new Sound(this.path + "splash.ogg");
   }
   
   setVolume(volume) {
@@ -16,5 +17,6 @@ export default class GameSounds {
     this.okayStrike.setVolume(volume);
     this.badStrike.setVolume(volume);
     this.click.setVolume(volume);
+    this.splash.setVolume(volume);
   }
 }
