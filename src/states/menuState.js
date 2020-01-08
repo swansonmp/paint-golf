@@ -125,10 +125,12 @@ export default class MenuState extends State {
   handleRightArrow() { this.state.handleIncrement(); }
   handleLeftArrow() { this.state.handleDecrement(); }
   handleUpArrow() {
+    this.game.sounds.click.play();
     this.state.index--;
     if (this.state.index < 0) this.state.index = this.state.items.length - 1;
   }
   handleDownArrow() {
+    this.game.sounds.click.play();
     this.state.index++;
     if (this.state.index >= this.state.items.length) this.state.index = 0; 
   }

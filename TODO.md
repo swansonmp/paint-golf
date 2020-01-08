@@ -2,9 +2,8 @@
 
 ## Changes
 
-* Overhaul powerbar
-* Add PreStrikingState, effectively adding a delay
-* Refactor state classes to inherit from state.js
+* Add sounds
+* Add volume adjustment in settings
 
 
 ## Logic
@@ -46,6 +45,7 @@
 
 ## Other Fixes
 
+* Fix last position for respawning
 * Fix pan limits on bottom and right
 * Derive club distances as opposed to listing them
 * Create cursor images in javascript

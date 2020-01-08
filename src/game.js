@@ -11,6 +11,7 @@ import Bag from "./bag.js";
 import PowerBar from "./powerbar.js";
 import Status from "./status.js";
 import CurrentYards from "./currentYards.js";
+import GameSounds from "./gameSounds.js";
 import InputHandler from "./input.js";
 
 import MenuState from "./states/menuState.js";
@@ -37,6 +38,9 @@ export default class Game {
     this.view = new View(this);
     this.drawUtil = new DrawUtil(this);
     
+    this.strokes = 0;
+    this.holeNum = 1;
+    
     this.ball = new Ball(this);
     this.wind = new Wind(this);
     this.cursor = new Cursor(this);
@@ -45,9 +49,7 @@ export default class Game {
     this.status = new Status(this);
     this.currentYards = new CurrentYards(this);
     
-    this.strokes = 0;
-    this.holeNum = 1;
-
+    this.sounds = new GameSounds(this);
     new InputHandler(this);
     
     this.menuState = new MenuState(this);

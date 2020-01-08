@@ -58,7 +58,6 @@ export default class PowerBar {
     this.BAR_X = this.game.GAME_WIDTH / 2 - this.BAR_WIDTH / 2;
     this.BAR_Y = this.game.GAME_HEIGHT - this.BAR_HEIGHT - this.game.drawUtil.getPadding() - this.game.drawUtil.getDefaultTextSize() * 0.4;
     this.BAR_START = this.BAR_X + this.BAR_WIDTH - this.BAR_WIDTH / ((100 - this.BAR_MIN) / -this.BAR_MIN);
-    //calculate hue
     let h = -0.6 * this.current + 60;
     
     //draw center
@@ -95,7 +94,7 @@ export default class PowerBar {
       this.game.drawUtil.drawText( ctx,
         t + "%", 
         this.getXFromValue(t),
-        this.BAR_Y - this.LINE_WIDTH * 4,
+        this.BAR_Y - this.LINE_WIDTH * 2,
         "center",
         this.game.drawUtil.getDefaultTextSize() * 0.4,
         this.game.drawUtil.getDefaultStrokeWidth() * 0.4,
@@ -138,16 +137,16 @@ export default class PowerBar {
     );
     ctx.fillStyle = "rgba(255,255,0,1)";
     ctx.fillRect(
-        this.getXFromValue(-this.BAR_MIN / 1.75), 
+        this.getXFromValue(-this.BAR_MIN / 3), 
         this.BAR_Y + this.BAR_HEIGHT + this.LINE_WIDTH, 
-        this.getXFromValue(this.BAR_MIN / 1.75) - this.getXFromValue(-this.BAR_MIN / 1.75), 
+        this.getXFromValue(this.BAR_MIN / 3) - this.getXFromValue(-this.BAR_MIN / 3), 
         this.BAR_HEIGHT / 4
     );
     ctx.fillStyle = "rgba(0,255,0,1)";
     ctx.fillRect(
-        this.getXFromValue(-this.BAR_MIN / 4), 
+        this.getXFromValue(-this.BAR_MIN / 8), 
         this.BAR_Y + this.BAR_HEIGHT + this.LINE_WIDTH, 
-        this.getXFromValue(this.BAR_MIN / 4) - this.getXFromValue(-this.BAR_MIN / 4), 
+        this.getXFromValue(this.BAR_MIN / 8) - this.getXFromValue(-this.BAR_MIN / 8), 
         this.BAR_HEIGHT / 4
     );
   }

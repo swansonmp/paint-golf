@@ -28,6 +28,7 @@ export default class IdleState extends State {
   }
   
   handleSpace() {
+    this.game.sounds.click.play();
     this.game.powerbar.reset();
     this.game.setState(this.game.getPowerState());
   }

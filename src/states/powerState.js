@@ -1,4 +1,5 @@
 import State from "./state.js";
+import Sound from "./../sound.js";
 
 export default class PowerState extends State {
   constructor(game) {
@@ -28,6 +29,7 @@ export default class PowerState extends State {
   }
   
   handleSpace() {
+    this.game.sounds.click.play();
     this.game.powerbar.setPower();
     this.game.setState(this.game.getAccuracyState());
   }

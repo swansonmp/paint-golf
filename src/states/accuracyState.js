@@ -26,8 +26,10 @@ export default class AccuracyState extends State {
   }
   
   handleSpace() {
+     this.game.sounds.click.play();
     //only set accuracy is current is valid
     if (this.game.powerbar.validAccuracy()) {
+      this.game.sounds.click.play();
       this.game.powerbar.setAccuracy();
       this.game.setState(this.game.getPreStrikingState());
     }
