@@ -66,12 +66,4 @@ export default class View {
     }
   }
   
-  zoomIn() {
-    
-  }
-  
-  zoomOut() {
-    
-  }
-  
 }

@@ -1,6 +1,6 @@
-import State from "./state.js";
+import ActionState from "./actionState.js";
 
-export default class PreStrikingState extends State {
+export default class PreStrikingState extends ActionState {
   constructor(game) {
     super(game);
     this.maxTime = 1000;
@@ -20,12 +20,16 @@ export default class PreStrikingState extends State {
     }
   }
   
-  draw(ctx) {
-    this.game.course.draw(ctx);
+  drawDynamicElements(ctx) {
+    this.game.course.draw(ctx); 
     this.game.ball.draw(ctx);
-    this.game.powerbar.draw(ctx);
+  }
+  
+  drawStaticElements(ctx) {
     this.game.wind.draw(ctx);
+    this.game.powerbar.draw(ctx);
     this.game.bag.draw(ctx);
     this.game.status.draw(ctx);
   }
+  
 }

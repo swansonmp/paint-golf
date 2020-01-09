@@ -1,6 +1,6 @@
-import State from "./state.js";
+import ActionState from "./actionState.js";
 
-export default class RunningState extends State {
+export default class RunningState extends ActionState {
   constructor(game) {
     super(game);
   }
@@ -16,9 +16,12 @@ export default class RunningState extends State {
     }
   }
   
-  draw(ctx) {
-    this.game.course.draw(ctx);
+  drawDynamicElements(ctx) {
+    this.game.course.draw(ctx); 
     this.game.ball.draw(ctx);
+  }
+  
+  drawStaticElements(ctx) {
     this.game.wind.draw(ctx);
     this.game.bag.draw(ctx);
     this.game.status.draw(ctx);

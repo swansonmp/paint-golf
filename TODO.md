@@ -2,10 +2,7 @@
 
 ## Changes
 
-* Add new click sound
-* Add splash sound
-* Add '-' and '=' key handling
-* Add setters for various size parameters
+* Progress on overhauling view logic (broken)
 
 
 ## Logic

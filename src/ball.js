@@ -111,33 +111,11 @@ export default class Ball {
     //draw ball
     ctx.drawImage(
       this.image,
-      this.getDrawX(),
-      this.getDrawY(),
+      this.getScaledPosition().x,
+      this.getScaledPosition().y,
       this.size,
       this.size
     );
-  }
-  
-  getDrawX() {
-    let drawX = this.game.GAME_WIDTH / 2 - this.size / 2;
-    if (this.getScaledX() < this.game.GAME_WIDTH / 2) {
-      drawX -= this.game.GAME_WIDTH / 2 - this.getScaledX();
-    }
-    else if (this.getScaledX() > this.game.COURSE_WIDTH - this.game.GAME_WIDTH / 2) {
-      drawX += this.game.GAME_WIDTH / 2 - this.game.COURSE_WIDTH + this.getScaledX();
-    }
-    return drawX - this.game.view.offsetX;
-  }
-  
-  getDrawY() {
-    let drawY = this.game.GAME_HEIGHT / 2 - this.size / 2;
-    if (this.getScaledY() < this.game.GAME_HEIGHT / 2) {
-      drawY -= this.game.GAME_HEIGHT / 2 - this.getScaledY();
-    }
-    else if (this.getScaledY() > this.game.COURSE_HEIGHT - this.game.GAME_HEIGHT / 2) {
-      drawY += this.game.GAME_HEIGHT / 2 - this.game.COURSE_HEIGHT + this.getScaledY();
-    }
-    return drawY - this.game.view.offsetY;
   }
   
   update(deltaTime) {

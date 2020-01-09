@@ -1,6 +1,6 @@
-import State from "./state.js";
+import ActionState from "./actionState.js";
 
-export default class PrepareState extends State {
+export default class PrepareState extends ActionState {
   constructor(game) {
     super(game);
   }
@@ -22,9 +22,12 @@ export default class PrepareState extends State {
     this.game.setState(this.game.getIdleState()); //go to idle state
   }
   
-  draw(ctx) {
+  drawDynamicElements(ctx) {
     this.game.course.draw(ctx);
     this.game.ball.draw(ctx);
+  }
+  
+  drawStaticElements(ctx) {
     this.game.bag.draw(ctx);
   }
   

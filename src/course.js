@@ -27,31 +27,13 @@ export default class Course {
   }
   
   getDrawX() {
-    let drawX = this.game.ball.getScaledX() - this.game.GAME_WIDTH / 2;
-    if (drawX < 0) {
-      drawX = 0;
-    }
-    else {
-      let maxX = this.game.COURSE_WIDTH - this.game.GAME_WIDTH;
-      if (drawX > maxX) {
-        drawX = maxX;
-      }
-    }
-    return drawX + this.game.view.offsetX;
+    //let drawX = this.game.view.clamp(this.game.ball.getScaledX() - this.game.GAME_WIDTH / 2, 0, this.game.COURSE_WIDTH - this.game.GAME_WIDTH);
+    return this.game.view.offsetX;
   }
   
   getDrawY() {
-    let drawY = this.game.ball.getScaledY() - this.game.GAME_HEIGHT / 2;
-    if (drawY < 0) {
-      drawY = 0;
-    }
-    else {
-      let maxY = this.game.COURSE_HEIGHT - this.game.GAME_HEIGHT;
-      if (drawY > maxY) {
-        drawY = maxY;
-      }
-    }
-    return drawY + this.game.view.offsetY;
+    //let drawY = this.game.view.clamp(this.game.ball.getScaledY() - this.game.GAME_HEIGHT / 2, 0, this.game.COURSE_HEIGHT - this.game.GAME_HEIGHT);
+    return this.game.view.offsetY;
   }
   
   drawCourse(ctx, xOffset, yOffset, width, height) {

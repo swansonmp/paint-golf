@@ -1,7 +1,7 @@
-import State from "./state.js";
+import ActionState from "./actionState.js";
 import Sound from "./../sound.js";
 
-export default class PowerState extends State {
+export default class PowerState extends ActionState {
   constructor(game) {
     super(game);
   }
@@ -19,9 +19,12 @@ export default class PowerState extends State {
     }
   }
   
-  draw(ctx) {
-    this.game.course.draw(ctx);
+  drawDynamicElements(ctx) {
+    this.game.course.draw(ctx); 
     this.game.ball.draw(ctx);
+  }
+  
+  drawStaticElements(ctx) {
     this.game.wind.draw(ctx);
     this.game.powerbar.draw(ctx);
     this.game.bag.draw(ctx);

@@ -65,8 +65,8 @@ export default class Cursor {
   
   update(deltaTime) {
     //calculate location
-    this.ballX = this.game.ball.getDrawX();
-    this.ballY = this.game.ball.getDrawY();
+    this.ballX = this.game.ball.getScaledPosition().x;
+    this.ballY = this.game.ball.getScaledPosition().y;
     this.curX = this.ballX + this.game.bag.getClub().carry * this.game.ball.scale * Math.cos(this.game.ball.angle);
     this.curY = this.ballY + this.game.bag.getClub().carry * this.game.ball.scale * Math.sin(this.game.ball.angle);
     

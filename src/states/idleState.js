@@ -1,6 +1,6 @@
-import State from "./state.js";
+import ActionState from "./actionState.js";
 
-export default class IdleState extends State {
+export default class IdleState extends ActionState {
   constructor(game) {
     super(game);
   }
@@ -10,10 +10,13 @@ export default class IdleState extends State {
     this.game.wind.update(deltaTime);
   }
   
-  draw(ctx) {
+  drawDynamicElements(ctx) {
     this.game.course.draw(ctx);
-    this.game.cursor.draw(ctx);
+    this.game.cursor.draw(ctx); 
     this.game.ball.draw(ctx);
+  }
+  
+  drawStaticElements(ctx) {
     this.game.wind.draw(ctx);
     this.game.powerbar.draw(ctx);
     this.game.bag.draw(ctx);
