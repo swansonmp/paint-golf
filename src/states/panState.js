@@ -8,7 +8,6 @@ export default class PanState extends ActionState {
   update(deltaTime) {
     this.game.cursor.update(deltaTime);
     this.game.wind.update(deltaTime);
-    this.game.view.update(deltaTime);
   }
   
   drawDynamicElements(ctx) {
@@ -24,8 +23,7 @@ export default class PanState extends ActionState {
   }
   
   handleReset() {
-    this.game.view.offsetX = 0;
-    this.game.view.offsetY = 0;
+    this.game.view.reset();
     this.game.setState(this.game.getIdleState());  //go to running state
   }
   handleEnter() { this.handleReset(); }  

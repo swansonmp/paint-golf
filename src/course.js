@@ -13,27 +13,7 @@ export default class Course {
   }
   
   draw(ctx) {
-    ctx.drawImage(
-        this.game.vanityImage,
-        this.getDrawX(),
-        this.getDrawY(), 
-        this.game.GAME_WIDTH, 
-        this.game.GAME_HEIGHT,
-        0,
-        0,
-        this.game.GAME_WIDTH, 
-        this.game.GAME_HEIGHT
-    );
-  }
-  
-  getDrawX() {
-    //let drawX = this.game.view.clamp(this.game.ball.getScaledX() - this.game.GAME_WIDTH / 2, 0, this.game.COURSE_WIDTH - this.game.GAME_WIDTH);
-    return this.game.view.offsetX;
-  }
-  
-  getDrawY() {
-    //let drawY = this.game.view.clamp(this.game.ball.getScaledY() - this.game.GAME_HEIGHT / 2, 0, this.game.COURSE_HEIGHT - this.game.GAME_HEIGHT);
-    return this.game.view.offsetY;
+    ctx.drawImage(this.game.vanityImage, 0, 0);
   }
   
   drawCourse(ctx, xOffset, yOffset, width, height) {

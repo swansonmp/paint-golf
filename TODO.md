@@ -2,7 +2,10 @@
 
 ## Changes
 
-* Progress on overhauling view logic (broken)
+* Fix viewport issues once and for all
+* Update View to use vectors
+* Remove getScaledX/Y, replacing with getScaledPosition
+* Fix OoB bounce glitch
 
 
 ## Logic
@@ -37,7 +40,7 @@
 ## UI
 
 * Implement smooth panning
-* Overhaul powerbar
+* Overhaul powerbar (again)
 * Add remaining yards indicator
 * Update stroke indicator
 
@@ -45,7 +48,7 @@
 ## Other Fixes
 
 * Fix last position for respawning
-* Fix pan limits on bottom and right
+* Re-add pan limits
 * Derive club distances as opposed to listing them
 * Create cursor images in javascript
 

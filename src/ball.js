@@ -37,6 +37,7 @@ export default class Ball {
     this.gravity = new Vector(0, 0, -9.8);
     this.friction = 0.90;
     this.bounce = -0.5;
+    this.bounceOoB = -0.2;
     this.radius = 0.0625;
     this.c = 0.5;
     this.rho = 1.2;
@@ -148,14 +149,30 @@ export default class Ball {
   }
   
   calculateOoBBounce() {
-    if (this.getScaledX() < 0 || this.getScaledX() > this.game.COURSE_WIDTH) this.velocity.x *= -0.2;
-    if (this.getScaledY() < 0 || this.getScaledY() > this.game.COURSE_HEIGHT) this.velocity.y *= -0.2;
+    //calculate x bounce
+    if (this.getScaledPosition().x < 0) {
+      this.position.x = 0;
+      this.velocity.x *= this.bounceOoB;
+    }
+    else if (this.getScaledPosition().x > this.game.COURSE_WIDTH) {
+      this.position.x = this.game.COURSE_WIDTH;
+      this.velocity.x *= this.bounceOoB;
+    }
+    //calculate y bounce
+    if (this.getScaledPosition().y < 0) {
+      this.position.y = 0;
+      this.velocity.y *= this.bounceOoB;
+    }
+    else if (this.getScaledPosition().y > this.game.COURSE_HEIGHT) {
+      this.position.y = this.game.COURSE_HEIGHT;
+      this.velocity.y *= this.bounceOoB;
+    }
   }
   
   calculateGroundBounce() {
     if (this.position.z < 0) {
       this.position.z = 0;
-      this.velocity.z *= this.getLieRate() * this.bounce;
+      this.velocity.z *= this.bounce * this.getLieRate();
       
       //calculate spin
       this.velocity.addTo(this.spin);
@@ -192,25 +209,18 @@ export default class Ball {
   }
   
   getPixelType() {
-    return this.game.course.map[Math.floor(this.getScaledX())][Math.floor(this.getScaledY())];
+    return this.game.course.map[Math.floor(this.getScaledPosition().x)][Math.floor(this.getScaledPosition().y)];
   }
   
-  inHole() {
-    return this.getPixelType() == this.PIXEL_TYPE.HOLE;
-  }
+  inHole() { return this.getPixelType() == this.PIXEL_TYPE.HOLE; }
+  inWater() { return this.getPixelType() == this.PIXEL_TYPE.WATER; }
   
-  inWater() {
-    return this.getPixelType() == this.PIXEL_TYPE.WATER;
-  }
-  
-  getScaledX() { return this.position.x * this.scale; }
-  getScaledY() { return this.position.y * this.scale; }
   getScaledPosition() { return this.position.multiply(this.scale) };
   
   angleToHole() {
     this.angle =  Math.atan2(
-        this.game.course.holes[this.game.holeNum].y - this.getScaledY(), 
-        this.game.course.holes[this.game.holeNum].x - this.getScaledX()
+        this.game.course.holes[this.game.holeNum].y - this.getScaledPosition().y, 
+        this.game.course.holes[this.game.holeNum].x - this.getScaledPosition().x
     );
   }
   
