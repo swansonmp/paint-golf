@@ -40,4 +40,7 @@ export default class PanState extends ActionState {
   handleSKey() { this.game.view.incrementViewOffsetY(); }
   handleDKey() { this.game.view.incrementViewOffsetX(); }
 
+  handleMinusKey() { this.game.view.zoomOut(); }
+  handleEqualKey() { this.game.view.zoomIn(); }
+  
 }

@@ -61,12 +61,7 @@ export default class IdleState extends ActionState {
   handleSKey() { this.game.setState(this.game.getPanState()); }
   handleDKey() { this.game.setState(this.game.getPanState()); }
   
-  handleMinusKey() {
-    
-  }
-  
-  handleEqualKey() {
-    
-  }
+  handleMinusKey() { this.game.view.zoomOut(); }
+  handleEqualKey() { this.game.view.zoomIn(); }
 
 }

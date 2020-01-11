@@ -4,32 +4,22 @@ export default class View {
   constructor(game) {
     this.game = game;
     this.offset = new Vector();
+    this.scale = 1;
+    this.scaleFactor = 1 + Math.pow(2, -5);
     this.panRate = 10;
   }
   
-    deltaTime /= 512;
   reset() { this.offset.setComponents(0, 0); }
   getOffset() { return this.offset; }
+  getScaledPanRate() { return this.panRate / this.scale; }
+  incrementViewOffsetX() { this.offset.x += this.getScaledPanRate(); }
+  incrementViewOffsetY() { this.offset.y += this.getScaledPanRate(); }
+  decrementViewOffsetX() { this.offset.x -= this.getScaledPanRate(); }
+  decrementViewOffsetY() { this.offset.y -= this.getScaledPanRate(); }
   
-  incrementViewOffsetX() { 
-    //if (this.offset.x < this.game.COURSE_WIDTH - this.game.GAME_WIDTH / 2)
-      this.offset.x += this.panRate;
-  }
-  incrementViewOffsetY() {
-    //if (this.offset.y < this.game.COURSE_HEIGHT - this.game.GAME_HEIGHT / 2) 
-      this.offset.y += this.panRate;
-  }
-  decrementViewOffsetX() {
-    //if (this.offset.x > 0) 
-      this.offset.x -= this.panRate;
-  }
-  decrementViewOffsetY() {
-    //if (this.offset.y > 0) 
-      this.offset.y -= this.panRate;
-  }
+  zoomIn() { this.scale *= this.scaleFactor; }
+  zoomOut() { this.scale /= this.scaleFactor; }
   
-  clamp(n, min, max) {
-    return Math.min(Math.max(n, min), max);
-  }
+  clamp(n, min, max) { return Math.min(Math.max(n, min), max); }
   
 }

@@ -2,10 +2,8 @@
 
 ## Changes
 
-* Fix viewport issues once and for all
-* Update View to use vectors
-* Remove getScaledX/Y, replacing with getScaledPosition
-* Fix OoB bounce glitch
+* Add naive zoom
+* Update view pan calculation
 
 
 ## Logic
@@ -27,7 +25,6 @@
 
 ## Features
 
-* Add zoom
 * Implement greens
 * Overhaul file uploading menu
 * Add support for user-uploaded vanity images
@@ -48,7 +45,6 @@
 ## Other Fixes
 
 * Fix last position for respawning
-* Re-add pan limits
 * Derive club distances as opposed to listing them
 * Create cursor images in javascript
 
