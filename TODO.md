@@ -2,8 +2,8 @@
 
 ## Changes
 
-* Add naive zoom
-* Update view pan calculation
+* Decrease friction
+* Update motion-checking methods
 
 
 ## Logic

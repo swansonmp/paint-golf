@@ -35,7 +35,7 @@ export default class Ball {
     this.scale = 2;
     this.mass = 0.25;
     this.gravity = new Vector(0, 0, -9.8);
-    this.friction = 0.90;
+    this.friction = 0.98;
     this.bounce = -0.5;
     this.bounceOoB = -0.2;
     this.radius = 0.0625;
@@ -73,10 +73,10 @@ export default class Ball {
   setLastPosition() {
     this.lastPosition = this.position.copy();
   }
-
-  isMoving() {
-    return this.position.z > 0.05 || this.velocity.mag() > 0.05;
-  }
+  
+  inAir()    { return this.position.z > 0.05; }
+  inMotion() { return this.velocity.mag() > 0.05; }
+  isMoving() { return this.inAir() || this.inMotion(); }
 
   strike(horizontal, vertical, dtheta) {
     //set last position
@@ -181,9 +181,8 @@ export default class Ball {
   }
   
   calculateFriction() {
-    if (this.position.z < 0.325 && Math.abs(this.velocity.z) < 0.325) {
+    if (!this.inAir()) {
       this.position.z = 0;
-      this.velocity.z = 0;
       this.velocity.multiplyBy(this.friction * this.getLieRate());
     }
   }
