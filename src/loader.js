@@ -51,7 +51,6 @@ export default class Loader {
   }
   
   parseSection(width, height) {
-    //console.log("Drawing: " + this.xOffset + ", " + this.yOffset + ", " + width + ", " + height); //todo///////////////////
     this.course.drawCourse(this.CTX, this.xOffset, this.yOffset, width, height);
     this.imgData = this.CTX.getImageData(0, 0, width, height);
     this.row = 0;
@@ -74,7 +73,7 @@ export default class Loader {
     if (r == 0 && g == 0) {
       if (b <= this.course.tees.length) {
         this.course.tees[b].setComponents(this.row + this.xOffset, this.col + this.yOffset);
-        this.course.map[this.row + this.xOffset][this.col + this.yOffset] = this.game.ball.PIXEL_TYPE.TEE;
+        this.course.map[this.row + this.xOffset][this.col + this.yOffset] = this.course.terrain.getTeeTerrain();
       }
       return true;
     }
@@ -82,7 +81,7 @@ export default class Loader {
     else if (r == 255 && g == 0) {
       if (b <= this.course.holes.length) {
         this.course.holes[b].setComponents(this.row + this.xOffset, this.col + this.yOffset);
-        this.course.map[this.row + this.xOffset][this.col + this.yOffset] = this.game.ball.PIXEL_TYPE.HOLE;
+        this.course.map[this.row + this.xOffset][this.col + this.yOffset] = this.course.terrain.getHoleTerrain();
       }
       return true;
     }
@@ -90,24 +89,7 @@ export default class Loader {
   }
   
   setPixel(r, g, b) {
-    let t;
-    switch(this.rgbToDec(r, g, b)) {
-      case this.palette.COLOR.GREEN:
-        t = this.game.ball.PIXEL_TYPE.GREEN;
-        break;
-      case this.palette.COLOR.ROUGH:
-        t = this.game.ball.PIXEL_TYPE.ROUGH;
-        break;
-      case this.palette.COLOR.BUNKER:
-        t = this.game.ball.PIXEL_TYPE.BUNKER;
-        break;
-      case this.palette.COLOR.WATER:
-        t = this.game.ball.PIXEL_TYPE.WATER;
-        break;
-      default:
-        t = this.game.ball.PIXEL_TYPE.FAIRWAY;
-    }
-    this.course.map[this.row + this.xOffset][this.col + this.yOffset] = t;
+    this.course.map[this.row + this.xOffset][this.col + this.yOffset] = this.course.terrain.colorToTerrainType(this.rgbToDec(r, g, b));
   }
   
   rgbToDec(r, g, b) {

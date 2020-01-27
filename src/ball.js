@@ -11,25 +11,6 @@ export default class Ball {
     this.game = game;
     this.image = document.getElementById("img_ball");
     
-    this.PIXEL_TYPE = {
-      TEE: 0,
-      HOLE: 1,
-      GREEN: 2,
-      FAIRWAY: 3,
-      ROUGH: 4,
-      BUNKER: 5,
-      WATER: 6
-    };
-    this.PIXEL_RATE = {
-      TEE: 1,
-      HOLE: 0,
-      GREEN: 0.99,
-      FAIRWAY: 0.98,
-      ROUGH: 0.8,
-      BUNKER: 0.6,
-      WATER: 0.1
-    };
-    
     this.rate = 750;
     this.inaccuracyRate = 1/128;
     this.scale = 2;
@@ -58,21 +39,10 @@ export default class Ball {
     this.spin = new Vector();
   }
   
-  setScale(scale) {
-    this.scale = scale;
-  }
-  
-  setRate(rate) {
-    this.rate = rate;
-  }
-  
-  setInaccuracyRate(inaccuracyRate) {
-    this.inaccuracyRate = inaccuracyRate;
-  }
-  
-  setLastPosition() {
-    this.lastPosition = this.position.copy();
-  }
+  setScale(scale) { this.scale = scale; }
+  setRate(rate) { this.rate = rate; }
+  setInaccuracyRate(inaccuracyRate) { this.inaccuracyRate = inaccuracyRate; }
+  setLastPosition() { this.lastPosition = this.getScaledPosition().copy(); }
   
   inAir()    { return this.position.z > 0.05; }
   inMotion() { return this.velocity.mag() > 0.05; }
@@ -187,32 +157,11 @@ export default class Ball {
     }
   }
   
-  getLieRate() {
-    let lie = this.getPixelType();
-    switch (lie) {
-      case this.PIXEL_TYPE.TEE:
-        return this.PIXEL_RATE.TEE;
-      case this.PIXEL_TYPE.HOLE:
-        return this.PIXEL_RATE.HOLE;
-      case this.PIXEL_TYPE.GREEN:
-        return this.PIXEL_RATE.GREEN;
-      case this.PIXEL_TYPE.ROUGH:
-        return this.PIXEL_RATE.ROUGH;
-      case this.PIXEL_TYPE.BUNKER:
-        return this.PIXEL_RATE.BUNKER;
-      case this.PIXEL_TYPE.WATER:
-        return this.PIXEL_RATE.WATER;
-      default:
-        return this.PIXEL_RATE.FAIRWAY;
-    }
-  }
+  getLieRate() { return this.game.course.getLieRate(this.getScaledPosition().x, this.getScaledPosition().y); }
+  getPixelType() { return this.game.course.getPixelType(this.getScaledPosition().x, this.getScaledPosition().y); }
   
-  getPixelType() {
-    return this.game.course.map[Math.floor(this.getScaledPosition().x)][Math.floor(this.getScaledPosition().y)];
-  }
-  
-  inHole() { return this.getPixelType() == this.PIXEL_TYPE.HOLE; }
-  inWater() { return this.getPixelType() == this.PIXEL_TYPE.WATER; }
+  inHole() { return this.getPixelType() == this.game.course.terrain.getHoleTerrain(); }
+  inWater() { return this.getPixelType() == this.game.course.terrain.getWaterTerrain(); }
   
   getScaledPosition() { return this.position.multiply(this.scale) };
   

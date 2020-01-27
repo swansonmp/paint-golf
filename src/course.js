@@ -1,4 +1,5 @@
 import Palette from "./palette.js";
+import Terrain from "./terrain.js";
 import Vector from "./vector.js";
 
 export default class Course {
@@ -6,6 +7,7 @@ export default class Course {
     this.game = game;
     
     this.palette = new Palette(game);
+    this.terrain = new Terrain(game);
     
     this.tees = this.createCourseCoordinateList();
     this.holes = this.createCourseCoordinateList();
@@ -39,9 +41,9 @@ export default class Course {
     else return 5;
   }
   
-  getDistance(n) {
-    return this.holes[n].distance2D(this.tees[n]) / this.game.ball.scale;
-  }
+  getDistance(n) { return this.holes[n].distance2D(this.tees[n]) / this.game.ball.scale; }
+  getPixelType(x, y) { return this.map[Math.floor(x)][Math.floor(y)]; }
+  getLieRate(x, y) { return this.terrain.getLieRate(this.getPixelType(x, y)); }
   
   createCourseCoordinateList() {
     let list = [];

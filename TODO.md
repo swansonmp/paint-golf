@@ -2,8 +2,8 @@
 
 ## Changes
 
-* Decrease friction
-* Update motion-checking methods
+* Refactor terrain logic data to terrain.js
+* Change lastPosition to get scaled position
 
 
 ## Logic
