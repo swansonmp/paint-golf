@@ -2,8 +2,9 @@
 
 ## Changes
 
-* Seperate lieRate from bounce and friction rate
-
+* Add trees and paths
+* Change inMotion tolerance from 0.05 to 0.125
+* Hotfix current yards indicator
 
 ## Logic
 
@@ -13,17 +14,17 @@
 
 ## Physics
 
-* Investigate partial-power shots
+* Overhaul physics
 * Fix spin
-* Add trees
-    * Leaves vs. trunk
 * Add variation in lie rate
 
 
 ## Features
 
+* Add pause after running state end
 * Add pause menu
 * Implement greens
+* Allow for any size vanity images
 * Add support for user-uploaded vanity images
 * Add palette customization to main menu
 * Add bag customization

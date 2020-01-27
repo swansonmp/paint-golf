@@ -12,7 +12,10 @@ export default class Terrain {
       FAIRWAY: 3,
       ROUGH:   4,
       BUNKER:  5,
-      WATER:   6
+      WATER:   6,
+      TREE:    7,
+      LEAF:    8,
+      PATH:    9
     };
     
     this.LIE_RATE = {
@@ -22,7 +25,10 @@ export default class Terrain {
       FAIRWAY: 0.98,
       ROUGH:   0.80,
       BUNKER:  0.60,
-      WATER:   0.15
+      WATER:   0.15,
+      TREE:    0.50,
+      LEAF:    0.80,
+      PATH:    0.60
     };
     
     this.BOUNCE_RATE = {
@@ -32,7 +38,10 @@ export default class Terrain {
       FAIRWAY: 0.98,
       ROUGH:   0.80,
       BUNKER:  0.50,
-      WATER:   0.00
+      WATER:   0.00,
+      TREE:    0.80,
+      LEAF:    0.80,
+      PATH:    2.00
     };
     
     this.FRICTION_RATE = {
@@ -42,7 +51,10 @@ export default class Terrain {
       FAIRWAY: 0.98,
       ROUGH:   0.85,
       BUNKER:  0.75,
-      WATER:   0.00
+      WATER:   0.00,
+      TREE:    1.00,
+      LEAF:    0.85,
+      PATH:    1.00
     };
   }
   
@@ -56,6 +68,12 @@ export default class Terrain {
         return this.TYPE.BUNKER;
       case this.palette.COLOR.WATER:
         return this.TYPE.WATER;
+      case this.palette.COLOR.TREE:
+        return this.TYPE.TREE;
+      case this.palette.COLOR.LEAF:
+        return this.TYPE.LEAF;
+      case this.palette.COLOR.PATH:
+        return this.TYPE.PATH;
       default:
         return this.TYPE.FAIRWAY;
     }
@@ -64,6 +82,8 @@ export default class Terrain {
   getTeeTerrain() { return this.TYPE.TEE; }
   getHoleTerrain() { return this.TYPE.HOLE; }
   getWaterTerrain() { return this.TYPE.WATER; }
+  getTreeTerrain() { return this.TYPE.TREE; }
+  getLeafTerrain() { return this.TYPE.LEAF; }
   
   getLieRate(lie) {
     switch (lie) {
@@ -79,6 +99,12 @@ export default class Terrain {
         return this.LIE_RATE.BUNKER;
       case this.TYPE.WATER:
         return this.LIE_RATE.WATER;
+      case this.TYPE.TREE:
+        return this.LIE_RATE.TREE;
+      case this.TYPE.LEAF:
+        return this.LIE_RATE.LEAF;
+      case this.TYPE.PATH:
+        return this.LIE_RATE.PATH;
       default:
         return this.LIE_RATE.FAIRWAY;
     }
@@ -98,6 +124,12 @@ export default class Terrain {
         return this.BOUNCE_RATE.BUNKER;
       case this.TYPE.WATER:
         return this.BOUNCE_RATE.WATER;
+      case this.TYPE.TREE:
+        return this.BOUNCE_RATE.TREE;
+      case this.TYPE.LEAF:
+        return this.BOUNCE_RATE.LEAF;
+      case this.TYPE.PATH:
+        return this.BOUNCE_RATE.PATH;
       default:
         return this.BOUNCE_RATE.FAIRWAY;
     }
@@ -117,6 +149,12 @@ export default class Terrain {
         return this.FRICTION_RATE.BUNKER;
       case this.TYPE.WATER:
         return this.FRICTION_RATE.WATER;
+      case this.TYPE.TREE:
+        return this.FRICTION_RATE.TREE;
+      case this.TYPE.LEAF:
+        return this.FRICTION_RATE.LEAF;
+      case this.TYPE.PATH:
+        return this.FRICTION_RATE.PATH;
       default:
         return this.FRICTION_RATE.FAIRWAY;
     }

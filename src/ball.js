@@ -23,7 +23,7 @@ export default class Ball {
     this.c = 0.5;
     this.rho = 1.2;
     this.A = Math.PI * Math.pow(this.radius, 2);
-	
+    
     this.reset();
   }
 
@@ -45,7 +45,7 @@ export default class Ball {
   setLastPosition() { this.lastPosition = this.getScaledPosition().copy(); }
   
   inAir()    { return this.position.z > 0.05; }
-  inMotion() { return this.velocity.mag() > 0.05; }
+  inMotion() { return this.velocity.mag() > 0.125; }
   isMoving() { return this.inAir() || this.inMotion(); }
 
   strike(horizontal, vertical, dtheta) {
@@ -106,6 +106,8 @@ export default class Ball {
       this.velocity.addTo(this.fnet.multiply(this.deltaTime));
       
       this.calculateOoBBounce();
+      this.calculateTreeBounce();
+      this.calculateLeafPhysics();
       this.calculateGroundBounce();
       this.calculateFriction();
     }
@@ -139,6 +141,21 @@ export default class Ball {
     }
   }
   
+  calculateTreeBounce() {
+    if (this.inTree() && this.game.course.atTreeLevel(this.position.z)) {
+      this.position.subtractFrom(this.velocity.multiply(0.0625));
+      //TODO placeholder physics
+      this.velocity.x *= this.game.course.getTreeBounce();
+      this.velocity.y *= this.game.course.getTreeBounce();
+    }
+  }
+  
+  calculateLeafPhysics() {
+    if (this.inLeaf() && this.game.course.atLeafLevel(this.position.z)) {
+      this.velocity.multiplyBy(this.game.course.getLeafRate());
+    }
+  }
+  
   calculateGroundBounce() {
     if (this.position.z < 0) {
       this.position.z = 0;
@@ -164,6 +181,8 @@ export default class Ball {
   
   inHole() { return this.getPixelType() == this.game.course.terrain.getHoleTerrain(); }
   inWater() { return this.getPixelType() == this.game.course.terrain.getWaterTerrain(); }
+  inTree() { return this.getPixelType() == this.game.course.terrain.getTreeTerrain(); }
+  inLeaf() { return this.getPixelType() == this.game.course.terrain.getLeafTerrain(); }
   
   getScaledPosition() { return this.position.multiply(this.scale) };
   

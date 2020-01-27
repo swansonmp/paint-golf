@@ -12,6 +12,11 @@ export default class Course {
     this.tees = this.createCourseCoordinateList();
     this.holes = this.createCourseCoordinateList();
     this.map = [0];
+    
+    this.leafRate = 0.98;
+    this.treeBounce = -0.25;
+    this.leafMinHeight = 4;
+    this.treeMaxHeight = 25;
   }
   
   draw(ctx) {
@@ -44,9 +49,16 @@ export default class Course {
   getDistance(n) { 
     return this.holes[n].distance2D(this.tees[n]) / this.game.ball.scale;
   }
+  
+  getTreeBounce() { return this.treeBounce; }
+  getLeafRate() { return this.leafRate; }
+  atTreeLevel(n) { return n < this.treeMaxHeight; }
+  atLeafLevel(n) { return n > this.leafMinHeight && n < this.treeMaxHeight; }
+  
   getPixelType(x, y) {
     return this.map[Math.floor(x)][Math.floor(y)];
   }
+  
   getLieRate(x, y) { return this.terrain.getLieRate(this.getPixelType(x, y)); }
   getBounceRate(x, y) { return this.terrain.getBounceRate(this.getPixelType(x, y)); }
   getFrictionRate(x, y) { return this.terrain.getFrictionRate(this.getPixelType(x, y)); }

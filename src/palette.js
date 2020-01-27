@@ -3,23 +3,29 @@ export default class Palette {
     this.game = game;
     
     this.COLOR = {
-      TEE: 0x000001,
-      HOLE: 0xed1c24,
-      GREEN: 0xb5e61d,
+      TEE:     0x000001,
+      HOLE:    0xed1c24,
+      GREEN:   0xb5e61d,
       FAIRWAY: 0xb5e61d,
-      ROUGH: 0x22b14c,
-      BUNKER: 0xefe4b0,
-      WATER: 0x00a2e8
+      ROUGH:   0x22b14c,
+      BUNKER:  0xefe4b0,
+      WATER:   0x00a2e8,
+      TREE:    0xb97a57,
+      LEAF:    0x004000,
+      PATH:    0x7f7f7f
     };
     
     this.HEX_COLOR = {
-      TEE: this.toHexString(this.COLOR.TEE),
-      HOLE: this.toHexString(this.COLOR.HOLE),
-      GREEN: this.toHexString(this.COLOR.GREEN),
+      TEE:     this.toHexString(this.COLOR.TEE),
+      HOLE:    this.toHexString(this.COLOR.HOLE),
+      GREEN:   this.toHexString(this.COLOR.GREEN),
       FAIRWAY: this.toHexString(this.COLOR.FAIRWAY),
-      ROUGH: this.toHexString(this.COLOR.ROUGH),
-      BUNKER: this.toHexString(this.COLOR.BUNKER),
-      WATER: this.toHexString(this.COLOR.WATER)
+      ROUGH:   this.toHexString(this.COLOR.ROUGH),
+      BUNKER:  this.toHexString(this.COLOR.BUNKER),
+      WATER:   this.toHexString(this.COLOR.WATER),
+      TREE:    this.toHexString(this.COLOR.TREE),
+      LEAF:    this.toHexString(this.COLOR.LEAF),
+      PATH:    this.toHexString(this.COLOR.PATH)
     };
   }
   
@@ -44,6 +50,12 @@ export default class Palette {
         return this.HEX_COLOR.BUNKER;
       case this.game.course.terrain.TYPE.WATER:
         return this.HEX_COLOR.WATER;
+      case this.game.course.terrain.TYPE.TREE:
+        return this.HEX_COLOR.TREE;
+      case this.game.course.terrain.TYPE.LEAF:
+        return this.HEX_COLOR.LEAF;
+      case this.game.course.terrain.TYPE.PATH:
+        return this.HEX_COLOR.PATH;
       default:
         return "#ff00ff";
     }

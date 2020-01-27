@@ -17,6 +17,6 @@ export default class CurrentYards {
   }
   
   update(deltaTime) {
-    this.currentYards = this.game.ball.position.distance2D(this.game.ball.lastPosition);
+    this.currentYards = this.game.ball.position.distance2D(this.game.ball.lastPosition.divide(this.game.ball.scale));
   }
 }
