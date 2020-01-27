@@ -30,19 +30,19 @@ export default class Palette {
   
   getHexColor(lie) {
     switch (lie) {
-      case this.game.course.terrain.PIXEL_TYPE.TEE:
+      case this.game.course.terrain.TYPE.TEE:
         return this.HEX_COLOR.TEE;
-      case this.game.course.terrain.PIXEL_TYPE.HOLE:
+      case this.game.course.terrain.TYPE.HOLE:
         return this.HEX_COLOR.HOLE;
-      case this.game.course.terrain.PIXEL_TYPE.GREEN:
+      case this.game.course.terrain.TYPE.GREEN:
         return this.HEX_COLOR.GREEN;
-      case this.game.course.terrain.PIXEL_TYPE.FAIRWAY:
+      case this.game.course.terrain.TYPE.FAIRWAY:
         return this.HEX_COLOR.FAIRWAY;
-      case this.game.course.terrain.PIXEL_TYPE.ROUGH:
+      case this.game.course.terrain.TYPE.ROUGH:
         return this.HEX_COLOR.ROUGH;
-      case this.game.course.terrain.PIXEL_TYPE.BUNKER:
+      case this.game.course.terrain.TYPE.BUNKER:
         return this.HEX_COLOR.BUNKER;
-      case this.game.course.terrain.PIXEL_TYPE.WATER:
+      case this.game.course.terrain.TYPE.WATER:
         return this.HEX_COLOR.WATER;
       default:
         return "#ff00ff";

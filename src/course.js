@@ -41,9 +41,15 @@ export default class Course {
     else return 5;
   }
   
-  getDistance(n) { return this.holes[n].distance2D(this.tees[n]) / this.game.ball.scale; }
-  getPixelType(x, y) { return this.map[Math.floor(x)][Math.floor(y)]; }
+  getDistance(n) { 
+    return this.holes[n].distance2D(this.tees[n]) / this.game.ball.scale;
+  }
+  getPixelType(x, y) {
+    return this.map[Math.floor(x)][Math.floor(y)];
+  }
   getLieRate(x, y) { return this.terrain.getLieRate(this.getPixelType(x, y)); }
+  getBounceRate(x, y) { return this.terrain.getBounceRate(this.getPixelType(x, y)); }
+  getFrictionRate(x, y) { return this.terrain.getFrictionRate(this.getPixelType(x, y)); }
   
   createCourseCoordinateList() {
     let list = [];

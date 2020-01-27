@@ -16,7 +16,7 @@ export default class Ball {
     this.scale = 2;
     this.mass = 0.25;
     this.gravity = new Vector(0, 0, -9.8);
-    this.friction = 0.98;
+    this.friction = 1;
     this.bounce = -0.5;
     this.bounceOoB = -0.2;
     this.radius = 0.0625;
@@ -142,7 +142,7 @@ export default class Ball {
   calculateGroundBounce() {
     if (this.position.z < 0) {
       this.position.z = 0;
-      this.velocity.z *= this.bounce * this.getLieRate();
+      this.velocity.z *= this.bounce * this.getBounceRate();
       
       //calculate spin
       this.velocity.addTo(this.spin);
@@ -153,12 +153,14 @@ export default class Ball {
   calculateFriction() {
     if (!this.inAir()) {
       this.position.z = 0;
-      this.velocity.multiplyBy(this.friction * this.getLieRate());
+      this.velocity.multiplyBy(this.friction * this.getFrictionRate());
     }
   }
   
-  getLieRate() { return this.game.course.getLieRate(this.getScaledPosition().x, this.getScaledPosition().y); }
   getPixelType() { return this.game.course.getPixelType(this.getScaledPosition().x, this.getScaledPosition().y); }
+  getLieRate() { return this.game.course.getLieRate(this.getScaledPosition().x, this.getScaledPosition().y); }
+  getBounceRate() { return this.game.course.getBounceRate(this.getScaledPosition().x, this.getScaledPosition().y); }
+  getFrictionRate() { return this.game.course.getFrictionRate(this.getScaledPosition().x, this.getScaledPosition().y); }
   
   inHole() { return this.getPixelType() == this.game.course.terrain.getHoleTerrain(); }
   inWater() { return this.getPixelType() == this.game.course.terrain.getWaterTerrain(); }

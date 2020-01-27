@@ -2,8 +2,7 @@
 
 ## Changes
 
-* Refactor terrain logic data to terrain.js
-* Change lastPosition to get scaled position
+* Seperate lieRate from bounce and friction rate
 
 
 ## Logic
@@ -16,17 +15,15 @@
 
 * Investigate partial-power shots
 * Fix spin
-* Seperate lie power and lie friction
 * Add trees
     * Leaves vs. trunk
 * Add variation in lie rate
-* Untie friction from framerate
 
 
 ## Features
 
+* Add pause menu
 * Implement greens
-* Overhaul file uploading menu
 * Add support for user-uploaded vanity images
 * Add palette customization to main menu
 * Add bag customization
@@ -44,7 +41,6 @@
 
 ## Other Fixes
 
-* Fix last position for respawning
 * Derive club distances as opposed to listing them
 * Create cursor images in javascript
 
