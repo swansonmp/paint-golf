@@ -45,16 +45,16 @@ export default class Terrain {
     };
     
     this.FRICTION_RATE = {
-      TEE:     0.99,
-      HOLE:    0.00,
-      GREEN:   0.99,
-      FAIRWAY: 0.98,
-      ROUGH:   0.85,
-      BUNKER:  0.75,
-      WATER:   0.00,
-      TREE:    1.00,
-      LEAF:    0.85,
-      PATH:    1.00
+      TEE:     0.980,
+      HOLE:    0.000,
+      GREEN:   0.980,
+      FAIRWAY: 0.975,
+      ROUGH:   0.850,
+      BUNKER:  0.750,
+      WATER:   0.000,
+      TREE:    1.000,
+      LEAF:    0.850,
+      PATH:    1.000
     };
   }
   

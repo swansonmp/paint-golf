@@ -12,7 +12,7 @@ export default class RunningState extends ActionState {
       this.game.currentYards.update(deltaTime);
     }
     else {
-      this.game.setState(this.game.getEvaluateState());
+      this.game.setState(this.game.getPostShotState());
     }
   }
   

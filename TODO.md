@@ -2,9 +2,10 @@
 
 ## Changes
 
-* Add trees and paths
-* Change inMotion tolerance from 0.05 to 0.125
-* Hotfix current yards indicator
+* Decrease putter power
+* Decrease green, fairway, and tee friction
+* Add delay after shot
+* Increase magnitude required for ball to be 'in motion'
 
 ## Logic
 
@@ -34,7 +35,6 @@
 
 ## UI
 
-* Implement smooth panning
 * Overhaul powerbar (again)
 * Add remaining yards indicator
 * Update stroke indicator

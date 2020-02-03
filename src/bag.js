@@ -5,7 +5,7 @@ export default class Bag {
     this.game = game;
     
     this.bag = [
-        new Club("P", 200, 0, 50),
+        new Club("P",  30, 0, 30),
         new Club("LW", 30, 10, 75),
         new Club("SW", 48, 10.125, 105),
         new Club("9I", 80, 11, 140),

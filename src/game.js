@@ -24,6 +24,7 @@ import AccuracyState from "./states/accuracyState.js";
 import PreStrikingState from "./states/preStrikingState.js";
 import StrikingState from "./states/strikingState.js";
 import RunningState from "./states/runningState.js";
+import PostShotState from "./states/postShotState.js";
 import EvaluateState from "./states/evaluateState.js";
 
 export default class Game {
@@ -61,6 +62,7 @@ export default class Game {
     this.preStrikingState = new PreStrikingState(this);
     this.strikingState = new StrikingState(this);
     this.runningState = new RunningState(this);
+    this.postShotState = new PostShotState(this);
     this.evaluateState = new EvaluateState(this);
     
     this.setState(this.getMenuState());
@@ -76,6 +78,7 @@ export default class Game {
   getPreStrikingState() { return this.preStrikingState; }
   getStrikingState() { return this.strikingState; }
   getRunningState() { return this.runningState; }
+  getPostShotState() { return this.postShotState; }
   getEvaluateState() { return this.evaluateState; }
   
   setState(state) {

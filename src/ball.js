@@ -45,7 +45,7 @@ export default class Ball {
   setLastPosition() { this.lastPosition = this.getScaledPosition().copy(); }
   
   inAir()    { return this.position.z > 0.05; }
-  inMotion() { return this.velocity.mag() > 0.125; }
+  inMotion() { return this.velocity.mag() > 0.25; }
   isMoving() { return this.inAir() || this.inMotion(); }
 
   strike(horizontal, vertical, dtheta) {
