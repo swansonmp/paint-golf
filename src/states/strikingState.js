@@ -15,7 +15,7 @@ export default class StrikingState extends ActionState {
     );
     this.game.wind.update(deltaTime);
     this.game.powerbar.reset();                       //reset powerbar
-    this.game.strokes++;                              //add stroke
+    this.game.gameData.incStrokes();                  //add stroke
     this.game.setState(this.game.getRunningState());  //go to running state
   }
   

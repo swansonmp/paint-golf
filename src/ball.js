@@ -188,8 +188,8 @@ export default class Ball {
   
   angleToHole() {
     this.angle =  Math.atan2(
-        this.game.course.holes[this.game.holeNum].y - this.getScaledPosition().y, 
-        this.game.course.holes[this.game.holeNum].x - this.getScaledPosition().x
+        this.game.course.holes[this.game.gameData.getHoleNum()].y - this.getScaledPosition().y, 
+        this.game.course.holes[this.game.gameData.getHoleNum()].x - this.getScaledPosition().x
     );
   }
   

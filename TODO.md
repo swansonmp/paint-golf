@@ -2,10 +2,7 @@
 
 ## Changes
 
-* Decrease putter power
-* Decrease green, fairway, and tee friction
-* Add delay after shot
-* Increase magnitude required for ball to be 'in motion'
+* Refactor strokes and holeNum to GameData class
 
 ## Logic
 

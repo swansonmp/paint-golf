@@ -7,14 +7,18 @@ export default class EvaluateState extends ActionState {
   
   update(deltaTime) {
     if (this.game.ball.inHole()) {                  //if the ball is in the hole
-      this.game.holeNum++;                          //increment hole
-      this.game.strokes = 0;
-      this.game.ball.reset(this.game.course.tees[this.game.holeNum].x, this.game.course.tees[this.game.holeNum].y, 0);
+      this.game.gameData.incHoleNum();              //increment hole
+      this.game.gameData.resetStrokes();            //reset strokes
+      this.game.ball.reset(
+          this.game.course.tees[this.game.gameData.getHoleNum()].x,
+          this.game.course.tees[this.game.gameData.getHoleNum()].y,
+          0
+      );
     }
     else {
       if (this.game.ball.inWater()) {               //if the ball is in the water
         this.game.sounds.splash.play();
-        this.game.strokes++;                        //add penalty stroke
+        this.game.gameData.incStrokes();            //add penalty stroke
         this.game.ball.reset(
             this.game.ball.lastPosition.x, 
             this.game.ball.lastPosition.y, 

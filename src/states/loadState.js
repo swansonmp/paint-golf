@@ -7,14 +7,19 @@ export default class LoadState extends State {
   }
   
   update(deltaTime) {
-    this.game.stroke = 0;
+    this.game.gameData.resetStrokes();
+    this.game.gameData.resetHoleNum();
        
     //load the course
     this.game.course = new Course(this.game);
     this.game.loader.loadCourse(this.game.course);
       
     //set ball
-    this.game.ball.reset(this.game.course.tees[1].x, this.game.course.tees[1].y, 0);
+    this.game.ball.reset(
+        this.game.course.tees[this.game.gameData.getHoleNum()].x,
+        this.game.course.tees[this.game.gameData.getHoleNum()].y,
+        0
+    );
     
     //go to idle state
     this.game.setState(this.game.getPrepareState());

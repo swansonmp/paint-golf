@@ -17,6 +17,6 @@ export default class StrokeInfo {
   }
   
   update(deltaTime) {
-    this.strokes = this.game.strokes;
+    this.strokes = this.game.gameData.getStrokes();
   }
 }

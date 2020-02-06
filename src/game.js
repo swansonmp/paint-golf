@@ -3,6 +3,7 @@ import Loader from "./loader.js";
 import Debug from "./debug.js";
 import View from "./view.js";
 import DrawUtil from "./drawUtil.js";
+import GameData from "./gameData.js";
 
 import Ball from "./ball.js";
 import Wind from "./wind.js";
@@ -38,8 +39,7 @@ export default class Game {
     this.view = new View(this);
     this.drawUtil = new DrawUtil(this);
     
-    this.strokes = 0;
-    this.holeNum = 1;
+    this.gameData = new GameData(this);
     
     this.ball = new Ball(this);
     this.wind = new Wind(this);

@@ -30,7 +30,7 @@ export default class HoleInfo {
   }
   
   update(deltaTime) {
-    this.par = this.game.course.getPar(this.game.holeNum);
-    this.distance = this.game.course.getDistance(this.game.holeNum);
+    this.par = this.game.course.getPar(this.game.gameData.getHoleNum());
+    this.distance = this.game.course.getDistance(this.game.gameData.getHoleNum());
   }
 }

@@ -25,6 +25,6 @@ export default class Flag {
   }
   
   update(deltaTime) {
-    this.holeNum = this.game.holeNum;
+    this.holeNum = this.game.gameData.getHoleNum();
   }
 }
