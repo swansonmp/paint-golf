@@ -5,16 +5,13 @@ export default class GameData {
   }
   
   init() {
-    this.strokes = 0;
-    this.holeNum = 0;
+    this.strokes = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    this.holeNum = 1;
   }
   
-  getStrokes() { return this.strokes; }
-  resetStrokes() { this.strokes = 0; }
-  incStrokes() { this.strokes++; }
-  
+  getStrokes() { return this.strokes[this.holeNum]; }
+  incStrokes() { this.strokes[this.holeNum]++; }
   getHoleNum() { return this.holeNum; }
-  resetHoleNum() { this.holeNum = 1; }
   incHoleNum() { this.holeNum++; }
   
 }

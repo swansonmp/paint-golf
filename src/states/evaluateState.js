@@ -8,7 +8,6 @@ export default class EvaluateState extends ActionState {
   update(deltaTime) {
     if (this.game.ball.inHole()) {                  //if the ball is in the hole
       this.game.gameData.incHoleNum();              //increment hole
-      this.game.gameData.resetStrokes();            //reset strokes
       this.game.ball.reset(
           this.game.course.tees[this.game.gameData.getHoleNum()].x,
           this.game.course.tees[this.game.gameData.getHoleNum()].y,

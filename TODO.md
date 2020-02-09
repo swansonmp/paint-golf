@@ -2,7 +2,7 @@
 
 ## Changes
 
-* Refactor strokes and holeNum to GameData class
+* Turn strokes into strokes array
 
 ## Logic
 

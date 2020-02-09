@@ -7,8 +7,7 @@ export default class LoadState extends State {
   }
   
   update(deltaTime) {
-    this.game.gameData.resetStrokes();
-    this.game.gameData.resetHoleNum();
+    this.game.gameData.init();
        
     //load the course
     this.game.course = new Course(this.game);
